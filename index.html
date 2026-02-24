@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI算力管理平台 - 登录</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        .animate-pulse-soft {
+            animation: pulse-soft 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="w-full max-w-md">
+            <!-- Logo and Title -->
+            <div class="text-center mb-10">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 mb-4">
+                    <svg class="w-9 h-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-bold text-white mb-2">AI算力管理平台</h1>
+                <p class="text-slate-400">统一管理算力资源，赋能业务创新</p>
+            </div>
+
+            <!-- Login Card -->
+            <div class="bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 border border-slate-700">
+                <form id="loginForm" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">用户名</label>
+                        <input type="text" id="username" value="admin"
+                            class="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                            placeholder="请输入用户名">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">密码</label>
+                        <input type="password" id="password" value="123456"
+                            class="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-xl text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+                            placeholder="请输入密码">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">角色</label>
+                        <select id="role"
+                            class="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
+                            <option value="admin">管理员</option>
+                            <option value="user">普通用户</option>
+                        </select>
+                    </div>
+                    <button type="submit"
+                        class="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition transform hover:scale-[1.02]">
+                        登 录
+                    </button>
+                </form>
+
+                <!-- Demo Info -->
+                <div class="mt-6 p-4 bg-blue-500/10 border border-blue-500/30 rounded-xl">
+                    <p class="text-xs text-blue-300 text-center">
+                        演示账号已预填，直接点击登录即可
+                    </p>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="text-center mt-8">
+                <p class="text-slate-500 text-sm">
+                    半导体数字化与IT装备部 &copy; 2025
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const role = document.getElementById('role').value;
+            window.location.href = 'dashboard.html?role=' + role;
+        });
+    </script>
+</body>
+</html>
