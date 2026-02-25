@@ -267,6 +267,11 @@ function initCharts() {
     // Destroy existing charts before creating new ones to prevent duplication
     destroyAllCharts();
 
+    // Set Chart.js global defaults for the new design
+    Chart.defaults.color = '#9898a6';
+    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.08)';
+    Chart.defaults.font.family = "'Outfit', sans-serif";
+
     // Use setTimeout to ensure DOM is fully rendered
     setTimeout(function() {
         // Initialize My Computing page charts
@@ -308,8 +313,8 @@ function initMyComputingCharts() {
                 datasets: [{
                     label: '额度消耗',
                     data: [65000, 78000, 90000, 81000, 95000, 110000, 125000],
-                    borderColor: '#3b82f6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    borderColor: '#00f5d4',
+                    backgroundColor: 'rgba(0, 245, 212, 0.1)',
                     fill: true,
                     tension: 0.4
                 }]
@@ -361,7 +366,7 @@ function initMyComputingCharts() {
                 datasets: [{
                     data: [45, 25, 20, 10],
                     backgroundColor: [
-                        '#3b82f6',
+                        '#00f5d4',
                         '#8b5cf6',
                         '#10b981',
                         '#f59e0b'
@@ -398,8 +403,8 @@ function initGpuDashboardCharts() {
                 datasets: [{
                     label: 'GPU使用率',
                     data: [45, 42, 38, 55, 72, 85, 82, 78, 80, 75, 68, 52],
-                    borderColor: '#3b82f6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    borderColor: '#00f5d4',
+                    backgroundColor: 'rgba(0, 245, 212, 0.1)',
                     fill: true,
                     tension: 0.4,
                     pointRadius: 3,
@@ -453,7 +458,7 @@ function initGpuDashboardCharts() {
                     data: [2, 5, 8, 5],
                     backgroundColor: [
                         '#10b981',
-                        '#3b82f6',
+                        '#00f5d4',
                         '#f59e0b',
                         '#ef4444'
                     ],
@@ -561,7 +566,7 @@ function initTokenDashboardCharts() {
                 datasets: [{
                     data: [35, 25, 15, 12, 8, 5],
                     backgroundColor: [
-                        '#3b82f6',
+                        '#00f5d4',
                         '#8b5cf6',
                         '#10b981',
                         '#f59e0b',
@@ -598,7 +603,7 @@ function initTokenDashboardCharts() {
                 datasets: [{
                     label: '调用次数',
                     data: [18500, 16200, 12800, 9500, 7200, 6800, 5400, 4100, 3200, 2800],
-                    backgroundColor: '#3b82f6',
+                    backgroundColor: '#00f5d4',
                     borderRadius: 4
                 }]
             },
@@ -820,8 +825,8 @@ function initOperationsMonitoringCharts() {
                 datasets: [{
                     label: 'GPU使用率',
                     data: [45, 42, 38, 55, 72, 85, 82, 78, 80, 75, 68, 52],
-                    borderColor: '#3b82f6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    borderColor: '#00f5d4',
+                    backgroundColor: 'rgba(0, 245, 212, 0.1)',
                     fill: true,
                     tension: 0.4
                 }]
@@ -907,8 +912,8 @@ function initCostOperationsCharts() {
                 datasets: [{
                     label: '成本',
                     data: [35, 38.5, 42, 45.6],
-                    borderColor: '#3b82f6',
-                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    borderColor: '#00f5d4',
+                    backgroundColor: 'rgba(0, 245, 212, 0.1)',
                     fill: true,
                     tension: 0.4
                 }]
@@ -933,7 +938,7 @@ function initCostOperationsCharts() {
             data: {
                 labels: ['第1周', '第2周', '第3周', '第4周'],
                 datasets: [
-                    { label: '芯片设计部', data: [1.2, 1.5, 1.3, 1.4], borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.5)', fill: true },
+                    { label: '芯片设计部', data: [1.2, 1.5, 1.3, 1.4], borderColor: '#00f5d4', backgroundColor: 'rgba(0, 245, 212, 0.5)', fill: true },
                     { label: '验证部', data: [0.9, 1.1, 1.0, 1.0], borderColor: '#8b5cf6', backgroundColor: 'rgba(139, 92, 246, 0.5)', fill: true },
                     { label: '封装部', data: [0.5, 0.6, 0.5, 0.6], borderColor: '#10b981', backgroundColor: 'rgba(16, 185, 129, 0.5)', fill: true },
                     { label: '测试部', data: [0.4, 0.5, 0.5, 0.5], borderColor: '#f59e0b', backgroundColor: 'rgba(245, 158, 11, 0.5)', fill: true },
@@ -963,7 +968,7 @@ function initCostOperationsCharts() {
                 datasets: [{
                     label: '人均消耗',
                     data: [185, 162, 145, 128, 112, 95],
-                    backgroundColor: ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#06b6d4'],
+                    backgroundColor: ['#00f5d4', '#f72585', '#7b2cbf', '#ff6b35', '#06d6a0', '#4361ee'],
                     borderRadius: 6
                 }]
             },
@@ -1019,7 +1024,7 @@ function initResourceAnalyticsCharts() {
                 datasets: [{
                     label: '调用次数',
                     data: [18500, 16200, 12800, 9500, 7200, 6800, 5400, 4100, 3200, 2800],
-                    backgroundColor: '#3b82f6',
+                    backgroundColor: '#00f5d4',
                     borderRadius: 4
                 }]
             },
@@ -1105,7 +1110,7 @@ function initResourceAnalyticsCharts() {
                 labels: ['芯片设计A', '验证测试B', '模型训练C', '数据处理D', '算法研发E', '其他'],
                 datasets: [{
                     data: [32, 25, 18, 12, 8, 5],
-                    backgroundColor: ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#64748b'],
+                    backgroundColor: ['#00f5d4', '#f72585', '#7b2cbf', '#ff6b35', '#06d6a0', '#5c5c6e'],
                     borderWidth: 0
                 }]
             },
@@ -1127,7 +1132,7 @@ function initResourceAnalyticsCharts() {
                 datasets: [{
                     label: 'LLaMA-7B',
                     data: [4200, 4500, 4800, 5100],
-                    borderColor: '#3b82f6',
+                    borderColor: '#00f5d4',
                     tension: 0.3
                 }, {
                     label: 'GPT-3.5',
@@ -1290,15 +1295,15 @@ function showToast(message, type = 'info', duration = 3000) {
     toast.className = `toast toast-${type}`;
 
     const icons = {
-        success: '<svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>',
-        error: '<svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>',
-        warning: '<svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>',
-        info: '<svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
+        success: '<svg class="w-5 h-5 toast-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>',
+        error: '<svg class="w-5 h-5 toast-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>',
+        warning: '<svg class="w-5 h-5 toast-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>',
+        info: '<svg class="w-5 h-5 toast-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>'
     };
 
     toast.innerHTML = `
         ${icons[type] || icons.info}
-        <span class="text-sm text-slate-200">${message}</span>
+        <span class="text-sm" style="color: var(--text-primary);">${message}</span>
     `;
 
     container.appendChild(toast);

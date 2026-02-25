@@ -6,21 +6,400 @@
     <title>AI算力管理平台</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* ===== COMMAND CENTER DESIGN SYSTEM ===== */
+        :root {
+            /* Base Colors */
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a25;
+            --bg-card: #14141e;
+            --bg-card-hover: #1a1a28;
+            --bg-elevated: #1e1e2a;
+
+            /* Accent Colors - Cyber Neon */
+            --accent-cyan: #00f5d4;
+            --accent-cyan-dim: rgba(0, 245, 212, 0.15);
+            --accent-cyan-glow: rgba(0, 245, 212, 0.4);
+            --accent-magenta: #f72585;
+            --accent-magenta-dim: rgba(247, 37, 133, 0.15);
+            --accent-magenta-glow: rgba(247, 37, 133, 0.4);
+            --accent-purple: #7b2cbf;
+            --accent-blue: #4361ee;
+            --accent-orange: #ff6b35;
+            --accent-green: #06d6a0;
+
+            /* Text Colors */
+            --text-primary: #e8e8ed;
+            --text-secondary: #9898a6;
+            --text-muted: #5c5c6e;
+
+            /* Border Colors */
+            --border-default: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.15);
+            --border-active: var(--accent-cyan);
+
+            /* Shadows */
+            --shadow-glow-cyan: 0 0 20px rgba(0, 245, 212, 0.15);
+            --shadow-glow-magenta: 0 0 20px rgba(247, 37, 133, 0.15);
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+
+            /* Typography */
+            --font-display: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        /* Base Reset */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--bg-tertiary) var(--bg-secondary);
+        }
+        *::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        *::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+        *::-webkit-scrollbar-thumb {
+            background: var(--bg-tertiary);
+            border-radius: 3px;
+        }
+        *::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        body {
+            font-family: var(--font-display);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            background-image:
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 245, 212, 0.08), transparent),
+                linear-gradient(180deg, var(--bg-primary) 0%, #0d0d14 100%);
+            min-height: 100vh;
+        }
+
+        /* Grid Background Pattern */
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Animations */
         @keyframes pulse-soft {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.8; }
+            50% { opacity: 0.7; }
         }
-        .animate-pulse-soft {
-            animation: pulse-soft 3s ease-in-out infinite;
+        @keyframes glow-pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 245, 212, 0.2); }
+            50% { box-shadow: 0 0 30px rgba(0, 245, 212, 0.35); }
         }
+        @keyframes data-flow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        @keyframes slide-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-pulse-soft { animation: pulse-soft 3s ease-in-out infinite; }
+        .animate-glow { animation: glow-pulse 3s ease-in-out infinite; }
+        .animate-slide-up { animation: slide-up 0.4s ease-out forwards; }
+
+        /* Page Display */
         .page { display: none; }
         .page.active { display: block; }
-        .nav-item.active { background: rgba(59, 130, 246, 0.2); border-left: 3px solid #3b82f6; }
-        .tab-btn.active { background: #3b82f6; color: white; }
+
+        /* Navigation */
+        .nav-item {
+            position: relative;
+            border-radius: 8px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 0;
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta));
+            border-radius: 0 2px 2px 0;
+            transition: height 0.25s ease;
+        }
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .nav-item.active {
+            background: linear-gradient(135deg, rgba(0, 245, 212, 0.1), rgba(247, 37, 133, 0.05));
+            border: 1px solid rgba(0, 245, 212, 0.3);
+        }
+        .nav-item.active::before {
+            height: 60%;
+        }
+        .nav-item.active svg {
+            color: var(--accent-cyan);
+            filter: drop-shadow(0 0 8px var(--accent-cyan));
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-cyan), #00c4a7);
+            color: #000;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 12px rgba(0, 245, 212, 0.25);
+        }
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(0, 245, 212, 0.4);
+        }
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-default);
+            color: var(--text-secondary);
+            border-radius: 8px;
+            transition: all 0.25s ease;
+        }
+        .btn-secondary:hover {
+            background: var(--bg-elevated);
+            border-color: var(--border-hover);
+            color: var(--text-primary);
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, var(--accent-magenta), #d61f69);
+            color: #fff;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 12px rgba(247, 37, 133, 0.25);
+        }
+        .btn-danger:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(247, 37, 133, 0.4);
+        }
+
+        /* Tab Buttons */
+        .tab-btn, .dashboard-tab-btn, .quota-tab-btn, .user-mgmt-tab-btn {
+            border-radius: 8px;
+            transition: all 0.25s ease;
+            font-weight: 500;
+        }
+        .tab-btn.active, .dashboard-tab-btn.active, .quota-tab-btn.active, .user-mgmt-tab-btn.active {
+            background: linear-gradient(135deg, var(--accent-cyan), #00c4a7) !important;
+            color: #000 !important;
+            box-shadow: var(--shadow-glow-cyan);
+        }
+
+        /* Stat Cards */
+        .stat-card {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid var(--border-default);
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        }
+        .stat-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-card);
+        }
+        .stat-card.cyan { border-color: rgba(0, 245, 212, 0.3); }
+        .stat-card.cyan:hover { box-shadow: var(--shadow-glow-cyan); }
+        .stat-card.magenta { border-color: rgba(247, 37, 133, 0.3); }
+        .stat-card.magenta:hover { box-shadow: var(--shadow-glow-magenta); }
+
+        /* Data Display */
+        .data-value {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+        .data-label {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            font-weight: 400;
+        }
+
+        /* Project Affiliation Card */
+        .project-card {
+            background: linear-gradient(135deg, rgba(123, 44, 191, 0.15), rgba(67, 97, 238, 0.1));
+            border: 1px solid rgba(123, 44, 191, 0.3);
+            border-radius: 16px;
+            position: relative;
+        }
+        .project-card::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(123, 44, 191, 0.2), transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Charts Container */
+        .chart-card {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid var(--border-default);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        .chart-card:hover {
+            border-color: var(--border-hover);
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        .data-table th {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border-default);
+            background: var(--bg-tertiary);
+        }
+        .data-table th:first-child { border-radius: 8px 0 0 0; }
+        .data-table th:last-child { border-radius: 0 8px 0 0; }
+        .data-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-default);
+            font-size: 0.875rem;
+        }
+        .data-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Status Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+        .badge-success {
+            background: rgba(6, 214, 160, 0.15);
+            color: var(--accent-green);
+            border: 1px solid rgba(6, 214, 160, 0.3);
+        }
+        .badge-warning {
+            background: rgba(255, 107, 53, 0.15);
+            color: var(--accent-orange);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+        }
+        .badge-danger {
+            background: var(--accent-magenta-dim);
+            color: var(--accent-magenta);
+            border: 1px solid var(--accent-magenta-glow);
+        }
+        .badge-info {
+            background: var(--accent-cyan-dim);
+            color: var(--accent-cyan);
+            border: 1px solid var(--accent-cyan-glow);
+        }
+        .badge-muted {
+            background: var(--bg-tertiary);
+            color: var(--text-muted);
+            border: 1px solid var(--border-default);
+        }
+
+        /* Status Indicator */
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            position: relative;
+        }
+        .status-dot::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            animation: pulse-soft 2s ease-in-out infinite;
+        }
+        .status-dot.online {
+            background: var(--accent-green);
+            box-shadow: 0 0 8px var(--accent-green);
+        }
+        .status-dot.online::after { background: rgba(6, 214, 160, 0.3); }
+        .status-dot.busy {
+            background: var(--accent-orange);
+            box-shadow: 0 0 8px var(--accent-orange);
+        }
+        .status-dot.busy::after { background: rgba(255, 107, 53, 0.3); }
+        .status-dot.offline {
+            background: var(--accent-magenta);
+            box-shadow: 0 0 8px var(--accent-magenta);
+        }
+        .status-dot.offline::after { background: rgba(247, 37, 133, 0.3); }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 4px;
+            background: var(--bg-tertiary);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .progress-bar .progress {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.5s ease;
+        }
+        .progress-bar .progress.low { background: var(--accent-green); }
+        .progress-bar .progress.medium { background: var(--accent-cyan); }
+        .progress-bar .progress.high { background: var(--accent-orange); }
+        .progress-bar .progress.critical { background: var(--accent-magenta); }
+
+        /* Form Elements */
+        input, select, textarea {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-default);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: var(--font-display);
+            transition: all 0.2s ease;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 0 3px var(--accent-cyan-dim);
+        }
+        input::placeholder { color: var(--text-muted); }
+
+        /* Loading Spinner */
         .loading-spinner {
-            border: 2px solid #f3f3f3;
-            border-top: 2px solid #3b82f6;
+            border: 2px solid var(--bg-tertiary);
+            border-top: 2px solid var(--accent-cyan);
             border-radius: 50%;
             width: 20px;
             height: 20px;
@@ -30,15 +409,26 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        canvas {
-            display: block;
-        }
+
+        /* Chart Container */
         .chart-container {
             position: relative;
             height: 280px;
             width: 100%;
         }
-        /* Toast notification */
+        canvas { display: block; }
+
+        /* Time Range Buttons */
+        .time-range-btn {
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        .time-range-btn:hover {
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+        }
+
+        /* ===== TOAST NOTIFICATIONS ===== */
         .toast-container {
             position: fixed;
             top: 20px;
@@ -46,24 +436,41 @@
             z-index: 9999;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
         }
         .toast {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 8px;
-            padding: 12px 20px;
-            min-width: 300px;
+            background: linear-gradient(135deg, var(--bg-elevated), var(--bg-card));
+            border: 1px solid var(--border-default);
+            border-radius: 12px;
+            padding: 14px 20px;
+            min-width: 320px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-            animation: toast-slide-in 0.3s ease;
+            gap: 14px;
+            box-shadow: var(--shadow-card);
+            animation: toast-slide-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            backdrop-filter: blur(10px);
         }
-        .toast.toast-success { border-left: 4px solid #10b981; }
-        .toast.toast-error { border-left: 4px solid #ef4444; }
-        .toast.toast-warning { border-left: 4px solid #f59e0b; }
-        .toast.toast-info { border-left: 4px solid #3b82f6; }
+        .toast.toast-success {
+            border-color: rgba(6, 214, 160, 0.4);
+            box-shadow: 0 4px 24px rgba(6, 214, 160, 0.15);
+        }
+        .toast.toast-success .toast-icon { color: var(--accent-green); }
+        .toast.toast-error {
+            border-color: rgba(247, 37, 133, 0.4);
+            box-shadow: 0 4px 24px rgba(247, 37, 133, 0.15);
+        }
+        .toast.toast-error .toast-icon { color: var(--accent-magenta); }
+        .toast.toast-warning {
+            border-color: rgba(255, 107, 53, 0.4);
+            box-shadow: 0 4px 24px rgba(255, 107, 53, 0.15);
+        }
+        .toast.toast-warning .toast-icon { color: var(--accent-orange); }
+        .toast.toast-info {
+            border-color: rgba(0, 245, 212, 0.4);
+            box-shadow: 0 4px 24px rgba(0, 245, 212, 0.15);
+        }
+        .toast.toast-info .toast-icon { color: var(--accent-cyan); }
         @keyframes toast-slide-in {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
@@ -75,14 +482,16 @@
         .toast.hiding {
             animation: toast-fade-out 0.3s ease forwards;
         }
-        /* Modal */
+
+        /* ===== MODAL ===== */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -96,120 +505,212 @@
             visibility: visible;
         }
         .modal {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 12px;
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            border: 1px solid var(--border-default);
+            border-radius: 16px;
             width: 90%;
             max-width: 500px;
             max-height: 90vh;
             overflow-y: auto;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
+            transform: scale(0.95) translateY(20px);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
         .modal-overlay.active .modal {
-            transform: scale(1);
+            transform: scale(1) translateY(0);
         }
         .modal-header {
-            padding: 20px;
-            border-bottom: 1px solid #334155;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--border-default);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
+        .modal-header h3 {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
         .modal-body {
-            padding: 20px;
+            padding: 24px;
         }
         .modal-footer {
-            padding: 20px;
-            border-top: 1px solid #334155;
+            padding: 20px 24px;
+            border-top: 1px solid var(--border-default);
             display: flex;
             justify-content: flex-end;
-            gap: 10px;
+            gap: 12px;
         }
         .btn-close {
             background: none;
             border: none;
-            color: #94a3b8;
+            color: var(--text-muted);
             cursor: pointer;
-            font-size: 20px;
+            font-size: 24px;
             line-height: 1;
+            padding: 4px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
         }
-        .btn-close:hover { color: #fff; }
-    }
+        .btn-close:hover {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+        }
+
+        /* ===== GPU SERVER LIST ===== */
+        .server-item {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-default);
+            border-radius: 10px;
+            padding: 14px;
+            transition: all 0.2s ease;
+        }
+        .server-item:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-elevated);
+        }
+
+        /* ===== ALERT ITEMS ===== */
+        .alert-item {
+            border-radius: 10px;
+            padding: 14px;
+            border: 1px solid;
+            transition: all 0.2s ease;
+        }
+        .alert-item.critical {
+            background: var(--accent-magenta-dim);
+            border-color: rgba(247, 37, 133, 0.3);
+        }
+        .alert-item.warning {
+            background: rgba(255, 107, 53, 0.1);
+            border-color: rgba(255, 107, 53, 0.3);
+        }
+        .alert-item.resolved {
+            background: var(--bg-tertiary);
+            border-color: var(--border-default);
+        }
+
+        /* ===== FORM STYLES ===== */
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .form-input {
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 0.875rem;
+        }
+
+        /* ===== PAGINATION ===== */
+        .pagination-btn {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-default);
+            color: var(--text-secondary);
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        .pagination-btn:hover:not(:disabled) {
+            background: var(--bg-elevated);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ===== LOGO ===== */
+        .logo-icon {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 245, 212, 0.3);
+        }
+
+        /* ===== USER AVATAR ===== */
+        .user-avatar {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-magenta));
+            font-weight: 600;
+        }
     </style>
 </head>
-<body class="bg-slate-900 text-white min-h-screen">
+<body class="text-white min-h-screen">
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
-        <aside class="w-64 bg-slate-800 border-r border-slate-700 flex flex-col">
+        <aside class="w-64 border-r flex flex-col" style="background: var(--bg-secondary); border-color: var(--border-default);">
             <!-- Logo -->
-            <div class="p-6 border-b border-slate-700">
+            <div class="p-6 border-b" style="border-color: var(--border-default);">
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                    <div class="logo-icon w-10 h-10 flex items-center justify-center">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                         </svg>
                     </div>
                     <div>
-                        <h1 class="font-bold text-lg">AI算力平台</h1>
-                        <p class="text-xs text-slate-400">Computing Platform</p>
+                        <h1 class="font-bold text-lg" style="color: var(--text-primary);">AI算力平台</h1>
+                        <p class="text-xs" style="color: var(--text-muted);">Computing Platform</p>
                     </div>
                 </div>
             </div>
 
             <!-- Navigation -->
-            <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
-                <a href="#" class="nav-item active flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-700/50 transition" data-page="my-computing">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+                <a href="#" class="nav-item active flex items-center space-x-3 px-4 py-3" data-page="my-computing">
+                    <svg class="w-5 h-5" style="color: var(--text-secondary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
                     </svg>
-                    <span>我的算力</span>
+                    <span style="color: var(--text-secondary);">我的算力</span>
                 </a>
-                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-700/50 transition" data-page="quota-manage">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3" data-page="quota-manage">
+                    <svg class="w-5 h-5" style="color: var(--text-secondary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
                     </svg>
-                    <span>额度管理</span>
-                    <span id="quotaRequestBadge" class="hidden ml-auto px-2 py-0.5 text-xs bg-red-500 text-white rounded-full">0</span>
+                    <span style="color: var(--text-secondary);">额度管理</span>
+                    <span id="quotaRequestBadge" class="hidden ml-auto px-2 py-0.5 text-xs badge badge-danger">0</span>
                 </a>
-                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-700/50 transition" data-page="dashboard">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3" data-page="dashboard">
+                    <svg class="w-5 h-5" style="color: var(--text-secondary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                     </svg>
-                    <span>运营看板</span>
+                    <span style="color: var(--text-secondary);">运营看板</span>
                 </a>
-                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-700/50 transition" data-page="projects">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3" data-page="projects">
+                    <svg class="w-5 h-5" style="color: var(--text-secondary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
                     </svg>
-                    <span>项目管理</span>
+                    <span style="color: var(--text-secondary);">项目管理</span>
                 </a>
-                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-700/50 transition" data-page="user-management">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3" data-page="user-management">
+                    <svg class="w-5 h-5" style="color: var(--text-secondary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                     </svg>
-                    <span>用户管理</span>
+                    <span style="color: var(--text-secondary);">用户管理</span>
                 </a>
-                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-700/50 transition" data-page="system-config">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3" data-page="system-config">
+                    <svg class="w-5 h-5" style="color: var(--text-secondary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                     </svg>
-                    <span>系统配置</span>
+                    <span style="color: var(--text-secondary);">系统配置</span>
                 </a>
             </nav>
 
             <!-- User Info -->
-            <div class="p-4 border-t border-slate-700">
+            <div class="p-4 border-t" style="border-color: var(--border-default);">
                 <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-semibold">
+                    <div class="user-avatar w-10 h-10 rounded-full flex items-center justify-center text-white">
                         A
                     </div>
                     <div class="flex-1">
-                        <p class="font-medium text-sm" id="currentUserName">Admin</p>
-                        <p class="text-xs text-slate-400" id="currentUserRole">管理员</p>
+                        <p class="font-medium text-sm" id="currentUserName" style="color: var(--text-primary);">Admin</p>
+                        <p class="text-xs" id="currentUserRole" style="color: var(--text-muted);">管理员</p>
                     </div>
-                    <a href="index.html" class="text-slate-400 hover:text-white transition">
+                    <a href="index.html" style="color: var(--text-muted);" class="hover:text-white transition">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                         </svg>
@@ -221,15 +722,15 @@
         <!-- Main Content -->
         <main class="flex-1 overflow-auto">
             <!-- Header -->
-            <header class="bg-slate-800/50 border-b border-slate-700 px-8 py-4">
+            <header class="px-8 py-4 border-b" style="background: rgba(18, 18, 26, 0.8); border-color: var(--border-default);">
                 <div class="flex items-center justify-between">
-                    <h2 class="text-xl font-semibold" id="pageTitle">我的算力</h2>
+                    <h2 class="text-xl font-semibold" id="pageTitle" style="color: var(--text-primary);">我的算力</h2>
                     <div class="flex items-center space-x-4">
-                        <div class="flex items-center space-x-2 text-sm text-slate-400">
-                            <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse-soft"></span>
+                        <div class="flex items-center space-x-2 text-sm" style="color: var(--text-secondary);">
+                            <span class="w-2 h-2 rounded-full animate-pulse-soft" style="background: var(--accent-green); box-shadow: 0 0 8px var(--accent-green);"></span>
                             <span>系统运行正常</span>
                         </div>
-                        <button class="p-2 text-slate-400 hover:text-white hover:bg-slate-700 rounded-lg transition">
+                        <button class="p-2 rounded-lg transition" style="color: var(--text-muted);" class="hover:text-white hover:bg-slate-700">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
                             </svg>
@@ -243,31 +744,31 @@
                 <!-- Page: 我的算力 -->
                 <div id="page-my-computing" class="page active">
                     <!-- 项目挂靠信息卡片 -->
-                    <div class="bg-gradient-to-br from-indigo-500/20 to-indigo-600/20 border border-indigo-500/30 rounded-xl p-6 mb-8">
+                    <div class="project-card p-6 mb-8">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center space-x-4">
-                                <div class="w-12 h-12 rounded-xl bg-indigo-500/30 flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <div class="w-12 h-12 rounded-xl flex items-center justify-center" style="background: rgba(123, 44, 191, 0.2);">
+                                    <svg class="w-6 h-6" style="color: #a855f7;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
                                     </svg>
                                 </div>
                                 <div>
                                     <div class="flex items-center space-x-2">
-                                        <span class="text-indigo-400 text-sm font-medium">当前挂靠项目</span>
-                                        <span id="currentProjectBadge" class="px-2 py-0.5 bg-green-500/20 text-green-400 rounded text-xs">进行中</span>
+                                        <span class="text-sm font-medium" style="color: #a855f7;">当前挂靠项目</span>
+                                        <span id="currentProjectBadge" class="badge badge-success">进行中</span>
                                     </div>
-                                    <p class="text-xl font-bold text-white mt-1" id="currentProjectName">加载中...</p>
-                                    <p class="text-sm text-slate-400 mt-1" id="currentProjectPeriod">挂靠时间: --</p>
+                                    <p class="text-xl font-bold mt-1" id="currentProjectName" style="color: var(--text-primary);">加载中...</p>
+                                    <p class="text-sm mt-1" id="currentProjectPeriod" style="color: var(--text-muted);">挂靠时间: --</p>
                                 </div>
                             </div>
                             <div class="flex items-center space-x-3">
-                                <button onclick="showProjectSwitchModal()" class="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition text-sm flex items-center">
+                                <button onclick="showProjectSwitchModal()" class="btn-primary px-4 py-2 text-sm flex items-center">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
                                     </svg>
                                     切换项目
                                 </button>
-                                <button onclick="showProjectHistory()" class="px-4 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition text-sm">
+                                <button onclick="showProjectHistory()" class="btn-secondary px-4 py-2 text-sm">
                                     查看历史
                                 </button>
                             </div>
@@ -276,65 +777,65 @@
 
                     <!-- Stats Cards -->
                     <div class="grid grid-cols-4 gap-6 mb-8">
-                        <div class="bg-gradient-to-br from-blue-500/20 to-blue-600/20 border border-blue-500/30 rounded-xl p-6">
+                        <div class="stat-card cyan p-6">
                             <div class="flex items-center justify-between mb-4">
-                                <span class="text-blue-400">总额度</span>
-                                <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <span style="color: var(--accent-cyan);">总额度</span>
+                                <svg class="w-6 h-6" style="color: var(--accent-cyan);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                             </div>
-                            <p class="text-3xl font-bold">1,000,000</p>
-                            <p class="text-sm text-slate-400 mt-2">百万Token</p>
+                            <p class="text-3xl font-bold data-value" style="color: var(--text-primary);">1,000,000</p>
+                            <p class="text-sm mt-2 data-label">百万Token</p>
                         </div>
-                        <div class="bg-gradient-to-br from-green-500/20 to-green-600/20 border border-green-500/30 rounded-xl p-6">
+                        <div class="stat-card p-6" style="border-color: rgba(6, 214, 160, 0.3);">
                             <div class="flex items-center justify-between mb-4">
-                                <span class="text-green-400">已使用</span>
-                                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <span style="color: var(--accent-green);">已使用</span>
+                                <svg class="w-6 h-6" style="color: var(--accent-green);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
                                 </svg>
                             </div>
-                            <p class="text-3xl font-bold">325,680</p>
-                            <p class="text-sm text-slate-400 mt-2">百万Token</p>
+                            <p class="text-3xl font-bold data-value" style="color: var(--text-primary);">325,680</p>
+                            <p class="text-sm mt-2 data-label">百万Token</p>
                         </div>
-                        <div class="bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-xl p-6 relative">
+                        <div class="stat-card magenta p-6">
                             <div class="flex items-center justify-between mb-4">
-                                <span class="text-purple-400">剩余额度</span>
-                                <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <span style="color: var(--accent-magenta);">剩余额度</span>
+                                <svg class="w-6 h-6" style="color: var(--accent-magenta);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                                 </svg>
                             </div>
-                            <p class="text-3xl font-bold">674,320</p>
+                            <p class="text-3xl font-bold data-value" style="color: var(--text-primary);">674,320</p>
                             <div class="flex items-center justify-between mt-2">
-                                <p class="text-sm text-slate-400">百万Token</p>
-                                <button onclick="navigateToQuotaManage()" class="apply-quota-btn px-2 py-1 bg-purple-500 text-white rounded text-xs hover:bg-purple-600 transition">申请额度</button>
+                                <p class="text-sm data-label">百万Token</p>
+                                <button onclick="navigateToQuotaManage()" class="apply-quota-btn px-2 py-1 text-xs btn-primary">申请额度</button>
                             </div>
                         </div>
-                        <div class="bg-gradient-to-br from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-xl p-6">
+                        <div class="stat-card p-6" style="border-color: rgba(255, 107, 53, 0.3);">
                             <div class="flex items-center justify-between mb-4">
-                                <span class="text-amber-400">使用率</span>
-                                <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <span style="color: var(--accent-orange);">使用率</span>
+                                <svg class="w-6 h-6" style="color: var(--accent-orange);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
                                 </svg>
                             </div>
-                            <p class="text-3xl font-bold">32.6%</p>
-                            <p class="text-sm text-slate-400 mt-2">总配额</p>
+                            <p class="text-3xl font-bold data-value" style="color: var(--text-primary);">32.6%</p>
+                            <p class="text-sm mt-2 data-label">总配额</p>
                         </div>
                     </div>
 
                     <!-- Charts and Tables -->
                     <div class="grid grid-cols-3 gap-6">
                         <!-- Usage Trend -->
-                        <div class="col-span-2 bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                            <h3 class="text-lg font-semibold mb-6">额度使用趋势</h3>
+                        <div class="chart-card col-span-2 p-6">
+                            <h3 class="text-lg font-semibold mb-6" style="color: var(--text-primary);">额度使用趋势</h3>
                             <div class="chart-container">
                                 <canvas id="myComputingTrendChart"></canvas>
                             </div>
                         </div>
 
                         <!-- Usage by Model -->
-                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                            <h3 class="text-lg font-semibold mb-6">模型使用分布</h3>
+                        <div class="chart-card p-6">
+                            <h3 class="text-lg font-semibold mb-6" style="color: var(--text-primary);">模型使用分布</h3>
                             <div class="chart-container">
                                 <canvas id="myComputingModelChart"></canvas>
                             </div>
@@ -342,56 +843,56 @@
                     </div>
 
                     <!-- My Tokens -->
-                    <div class="mt-8 bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                    <div class="mt-8 chart-card p-6">
                         <div class="flex items-center justify-between mb-6">
-                            <h3 class="text-lg font-semibold">我的令牌</h3>
-                            <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition text-sm">
+                            <h3 class="text-lg font-semibold" style="color: var(--text-primary);">我的令牌</h3>
+                            <button class="btn-primary px-4 py-2 text-sm">
                                 + 新建令牌
                             </button>
                         </div>
-                        <table class="w-full">
+                        <table class="data-table">
                             <thead>
-                                <tr class="text-left text-slate-400 text-sm border-b border-slate-700">
-                                    <th class="pb-3 font-medium">令牌名称</th>
-                                    <th class="pb-3 font-medium">令牌ID</th>
-                                    <th class="pb-3 font-medium">创建时间</th>
-                                    <th class="pb-3 font-medium">过期时间</th>
-                                    <th class="pb-3 font-medium">状态</th>
-                                    <th class="pb-3 font-medium">操作</th>
+                                <tr>
+                                    <th class="font-medium">令牌名称</th>
+                                    <th class="font-medium">令牌ID</th>
+                                    <th class="font-medium">创建时间</th>
+                                    <th class="font-medium">过期时间</th>
+                                    <th class="font-medium">状态</th>
+                                    <th class="font-medium">操作</th>
                                 </tr>
                             </thead>
                             <tbody class="text-sm">
-                                <tr class="border-b border-slate-700/50">
-                                    <td class="py-4">生产环境令牌</td>
-                                    <td class="py-4 font-mono text-slate-400">tk_xxxxxxxxxxxx001</td>
-                                    <td class="py-4 text-slate-400">2025-01-15</td>
-                                    <td class="py-4 text-slate-400">2025-07-15</td>
-                                    <td class="py-4"><span class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs">正常</span></td>
+                                <tr>
+                                    <td class="py-4" style="color: var(--text-primary);">生产环境令牌</td>
+                                    <td class="py-4 font-mono" style="color: var(--text-muted);">tk_xxxxxxxxxxxx001</td>
+                                    <td class="py-4" style="color: var(--text-muted);">2025-01-15</td>
+                                    <td class="py-4" style="color: var(--text-muted);">2025-07-15</td>
+                                    <td class="py-4"><span class="badge badge-success">正常</span></td>
                                     <td class="py-4">
-                                        <button class="text-blue-400 hover:text-blue-300 mr-3">查看</button>
-                                        <button class="text-red-400 hover:text-red-300">吊销</button>
-                                    </td>
-                                </tr>
-                                <tr class="border-b border-slate-700/50">
-                                    <td class="py-4">测试环境令牌</td>
-                                    <td class="py-4 font-mono text-slate-400">tk_xxxxxxxxxxxx002</td>
-                                    <td class="py-4 text-slate-400">2025-02-01</td>
-                                    <td class="py-4 text-slate-400">2025-08-01</td>
-                                    <td class="py-4"><span class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs">正常</span></td>
-                                    <td class="py-4">
-                                        <button class="text-blue-400 hover:text-blue-300 mr-3">查看</button>
-                                        <button class="text-red-400 hover:text-red-300">吊销</button>
+                                        <button class="mr-3" style="color: var(--accent-cyan);">查看</button>
+                                        <button style="color: var(--accent-magenta);">吊销</button>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="py-4">开发调试令牌</td>
-                                    <td class="py-4 font-mono text-slate-400">tk_xxxxxxxxxxxx003</td>
-                                    <td class="py-4 text-slate-400">2025-02-10</td>
-                                    <td class="py-4 text-slate-400">2025-02-25</td>
-                                    <td class="py-4"><span class="px-2 py-1 bg-amber-500/20 text-amber-400 rounded text-xs">即将过期</span></td>
+                                    <td class="py-4" style="color: var(--text-primary);">测试环境令牌</td>
+                                    <td class="py-4 font-mono" style="color: var(--text-muted);">tk_xxxxxxxxxxxx002</td>
+                                    <td class="py-4" style="color: var(--text-muted);">2025-02-01</td>
+                                    <td class="py-4" style="color: var(--text-muted);">2025-08-01</td>
+                                    <td class="py-4"><span class="badge badge-success">正常</span></td>
                                     <td class="py-4">
-                                        <button class="text-blue-400 hover:text-blue-300 mr-3">查看</button>
-                                        <button class="text-red-400 hover:text-red-300">吊销</button>
+                                        <button class="mr-3" style="color: var(--accent-cyan);">查看</button>
+                                        <button style="color: var(--accent-magenta);">吊销</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-4" style="color: var(--text-primary);">开发调试令牌</td>
+                                    <td class="py-4 font-mono" style="color: var(--text-muted);">tk_xxxxxxxxxxxx003</td>
+                                    <td class="py-4" style="color: var(--text-muted);">2025-02-10</td>
+                                    <td class="py-4" style="color: var(--text-muted);">2025-02-25</td>
+                                    <td class="py-4"><span class="badge badge-warning">即将过期</span></td>
+                                    <td class="py-4">
+                                        <button class="mr-3" style="color: var(--accent-cyan);">查看</button>
+                                        <button style="color: var(--accent-magenta);">吊销</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -403,16 +904,16 @@
                 <div id="page-quota-manage" class="page">
                     <!-- Tabs -->
                     <div class="flex items-center space-x-4 mb-6">
-                        <button class="quota-tab-btn active px-4 py-2 bg-blue-500 text-white rounded-lg text-sm transition" data-tab="my-requests">我的申请</button>
-                        <button class="quota-tab-btn px-4 py-2 bg-slate-700 text-slate-300 rounded-lg text-sm hover:bg-slate-600 transition hidden" data-tab="approval" id="approvalTabBtn">配额审批</button>
+                        <button class="quota-tab-btn active px-4 py-2 text-sm transition" data-tab="my-requests" style="background: var(--accent-cyan); color: #000;">我的申请</button>
+                        <button class="quota-tab-btn px-4 py-2 text-sm transition hidden" data-tab="approval" id="approvalTabBtn" style="background: var(--bg-tertiary); color: var(--text-secondary);">配额审批</button>
                     </div>
 
                     <!-- Tab Content: 我的申请 -->
                     <div id="tab-my-requests" class="quota-tab-content">
-                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <div class="chart-card p-6">
                             <div class="flex items-center justify-between mb-6">
-                                <h3 class="text-lg font-semibold">我的申请记录</h3>
-                                <button id="applyQuotaBtn" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition text-sm flex items-center">
+                                <h3 class="text-lg font-semibold" style="color: var(--text-primary);">我的申请记录</h3>
+                                <button id="applyQuotaBtn" class="btn-primary px-4 py-2 text-sm flex items-center">
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                                     </svg>
@@ -420,17 +921,17 @@
                                 </button>
                             </div>
                             <div id="myRequestsList" class="space-y-4">
-                                <p class="text-slate-400 text-center py-8">暂无申请记录</p>
+                                <p class="text-center py-8" style="color: var(--text-muted);">暂无申请记录</p>
                             </div>
                             <!-- 我的申请分页 -->
-                            <div id="myRequestsPagination" class="flex items-center justify-between mt-4 pt-4 border-t border-slate-700">
-                                <div class="text-sm text-slate-400">
+                            <div id="myRequestsPagination" class="flex items-center justify-between mt-4 pt-4 border-t" style="border-color: var(--border-default);">
+                                <div class="text-sm" style="color: var(--text-muted);">
                                     共 <span id="myRequestsTotalCount">0</span> 条记录
                                 </div>
                                 <div class="flex items-center space-x-2">
-                                    <button id="myRequestsPrevBtn" class="px-3 py-1 bg-slate-700 text-white rounded text-sm hover:bg-slate-600 disabled:opacity-50" disabled>上一页</button>
-                                    <span id="myRequestsPageInfo" class="text-sm text-slate-300">1 / 1</span>
-                                    <button id="myRequestsNextBtn" class="px-3 py-1 bg-slate-700 text-white rounded text-sm hover:bg-slate-600 disabled:opacity-50" disabled>下一页</button>
+                                    <button id="myRequestsPrevBtn" class="pagination-btn px-3 py-1 text-sm" disabled>上一页</button>
+                                    <span id="myRequestsPageInfo" class="text-sm" style="color: var(--text-secondary);">1 / 1</span>
+                                    <button id="myRequestsNextBtn" class="pagination-btn px-3 py-1 text-sm" disabled>下一页</button>
                                 </div>
                             </div>
                         </div>
@@ -438,34 +939,34 @@
 
                     <!-- Tab Content: 配额审批 (Admin Only) -->
                     <div id="tab-approval" class="quota-tab-content hidden">
-                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <div class="chart-card p-6">
                             <div class="flex items-center justify-between mb-6">
-                                <h3 class="text-lg font-semibold">待审批申请</h3>
+                                <h3 class="text-lg font-semibold" style="color: var(--text-primary);">待审批申请</h3>
                                 <div class="flex items-center space-x-3">
-                                    <label class="flex items-center space-x-2 text-sm text-slate-400 cursor-pointer">
-                                        <input type="checkbox" id="selectAllApproval" class="w-4 h-4 rounded bg-slate-700 border-slate-600 text-blue-500 focus:ring-blue-500">
+                                    <label class="flex items-center space-x-2 text-sm cursor-pointer" style="color: var(--text-muted);">
+                                        <input type="checkbox" id="selectAllApproval" class="w-4 h-4 rounded" style="background: var(--bg-tertiary); border-color: var(--border-default);">
                                         <span>全选</span>
                                     </label>
-                                    <button id="batchApproveBtn" class="px-3 py-1.5 bg-green-500 text-white rounded text-sm hover:bg-green-600 disabled:opacity-50" disabled>
+                                    <button id="batchApproveBtn" class="px-3 py-1.5 text-sm pagination-btn disabled:opacity-50" disabled style="background: var(--accent-green); color: #000;">
                                         批量批准
                                     </button>
-                                    <button id="batchRejectBtn" class="px-3 py-1.5 bg-red-500 text-white rounded text-sm hover:bg-red-600 disabled:opacity-50" disabled>
+                                    <button id="batchRejectBtn" class="px-3 py-1.5 text-sm disabled:opacity-50" disabled style="background: var(--accent-magenta); color: #fff;">
                                         批量拒绝
                                     </button>
                                 </div>
                             </div>
                             <div id="approvalRequestsList" class="space-y-4">
-                                <p class="text-slate-400 text-center py-8">暂无待审批申请</p>
+                                <p class="text-center py-8" style="color: var(--text-muted);">暂无待审批申请</p>
                             </div>
                             <!-- 审批分页 -->
-                            <div id="approvalPagination" class="flex items-center justify-between mt-4 pt-4 border-t border-slate-700">
-                                <div class="text-sm text-slate-400">
+                            <div id="approvalPagination" class="flex items-center justify-between mt-4 pt-4 border-t" style="border-color: var(--border-default);">
+                                <div class="text-sm" style="color: var(--text-muted);">
                                     共 <span id="approvalTotalCount">0</span> 条记录
                                 </div>
                                 <div class="flex items-center space-x-2">
-                                    <button id="approvalPrevBtn" class="px-3 py-1 bg-slate-700 text-white rounded text-sm hover:bg-slate-600 disabled:opacity-50" disabled>上一页</button>
-                                    <span id="approvalPageInfo" class="text-sm text-slate-300">1 / 1</span>
-                                    <button id="approvalNextBtn" class="px-3 py-1 bg-slate-700 text-white rounded text-sm hover:bg-slate-600 disabled:opacity-50" disabled>下一页</button>
+                                    <button id="approvalPrevBtn" class="pagination-btn px-3 py-1 text-sm" disabled>上一页</button>
+                                    <span id="approvalPageInfo" class="text-sm" style="color: var(--text-secondary);">1 / 1</span>
+                                    <button id="approvalNextBtn" class="pagination-btn px-3 py-1 text-sm" disabled>下一页</button>
                                 </div>
                             </div>
                         </div>
@@ -1466,15 +1967,15 @@
     <div id="modalOverlay" class="modal-overlay">
         <div class="modal">
             <div class="modal-header">
-                <h3 id="modalTitle">标题</h3>
+                <h3 id="modalTitle" style="color: var(--text-primary);">标题</h3>
                 <button class="btn-close" onclick="closeModal()">&times;</button>
             </div>
             <div id="modalBody" class="modal-body">
                 <!-- Content will be dynamically inserted -->
             </div>
             <div class="modal-footer">
-                <button id="modalCancelBtn" class="px-4 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition" onclick="closeModal()">取消</button>
-                <button id="modalConfirmBtn" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">确认</button>
+                <button id="modalCancelBtn" class="btn-secondary px-4 py-2" onclick="closeModal()">取消</button>
+                <button id="modalConfirmBtn" class="btn-primary px-4 py-2">确认</button>
             </div>
         </div>
     </div>
