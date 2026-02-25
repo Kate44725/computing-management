@@ -42,12 +42,12 @@ const RolePermissions = {
         'operator': '运营人员'
     },
 
-    // 角色颜色（用于UI显示）
+    // 角色颜色（用于UI显示）- 浅色模式
     roleColors: {
-        'admin': { bg: 'bg-purple-500/20', text: 'text-purple-400', border: 'border-purple-500/30' },
-        'domain_admin': { bg: 'bg-blue-500/20', text: 'text-blue-400', border: 'border-blue-500/30' },
-        'operator': { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/30' },
-        'user': { bg: 'bg-slate-500/20', text: 'text-slate-400', border: 'border-slate-500/30' }
+        'admin': { bg: 'bg-purple-100', text: 'text-purple-700', border: 'border-purple-200' },
+        'domain_admin': { bg: 'bg-blue-100', text: 'text-blue-700', border: 'border-blue-200' },
+        'operator': { bg: 'bg-green-100', text: 'text-green-700', border: 'border-green-200' },
+        'user': { bg: 'bg-slate-100', text: 'text-slate-600', border: 'border-slate-200' }
     }
 };
 

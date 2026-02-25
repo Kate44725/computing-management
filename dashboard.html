@@ -10,42 +10,42 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ===== COMMAND CENTER DESIGN SYSTEM ===== */
+        /* ===== COMMAND CENTER DESIGN SYSTEM - LIGHT MODE ===== */
         :root {
-            /* Base Colors */
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-tertiary: #1a1a25;
-            --bg-card: #14141e;
-            --bg-card-hover: #1a1a28;
-            --bg-elevated: #1e1e2a;
+            /* Base Colors - Light Mode */
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f1f5f9;
+            --bg-card: #ffffff;
+            --bg-card-hover: #f8fafc;
+            --bg-elevated: #ffffff;
 
-            /* Accent Colors - Cyber Neon */
-            --accent-cyan: #00f5d4;
-            --accent-cyan-dim: rgba(0, 245, 212, 0.15);
-            --accent-cyan-glow: rgba(0, 245, 212, 0.4);
-            --accent-magenta: #f72585;
-            --accent-magenta-dim: rgba(247, 37, 133, 0.15);
-            --accent-magenta-glow: rgba(247, 37, 133, 0.4);
-            --accent-purple: #7b2cbf;
-            --accent-blue: #4361ee;
-            --accent-orange: #ff6b35;
-            --accent-green: #06d6a0;
+            /* Accent Colors - Light Mode (more refined) */
+            --accent-cyan: #0891b2;
+            --accent-cyan-dim: rgba(8, 145, 178, 0.1);
+            --accent-cyan-glow: rgba(8, 145, 178, 0.2);
+            --accent-magenta: #db2777;
+            --accent-magenta-dim: rgba(219, 39, 119, 0.1);
+            --accent-magenta-glow: rgba(219, 39, 119, 0.2);
+            --accent-purple: #7c3aed;
+            --accent-blue: #4f46e5;
+            --accent-orange: #ea580c;
+            --accent-green: #059669;
 
-            /* Text Colors */
-            --text-primary: #e8e8ed;
-            --text-secondary: #9898a6;
-            --text-muted: #5c5c6e;
+            /* Text Colors - Light Mode */
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
 
-            /* Border Colors */
-            --border-default: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(255, 255, 255, 0.15);
+            /* Border Colors - Light Mode */
+            --border-default: rgba(148, 163, 184, 0.2);
+            --border-hover: rgba(148, 163, 184, 0.4);
             --border-active: var(--accent-cyan);
 
-            /* Shadows */
-            --shadow-glow-cyan: 0 0 20px rgba(0, 245, 212, 0.15);
-            --shadow-glow-magenta: 0 0 20px rgba(247, 37, 133, 0.15);
-            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+            /* Shadows - Light Mode */
+            --shadow-glow-cyan: 0 0 20px rgba(8, 145, 178, 0.15);
+            --shadow-glow-magenta: 0 0 20px rgba(219, 39, 119, 0.15);
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.06);
 
             /* Typography */
             --font-display: 'Outfit', sans-serif;
@@ -77,16 +77,16 @@
             background: var(--bg-primary);
             color: var(--text-primary);
             background-image:
-                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 245, 212, 0.08), transparent),
-                linear-gradient(180deg, var(--bg-primary) 0%, #0d0d14 100%);
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(8, 145, 178, 0.06), transparent),
+                linear-gradient(180deg, var(--bg-primary) 0%, #f1f5f9 100%);
             min-height: 100vh;
         }
 
-        /* Grid Background Pattern */
+        /* Grid Background Pattern - Light Mode */
         .grid-bg {
             background-image:
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+                linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
             background-size: 40px 40px;
         }
 
@@ -130,37 +130,37 @@
             transform: translateY(-50%);
             width: 3px;
             height: 0;
-            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta));
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-purple));
             border-radius: 0 2px 2px 0;
             transition: height 0.25s ease;
         }
         .nav-item:hover {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(8, 145, 178, 0.06);
         }
         .nav-item.active {
-            background: linear-gradient(135deg, rgba(0, 245, 212, 0.1), rgba(247, 37, 133, 0.05));
-            border: 1px solid rgba(0, 245, 212, 0.3);
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.12), rgba(124, 58, 237, 0.06));
+            border: 1px solid rgba(8, 145, 178, 0.25);
         }
         .nav-item.active::before {
             height: 60%;
         }
         .nav-item.active svg {
             color: var(--accent-cyan);
-            filter: drop-shadow(0 0 8px var(--accent-cyan));
+            filter: drop-shadow(0 0 6px var(--accent-cyan));
         }
 
         /* Buttons */
         .btn-primary {
-            background: linear-gradient(135deg, var(--accent-cyan), #00c4a7);
-            color: #000;
+            background: linear-gradient(135deg, var(--accent-cyan), #0e7490);
+            color: #fff;
             font-weight: 600;
             border-radius: 8px;
             transition: all 0.25s ease;
-            box-shadow: 0 2px 12px rgba(0, 245, 212, 0.25);
+            box-shadow: 0 2px 12px rgba(8, 145, 178, 0.25);
         }
         .btn-primary:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 20px rgba(0, 245, 212, 0.4);
+            box-shadow: 0 4px 20px rgba(8, 145, 178, 0.35);
         }
         .btn-secondary {
             background: var(--bg-tertiary);
@@ -175,28 +175,28 @@
             color: var(--text-primary);
         }
         .btn-danger {
-            background: linear-gradient(135deg, var(--accent-magenta), #d61f69);
+            background: linear-gradient(135deg, var(--accent-magenta), #be185d);
             color: #fff;
             font-weight: 600;
             border-radius: 8px;
             transition: all 0.25s ease;
-            box-shadow: 0 2px 12px rgba(247, 37, 133, 0.25);
+            box-shadow: 0 2px 12px rgba(219, 39, 119, 0.25);
         }
         .btn-danger:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 20px rgba(247, 37, 133, 0.4);
+            box-shadow: 0 4px 20px rgba(219, 39, 119, 0.35);
         }
 
-        /* Tab Buttons */
+        /* Tab Buttons - Light mode */
         .tab-btn, .dashboard-tab-btn, .quota-tab-btn, .user-mgmt-tab-btn {
             border-radius: 8px;
             transition: all 0.25s ease;
             font-weight: 500;
         }
         .tab-btn.active, .dashboard-tab-btn.active, .quota-tab-btn.active, .user-mgmt-tab-btn.active {
-            background: linear-gradient(135deg, var(--accent-cyan), #00c4a7) !important;
-            color: #000 !important;
-            box-shadow: var(--shadow-glow-cyan);
+            background: linear-gradient(135deg, #1e293b, #334155) !important;
+            color: #fff !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
         /* Stat Cards */
@@ -241,10 +241,11 @@
 
         /* Project Affiliation Card */
         .project-card {
-            background: linear-gradient(135deg, rgba(123, 44, 191, 0.15), rgba(67, 97, 238, 0.1));
-            border: 1px solid rgba(123, 44, 191, 0.3);
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(79, 70, 229, 0.05));
+            border: 1px solid rgba(124, 58, 237, 0.2);
             border-radius: 16px;
             position: relative;
+            box-shadow: 0 2px 12px rgba(124, 58, 237, 0.08);
         }
         .project-card::after {
             content: '';
@@ -253,7 +254,7 @@
             right: -20%;
             width: 200px;
             height: 200px;
-            background: radial-gradient(circle, rgba(123, 44, 191, 0.2), transparent 70%);
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.1), transparent 70%);
             pointer-events: none;
         }
 
@@ -392,7 +393,7 @@
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--accent-cyan);
-            box-shadow: 0 0 0 3px var(--accent-cyan-dim);
+            box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.15);
         }
         input::placeholder { color: var(--text-muted); }
 
@@ -490,7 +491,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(15, 23, 42, 0.6);
             backdrop-filter: blur(4px);
             display: flex;
             align-items: center;
@@ -505,7 +506,7 @@
             visibility: visible;
         }
         .modal {
-            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+            background: linear-gradient(135deg, var(--bg-card), #f8fafc);
             border: 1px solid var(--border-default);
             border-radius: 16px;
             width: 90%;
@@ -514,7 +515,7 @@
             overflow-y: auto;
             transform: scale(0.95) translateY(20px);
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
         }
         .modal-overlay.active .modal {
             transform: scale(1) translateY(0);
@@ -639,14 +640,14 @@
         }
     </style>
 </head>
-<body class="text-white min-h-screen">
+<body class="text-slate-800 min-h-screen">
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
-        <aside class="w-64 border-r flex flex-col" style="background: var(--bg-secondary); border-color: var(--border-default);">
+        <aside class="w-64 border-r flex flex-col shadow-sm" style="background: var(--bg-secondary); border-color: var(--border-default);">
             <!-- Logo -->
             <div class="p-6 border-b" style="border-color: var(--border-default);">
                 <div class="flex items-center space-x-3">
-                    <div class="logo-icon w-10 h-10 flex items-center justify-center">
+                    <div class="logo-icon w-10 h-10 flex items-center justify-center rounded-lg" style="background: linear-gradient(135deg, #1e293b, #334155);">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                         </svg>
@@ -664,53 +665,53 @@
                     <svg class="w-5 h-5" style="color: var(--text-secondary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
                     </svg>
-                    <span style="color: var(--text-secondary);">我的算力</span>
+                    <span style="color: var(--text-primary);">我的算力</span>
                 </a>
                 <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3" data-page="quota-manage">
                     <svg class="w-5 h-5" style="color: var(--text-secondary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
                     </svg>
-                    <span style="color: var(--text-secondary);">额度管理</span>
+                    <span style="color: var(--text-primary);">额度管理</span>
                     <span id="quotaRequestBadge" class="hidden ml-auto px-2 py-0.5 text-xs badge badge-danger">0</span>
                 </a>
                 <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3" data-page="dashboard">
                     <svg class="w-5 h-5" style="color: var(--text-secondary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                     </svg>
-                    <span style="color: var(--text-secondary);">运营看板</span>
+                    <span style="color: var(--text-primary);">运营看板</span>
                 </a>
                 <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3" data-page="projects">
                     <svg class="w-5 h-5" style="color: var(--text-secondary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
                     </svg>
-                    <span style="color: var(--text-secondary);">项目管理</span>
+                    <span style="color: var(--text-primary);">项目管理</span>
                 </a>
                 <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3" data-page="user-management">
                     <svg class="w-5 h-5" style="color: var(--text-secondary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                     </svg>
-                    <span style="color: var(--text-secondary);">用户管理</span>
+                    <span style="color: var(--text-primary);">用户管理</span>
                 </a>
                 <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3" data-page="system-config">
                     <svg class="w-5 h-5" style="color: var(--text-secondary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                     </svg>
-                    <span style="color: var(--text-secondary);">系统配置</span>
+                    <span style="color: var(--text-primary);">系统配置</span>
                 </a>
             </nav>
 
             <!-- User Info -->
             <div class="p-4 border-t" style="border-color: var(--border-default);">
                 <div class="flex items-center space-x-3">
-                    <div class="user-avatar w-10 h-10 rounded-full flex items-center justify-center text-white">
+                    <div class="user-avatar w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold" style="background: linear-gradient(135deg, #1e293b, #475569);">
                         A
                     </div>
                     <div class="flex-1">
                         <p class="font-medium text-sm" id="currentUserName" style="color: var(--text-primary);">Admin</p>
                         <p class="text-xs" id="currentUserRole" style="color: var(--text-muted);">管理员</p>
                     </div>
-                    <a href="index.html" style="color: var(--text-muted);" class="hover:text-white transition">
+                    <a href="index.html" style="color: var(--text-muted);" class="hover:text-slate-600 transition">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                         </svg>
@@ -722,7 +723,7 @@
         <!-- Main Content -->
         <main class="flex-1 overflow-auto">
             <!-- Header -->
-            <header class="px-8 py-4 border-b" style="background: rgba(18, 18, 26, 0.8); border-color: var(--border-default);">
+            <header class="px-8 py-4 border-b shadow-sm" style="background: rgba(255, 255, 255, 0.9); border-color: var(--border-default); backdrop-filter: blur(8px);">
                 <div class="flex items-center justify-between">
                     <h2 class="text-xl font-semibold" id="pageTitle" style="color: var(--text-primary);">我的算力</h2>
                     <div class="flex items-center space-x-4">
@@ -730,7 +731,7 @@
                             <span class="w-2 h-2 rounded-full animate-pulse-soft" style="background: var(--accent-green); box-shadow: 0 0 8px var(--accent-green);"></span>
                             <span>系统运行正常</span>
                         </div>
-                        <button class="p-2 rounded-lg transition" style="color: var(--text-muted);" class="hover:text-white hover:bg-slate-700">
+                        <button class="p-2 rounded-lg transition hover:bg-slate-100" style="color: var(--text-muted);">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
                             </svg>
@@ -904,8 +905,8 @@
                 <div id="page-quota-manage" class="page">
                     <!-- Tabs -->
                     <div class="flex items-center space-x-4 mb-6">
-                        <button class="quota-tab-btn active px-4 py-2 text-sm transition" data-tab="my-requests" style="background: var(--accent-cyan); color: #000;">我的申请</button>
-                        <button class="quota-tab-btn px-4 py-2 text-sm transition hidden" data-tab="approval" id="approvalTabBtn" style="background: var(--bg-tertiary); color: var(--text-secondary);">配额审批</button>
+                        <button class="quota-tab-btn active px-4 py-2 text-sm font-medium transition bg-slate-800 text-white rounded-lg" data-tab="my-requests">我的申请</button>
+                        <button class="quota-tab-btn px-4 py-2 text-sm font-medium transition bg-white text-slate-600 border border-slate-200 rounded-lg hover:bg-slate-50 hidden" data-tab="approval" id="approvalTabBtn">配额审批</button>
                     </div>
 
                     <!-- Tab Content: 我的申请 -->
@@ -944,13 +945,13 @@
                                 <h3 class="text-lg font-semibold" style="color: var(--text-primary);">待审批申请</h3>
                                 <div class="flex items-center space-x-3">
                                     <label class="flex items-center space-x-2 text-sm cursor-pointer" style="color: var(--text-muted);">
-                                        <input type="checkbox" id="selectAllApproval" class="w-4 h-4 rounded" style="background: var(--bg-tertiary); border-color: var(--border-default);">
-                                        <span>全选</span>
+                                        <input type="checkbox" id="selectAllApproval" class="w-4 h-4 rounded bg-slate-50 border-slate-300 text-cyan-600">
+                                        <span class="text-slate-600">全选</span>
                                     </label>
-                                    <button id="batchApproveBtn" class="px-3 py-1.5 text-sm pagination-btn disabled:opacity-50" disabled style="background: var(--accent-green); color: #000;">
+                                    <button id="batchApproveBtn" class="px-3 py-1.5 text-sm font-medium rounded-lg bg-green-600 text-white hover:bg-green-700 disabled:opacity-50 transition" disabled>
                                         批量批准
                                     </button>
-                                    <button id="batchRejectBtn" class="px-3 py-1.5 text-sm disabled:opacity-50" disabled style="background: var(--accent-magenta); color: #fff;">
+                                    <button id="batchRejectBtn" class="px-3 py-1.5 text-sm font-medium rounded-lg bg-red-600 text-white hover:bg-red-700 disabled:opacity-50 transition" disabled>
                                         批量拒绝
                                     </button>
                                 </div>
@@ -976,30 +977,30 @@
                 <!-- Page: 运营看板 -->
                 <div id="page-dashboard" class="page">
                     <!-- Real-time Alert Banner (shown when there are unhandled alerts) -->
-                    <div id="realtime-alert-banner" class="hidden mb-4 p-4 bg-red-500/20 border border-red-500/50 rounded-lg flex items-center justify-between">
+                    <div id="realtime-alert-banner" class="hidden mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center justify-between">
                         <div class="flex items-center space-x-3">
-                            <svg class="w-5 h-5 text-red-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5 text-red-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                             </svg>
-                            <span class="text-red-400 font-medium">实时告警: <span id="alert-count">3</span> 条未处理</span>
+                            <span class="text-red-700 font-medium">实时告警: <span id="alert-count">3</span> 条未处理</span>
                         </div>
-                        <button class="text-red-400 hover:text-red-300 text-sm">查看详情</button>
+                        <button class="text-red-600 hover:text-red-800 text-sm">查看详情</button>
                     </div>
 
                     <!-- Time Range Selector -->
                     <div class="flex items-center justify-between mb-6">
                         <div class="flex items-center space-x-4">
-                            <div class="flex items-center space-x-2 bg-slate-800 rounded-lg p-1">
-                                <button class="time-range-btn px-3 py-1.5 text-sm rounded text-slate-400 hover:text-white transition" data-range="7">近7天</button>
-                                <button class="time-range-btn px-3 py-1.5 text-sm rounded text-slate-400 hover:text-white transition" data-range="30">近30天</button>
-                                <button class="time-range-btn px-3 py-1.5 text-sm rounded text-slate-400 hover:text-white transition" data-range="90">近90天</button>
-                                <input type="date" class="bg-slate-700 border border-slate-600 rounded px-3 py-1.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <div class="flex items-center space-x-2 bg-white border border-slate-200 rounded-lg p-1 shadow-sm">
+                                <button class="time-range-btn px-3 py-1.5 text-sm rounded text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition" data-range="7">近7天</button>
+                                <button class="time-range-btn px-3 py-1.5 text-sm rounded text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition" data-range="30">近30天</button>
+                                <button class="time-range-btn px-3 py-1.5 text-sm rounded text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition" data-range="90">近90天</button>
+                                <input type="date" class="bg-slate-50 border border-slate-200 rounded px-3 py-1.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-cyan-600">
                                 <span class="text-slate-500">至</span>
-                                <input type="date" class="bg-slate-700 border border-slate-600 rounded px-3 py-1.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <input type="date" class="bg-slate-50 border border-slate-200 rounded px-3 py-1.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-cyan-600">
                             </div>
                         </div>
                         <!-- Refresh indicator for real-time dashboards -->
-                        <div id="refresh-indicator" class="hidden flex items-center space-x-2 text-sm text-slate-400">
+                        <div id="refresh-indicator" class="hidden flex items-center space-x-2 text-sm text-slate-500">
                             <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                             </svg>
@@ -1009,9 +1010,9 @@
 
                     <!-- Dashboard Tab Navigation -->
                     <div class="flex items-center space-x-4 mb-8">
-                        <button class="dashboard-tab-btn active px-4 py-2 rounded-lg text-sm transition" data-view="operations">运维监控</button>
-                        <button class="dashboard-tab-btn px-4 py-2 rounded-lg text-sm transition" data-view="cost">成本运营</button>
-                        <button class="dashboard-tab-btn px-4 py-2 rounded-lg text-sm transition" data-view="resource">资源分析</button>
+                        <button class="dashboard-tab-btn active px-4 py-2 rounded-lg text-sm font-medium transition bg-slate-800 text-white" data-view="operations">运维监控</button>
+                        <button class="dashboard-tab-btn px-4 py-2 rounded-lg text-sm font-medium transition bg-white text-slate-600 border border-slate-200 hover:bg-slate-50" data-view="cost">成本运营</button>
+                        <button class="dashboard-tab-btn px-4 py-2 rounded-lg text-sm font-medium transition bg-white text-slate-600 border border-slate-200 hover:bg-slate-50" data-view="resource">资源分析</button>
                     </div>
 
                     <!-- ==================== 1. 运维监控看板 ==================== -->
@@ -1019,47 +1020,47 @@
                         <!-- Stats Cards: 模型在线状态 + 模型性能指标 + 异常告警数量 -->
                         <div class="grid grid-cols-3 gap-6 mb-8">
                             <!-- 模型在线状态 -->
-                            <div class="bg-gradient-to-br from-blue-500/20 to-blue-600/20 border border-blue-500/30 rounded-xl p-6">
+                            <div class="bg-gradient-to-br from-cyan-50 to-cyan-100 border border-cyan-200 rounded-xl p-6 shadow-sm">
                                 <div class="flex items-center justify-between mb-4">
-                                    <span class="text-blue-400">模型在线状态</span>
-                                    <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <span class="text-cyan-700 font-medium">模型在线状态</span>
+                                    <svg class="w-6 h-6 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
                                     </svg>
                                 </div>
-                                <p class="text-3xl font-bold">18/20</p>
-                                <p class="text-sm text-slate-400 mt-2">模型在线数量</p>
+                                <p class="text-3xl font-bold text-slate-800">18/20</p>
+                                <p class="text-sm text-slate-500 mt-2">模型在线数量</p>
                                 <div class="mt-2 flex items-center">
                                     <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
-                                    <span class="text-xs text-green-400">90% 在线率</span>
+                                    <span class="text-xs text-green-600">90% 在线率</span>
                                 </div>
                             </div>
                             <!-- 模型性能指标 -->
-                            <div class="bg-gradient-to-br from-green-500/20 to-green-600/20 border border-green-500/30 rounded-xl p-6">
+                            <div class="bg-gradient-to-br from-green-50 to-green-100 border border-green-200 rounded-xl p-6 shadow-sm">
                                 <div class="flex items-center justify-between mb-4">
-                                    <span class="text-green-400">模型性能指标</span>
-                                    <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <span class="text-green-700 font-medium">模型性能指标</span>
+                                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                                     </svg>
                                 </div>
-                                <p class="text-3xl font-bold">245ms</p>
-                                <p class="text-sm text-slate-400 mt-2">平均响应时间</p>
+                                <p class="text-3xl font-bold text-slate-800">245ms</p>
+                                <p class="text-sm text-slate-500 mt-2">平均响应时间</p>
                                 <div class="mt-2 flex items-center justify-between text-xs">
-                                    <span class="text-slate-400">QPS: <span class="text-white">1,280</span></span>
-                                    <span class="text-slate-400">并发: <span class="text-white">856</span></span>
+                                    <span class="text-slate-500">QPS: <span class="text-slate-800 font-medium">1,280</span></span>
+                                    <span class="text-slate-500">并发: <span class="text-slate-800 font-medium">856</span></span>
                                 </div>
                             </div>
                             <!-- 异常告警数量 -->
-                            <div class="bg-gradient-to-br from-red-500/20 to-red-600/20 border border-red-500/30 rounded-xl p-6">
+                            <div class="bg-gradient-to-br from-red-50 to-red-100 border border-red-200 rounded-xl p-6 shadow-sm">
                                 <div class="flex items-center justify-between mb-4">
-                                    <span class="text-red-400">异常告警数量</span>
-                                    <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <span class="text-red-700 font-medium">异常告警数量</span>
+                                    <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                                     </svg>
                                 </div>
-                                <p class="text-3xl font-bold">3</p>
-                                <p class="text-sm text-slate-400 mt-2">当前告警</p>
+                                <p class="text-3xl font-bold text-slate-800">3</p>
+                                <p class="text-sm text-slate-500 mt-2">当前告警</p>
                                 <div class="mt-2">
-                                    <span class="px-2 py-0.5 bg-red-500/20 text-red-400 rounded text-xs">2高危 1中危</span>
+                                    <span class="px-2 py-0.5 bg-red-100 text-red-700 rounded text-xs">2高危 1中危</span>
                                 </div>
                             </div>
                         </div>
@@ -1067,27 +1068,27 @@
                         <!-- 模型筛选器 -->
                         <div class="flex items-center justify-between mb-6">
                             <div class="flex items-center space-x-4">
-                                <span class="text-sm text-slate-400">筛选模型：</span>
+                                <span class="text-sm text-slate-600">筛选模型：</span>
                                 <div class="relative" id="modelFilterContainer">
-                                    <button id="modelFilterBtn" type="button" class="flex items-center space-x-2 px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white text-sm hover:bg-slate-600 transition">
+                                    <button id="modelFilterBtn" type="button" class="flex items-center space-x-2 px-4 py-2 bg-white border border-slate-200 rounded-lg text-slate-700 text-sm hover:bg-slate-50 transition shadow-sm">
                                         <span>全部模型</span>
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                         </svg>
                                     </button>
-                                    <div id="modelFilterDropdown" style="display:none;" class="absolute top-full left-0 mt-2 w-72 bg-slate-800 border border-slate-600 rounded-lg shadow-xl z-50 max-h-64 overflow-y-auto">
-                                        <div class="p-2 border-b border-slate-700">
+                                    <div id="modelFilterDropdown" style="display:none;" class="absolute top-full left-0 mt-2 w-72 bg-white border border-slate-200 rounded-lg shadow-xl z-50 max-h-64 overflow-y-auto">
+                                        <div class="p-2 border-b border-slate-100">
                                             <label class="flex items-center space-x-2 cursor-pointer">
-                                                <input type="checkbox" id="selectAllModels" class="w-4 h-4 rounded bg-slate-700 border-slate-600 text-blue-500" checked>
-                                                <span class="text-sm text-white">全选</span>
+                                                <input type="checkbox" id="selectAllModels" class="w-4 h-4 rounded bg-slate-50 border-slate-300 text-cyan-600" checked>
+                                                <span class="text-sm text-slate-700">全选</span>
                                             </label>
                                         </div>
                                         <div id="modelFilterList" class="p-2 space-y-1">
                                             <!-- 模型选项动态生成 -->
                                         </div>
-                                        <div class="p-2 border-t border-slate-700 flex justify-between">
-                                            <button id="clearModelFilter" class="text-xs text-slate-400 hover:text-white">清除</button>
-                                            <button id="applyModelFilter" class="px-3 py-1 bg-blue-500 text-white rounded text-xs hover:bg-blue-600">应用</button>
+                                        <div class="p-2 border-t border-slate-100 flex justify-between">
+                                            <button id="clearModelFilter" class="text-xs text-slate-500 hover:text-slate-700">清除</button>
+                                            <button id="applyModelFilter" class="px-3 py-1 bg-cyan-600 text-white rounded text-xs hover:bg-cyan-700">应用</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1098,13 +1099,13 @@
                         <!-- Charts: GPU使用率趋势 + 模型响应时间趋势 + 模型吞吐量趋势 -->
                         <div class="grid grid-cols-3 gap-6 mb-8">
                             <!-- GPU使用率趋势 -->
-                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                                <h3 class="text-lg font-semibold mb-4">GPU使用率趋势</h3>
+                            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                                <h3 class="text-lg font-semibold mb-4 text-slate-800">GPU使用率趋势</h3>
                                 <div class="flex items-center space-x-2 mb-4">
-                                    <span class="text-sm text-slate-400">粒度：</span>
-                                    <button class="grain-btn px-2 py-1 text-xs bg-blue-500 text-white rounded">小时</button>
-                                    <button class="grain-btn px-2 py-1 text-xs bg-slate-700 text-slate-300 rounded hover:bg-slate-600">天</button>
-                                    <button class="grain-btn px-2 py-1 text-xs bg-slate-700 text-slate-300 rounded hover:bg-slate-600">周</button>
+                                    <span class="text-sm text-slate-500">粒度：</span>
+                                    <button class="grain-btn px-2 py-1 text-xs bg-cyan-600 text-white rounded">小时</button>
+                                    <button class="grain-btn px-2 py-1 text-xs bg-slate-100 text-slate-600 rounded hover:bg-slate-200">天</button>
+                                    <button class="grain-btn px-2 py-1 text-xs bg-slate-100 text-slate-600 rounded hover:bg-slate-200">周</button>
                                 </div>
                                 <div class="chart-container">
                                     <canvas id="gpuUsageTrendChart"></canvas>
@@ -1112,15 +1113,15 @@
                             </div>
 
                             <!-- 模型响应时间趋势 -->
-                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                                <h3 class="text-lg font-semibold mb-4">模型响应时间趋势</h3>
+                            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+                                <h3 class="text-lg font-semibold mb-4 text-slate-800">模型响应时间趋势</h3>
                                 <div class="chart-container">
                                     <canvas id="modelResponseTimeChart"></canvas>
                                 </div>
                             </div>
 
                             <!-- 模型吞吐量趋势 -->
-                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                                 <h3 class="text-lg font-semibold mb-4">模型吞吐量趋势</h3>
                                 <div class="chart-container">
                                     <canvas id="modelThroughputChart"></canvas>
@@ -1131,174 +1132,174 @@
                         <!-- GPU Status Table -->
                         <div class="grid grid-cols-2 gap-6">
                             <!-- GPU Server List -->
-                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                                 <div class="flex items-center justify-between mb-4">
                                     <h3 class="text-lg font-semibold">GPU服务器状态</h3>
-                                    <span class="text-sm text-slate-400">共 20 台服务器</span>
+                                    <span class="text-sm text-slate-500">共 20 台服务器</span>
                                 </div>
                                 <div class="space-y-3 max-h-80 overflow-y-auto">
-                                    <div class="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
+                                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                                         <div class="flex items-center space-x-3">
                                             <div class="w-2 h-2 rounded-full bg-green-500"></div>
                                             <span class="font-mono text-sm">gpu-server-001</span>
-                                            <span class="text-xs text-slate-400">A100 x8</span>
+                                            <span class="text-xs text-slate-500">A100 x8</span>
                                         </div>
                                         <div class="flex items-center space-x-4">
-                                            <div class="w-24 h-2 bg-slate-700 rounded-full overflow-hidden">
+                                            <div class="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
                                                 <div class="h-full bg-green-500" style="width: 85%"></div>
                                             </div>
-                                            <span class="text-sm text-green-400">85%</span>
+                                            <span class="text-sm text-green-600">85%</span>
                                         </div>
                                     </div>
-                                    <div class="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
+                                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                                         <div class="flex items-center space-x-3">
                                             <div class="w-2 h-2 rounded-full bg-green-500"></div>
                                             <span class="font-mono text-sm">gpu-server-002</span>
-                                            <span class="text-xs text-slate-400">A100 x8</span>
+                                            <span class="text-xs text-slate-500">A100 x8</span>
                                         </div>
                                         <div class="flex items-center space-x-4">
-                                            <div class="w-24 h-2 bg-slate-700 rounded-full overflow-hidden">
+                                            <div class="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
                                                 <div class="h-full bg-green-500" style="width: 72%"></div>
                                             </div>
-                                            <span class="text-sm text-green-400">72%</span>
+                                            <span class="text-sm text-green-600">72%</span>
                                         </div>
                                     </div>
-                                    <div class="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
+                                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                                         <div class="flex items-center space-x-3">
                                             <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
                                             <span class="font-mono text-sm">gpu-server-003</span>
-                                            <span class="text-xs text-slate-400">H100 x4</span>
+                                            <span class="text-xs text-slate-500">H100 x4</span>
                                         </div>
                                         <div class="flex items-center space-x-4">
-                                            <div class="w-24 h-2 bg-slate-700 rounded-full overflow-hidden">
+                                            <div class="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
                                                 <div class="h-full bg-yellow-500" style="width: 94%"></div>
                                             </div>
-                                            <span class="text-sm text-yellow-400">94%</span>
+                                            <span class="text-sm text-yellow-600">94%</span>
                                         </div>
                                     </div>
-                                    <div class="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
+                                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                                         <div class="flex items-center space-x-3">
                                             <div class="w-2 h-2 rounded-full bg-green-500"></div>
                                             <span class="font-mono text-sm">gpu-server-004</span>
-                                            <span class="text-xs text-slate-400">H100 x4</span>
+                                            <span class="text-xs text-slate-500">H100 x4</span>
                                         </div>
                                         <div class="flex items-center space-x-4">
-                                            <div class="w-24 h-2 bg-slate-700 rounded-full overflow-hidden">
+                                            <div class="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
                                                 <div class="h-full bg-green-500" style="width: 68%"></div>
                                             </div>
-                                            <span class="text-sm text-green-400">68%</span>
+                                            <span class="text-sm text-green-600">68%</span>
                                         </div>
                                     </div>
-                                    <div class="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
+                                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                                         <div class="flex items-center space-x-3">
                                             <div class="w-2 h-2 rounded-full bg-green-500"></div>
                                             <span class="font-mono text-sm">gpu-server-005</span>
-                                            <span class="text-xs text-slate-400">A100 x8</span>
+                                            <span class="text-xs text-slate-500">A100 x8</span>
                                         </div>
                                         <div class="flex items-center space-x-4">
-                                            <div class="w-24 h-2 bg-slate-700 rounded-full overflow-hidden">
+                                            <div class="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
                                                 <div class="h-full bg-green-500" style="width: 56%"></div>
                                             </div>
-                                            <span class="text-sm text-green-400">56%</span>
+                                            <span class="text-sm text-green-600">56%</span>
                                         </div>
                                     </div>
-                                    <div class="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
+                                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                                         <div class="flex items-center space-x-3">
                                             <div class="w-2 h-2 rounded-full bg-red-500"></div>
                                             <span class="font-mono text-sm">gpu-server-006</span>
-                                            <span class="text-xs text-slate-400">A100 x8</span>
+                                            <span class="text-xs text-slate-500">A100 x8</span>
                                         </div>
                                         <div class="flex items-center space-x-4">
-                                            <div class="w-24 h-2 bg-slate-700 rounded-full overflow-hidden">
+                                            <div class="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
                                                 <div class="h-full bg-red-500" style="width: 100%"></div>
                                             </div>
-                                            <span class="text-sm text-red-400">100%</span>
+                                            <span class="text-sm text-red-600">100%</span>
                                         </div>
                                     </div>
-                                    <div class="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
+                                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                                         <div class="flex items-center space-x-3">
                                             <div class="w-2 h-2 rounded-full bg-green-500"></div>
                                             <span class="font-mono text-sm">gpu-server-007</span>
-                                            <span class="text-xs text-slate-400">H100 x4</span>
+                                            <span class="text-xs text-slate-500">H100 x4</span>
                                         </div>
                                         <div class="flex items-center space-x-4">
-                                            <div class="w-24 h-2 bg-slate-700 rounded-full overflow-hidden">
+                                            <div class="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
                                                 <div class="h-full bg-green-500" style="width: 42%"></div>
                                             </div>
-                                            <span class="text-sm text-green-400">42%</span>
+                                            <span class="text-sm text-green-600">42%</span>
                                         </div>
                                     </div>
-                                    <div class="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
+                                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                                         <div class="flex items-center space-x-3">
                                             <div class="w-2 h-2 rounded-full bg-green-500"></div>
                                             <span class="font-mono text-sm">gpu-server-008</span>
-                                            <span class="text-xs text-slate-400">A100 x8</span>
+                                            <span class="text-xs text-slate-500">A100 x8</span>
                                         </div>
                                         <div class="flex items-center space-x-4">
-                                            <div class="w-24 h-2 bg-slate-700 rounded-full overflow-hidden">
+                                            <div class="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
                                                 <div class="h-full bg-green-500" style="width: 78%"></div>
                                             </div>
-                                            <span class="text-sm text-green-400">78%</span>
+                                            <span class="text-sm text-green-600">78%</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Alert Records -->
-                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                                 <div class="flex items-center justify-between mb-4">
                                     <h3 class="text-lg font-semibold">异常告警记录</h3>
-                                    <span class="text-sm text-red-400">3 条未处理</span>
+                                    <span class="text-sm text-red-600 font-medium">3 条未处理</span>
                                 </div>
                                 <div class="space-y-3 max-h-80 overflow-y-auto">
-                                    <div class="p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+                                    <div class="p-3 bg-red-50 border border-red-200 rounded-lg">
                                         <div class="flex items-center justify-between mb-2">
-                                            <span class="text-red-400 text-sm font-medium">GPU负载过高</span>
-                                            <span class="text-xs text-slate-400">2分钟前</span>
+                                            <span class="text-red-700 text-sm font-medium">GPU负载过高</span>
+                                            <span class="text-xs text-slate-500">2分钟前</span>
                                         </div>
-                                        <p class="text-xs text-slate-300">gpu-server-003 负载达到 94%，持续超过阈值</p>
+                                        <p class="text-xs text-slate-600">gpu-server-003 负载达到 94%，持续超过阈值</p>
                                         <div class="flex items-center space-x-2 mt-2">
-                                            <span class="px-2 py-0.5 bg-red-500/20 text-red-400 rounded text-xs">待处理</span>
+                                            <span class="px-2 py-0.5 bg-red-100 text-red-700 rounded text-xs">待处理</span>
                                         </div>
                                     </div>
-                                    <div class="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                                    <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg">
                                         <div class="flex items-center justify-between mb-2">
-                                            <span class="text-amber-400 text-sm font-medium">并发数量较高</span>
-                                            <span class="text-xs text-slate-400">15分钟前</span>
+                                            <span class="text-amber-700 text-sm font-medium">并发数量较高</span>
+                                            <span class="text-xs text-slate-500">15分钟前</span>
                                         </div>
-                                        <p class="text-xs text-slate-300">API并发请求数达到峰值，建议扩容</p>
+                                        <p class="text-xs text-slate-600">API并发请求数达到峰值，建议扩容</p>
                                         <div class="flex items-center space-x-2 mt-2">
-                                            <span class="px-2 py-0.5 bg-amber-500/20 text-amber-400 rounded text-xs">待处理</span>
+                                            <span class="px-2 py-0.5 bg-amber-100 text-amber-700 rounded text-xs">待处理</span>
                                         </div>
                                     </div>
-                                    <div class="p-3 bg-red-500/10 border border-red-500/30 rounded-lg">
+                                    <div class="p-3 bg-red-50 border border-red-200 rounded-lg">
                                         <div class="flex items-center justify-between mb-2">
-                                            <span class="text-red-400 text-sm font-medium">连通性测试失败</span>
-                                            <span class="text-xs text-slate-400">32分钟前</span>
+                                            <span class="text-red-700 text-sm font-medium">连通性测试失败</span>
+                                            <span class="text-xs text-slate-500">32分钟前</span>
                                         </div>
-                                        <p class="text-xs text-slate-300">gpu-server-006 无法连接，可能宕机</p>
+                                        <p class="text-xs text-slate-600">gpu-server-006 无法连接，可能宕机</p>
                                         <div class="flex items-center space-x-2 mt-2">
-                                            <span class="px-2 py-0.5 bg-red-500/20 text-red-400 rounded text-xs">待处理</span>
+                                            <span class="px-2 py-0.5 bg-red-100 text-red-700 rounded text-xs">待处理</span>
                                         </div>
                                     </div>
-                                    <div class="p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                                    <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg">
                                         <div class="flex items-center justify-between mb-2">
-                                            <span class="text-amber-400 text-sm font-medium">模型降智</span>
-                                            <span class="text-xs text-slate-400">1小时前</span>
+                                            <span class="text-amber-700 text-sm font-medium">模型降智</span>
+                                            <span class="text-xs text-slate-500">1小时前</span>
                                         </div>
-                                        <p class="text-xs text-slate-300">模型 LLaMA-7B 响应质量下降，检查服务状态</p>
+                                        <p class="text-xs text-slate-600">模型 LLaMA-7B 响应质量下降，检查服务状态</p>
                                         <div class="flex items-center space-x-2 mt-2">
-                                            <span class="px-2 py-0.5 bg-green-500/20 text-green-400 rounded text-xs">已处理</span>
+                                            <span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">已处理</span>
                                         </div>
                                     </div>
-                                    <div class="p-3 bg-slate-700/30 border border-slate-600 rounded-lg">
+                                    <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg">
                                         <div class="flex items-center justify-between mb-2">
-                                            <span class="text-slate-400 text-sm font-medium">GPU负载过高</span>
+                                            <span class="text-slate-600 text-sm font-medium">GPU负载过高</span>
                                             <span class="text-xs text-slate-500">2小时前</span>
                                         </div>
-                                        <p class="text-xs text-slate-400">gpu-server-001 负载达到 91%</p>
+                                        <p class="text-xs text-slate-500">gpu-server-001 负载达到 91%</p>
                                         <div class="flex items-center space-x-2 mt-2">
-                                            <span class="px-2 py-0.5 bg-slate-600 text-slate-400 rounded text-xs">已恢复</span>
+                                            <span class="px-2 py-0.5 bg-slate-600 text-slate-500 rounded text-xs">已恢复</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1318,7 +1319,7 @@
                                     </svg>
                                 </div>
                                 <p class="text-3xl font-bold">15.6M</p>
-                                <p class="text-sm text-slate-400 mt-2">近30天</p>
+                                <p class="text-sm text-slate-500 mt-2">近30天</p>
                             </div>
                             <div class="bg-gradient-to-br from-green-500/20 to-green-600/20 border border-green-500/30 rounded-xl p-6">
                                 <div class="flex items-center justify-between mb-4">
@@ -1328,7 +1329,7 @@
                                     </svg>
                                 </div>
                                 <p class="text-3xl font-bold">181K</p>
-                                <p class="text-sm text-slate-400 mt-2">百万Token/人</p>
+                                <p class="text-sm text-slate-500 mt-2">百万Token/人</p>
                             </div>
                             <div class="bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-xl p-6">
                                 <div class="flex items-center justify-between mb-4">
@@ -1338,7 +1339,7 @@
                                     </svg>
                                 </div>
                                 <p class="text-3xl font-bold">¥156K</p>
-                                <p class="text-sm text-slate-400 mt-2">6个部门</p>
+                                <p class="text-sm text-slate-500 mt-2">6个部门</p>
                             </div>
                             <div class="bg-gradient-to-br from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-xl p-6">
                                 <div class="flex items-center justify-between mb-4">
@@ -1348,7 +1349,7 @@
                                     </svg>
                                 </div>
                                 <p class="text-3xl font-bold">¥89K</p>
-                                <p class="text-sm text-slate-400 mt-2">24个项目</p>
+                                <p class="text-sm text-slate-500 mt-2">24个项目</p>
                             </div>
                             <div class="bg-gradient-to-br from-cyan-500/20 to-cyan-600/20 border border-cyan-500/30 rounded-xl p-6">
                                 <div class="flex items-center justify-between mb-4">
@@ -1358,19 +1359,19 @@
                                     </svg>
                                 </div>
                                 <p class="text-3xl font-bold">+8.5%</p>
-                                <p class="text-sm text-slate-400 mt-2">环比增长</p>
+                                <p class="text-sm text-slate-500 mt-2">环比增长</p>
                             </div>
                         </div>
 
                         <!-- Charts: 成本趋势、部门消耗对比、人均消耗对比、项目成本排名 -->
                         <div class="grid grid-cols-2 gap-6 mb-8">
-                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                                 <h3 class="text-lg font-semibold mb-4">成本趋势</h3>
                                 <div class="chart-container">
                                     <canvas id="costTrendChart"></canvas>
                                 </div>
                             </div>
-                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                                 <h3 class="text-lg font-semibold mb-4">部门消耗对比</h3>
                                 <div class="chart-container">
                                     <canvas id="costDeptStackedChart"></canvas>
@@ -1379,13 +1380,13 @@
                         </div>
 
                         <div class="grid grid-cols-2 gap-6">
-                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                                 <h3 class="text-lg font-semibold mb-4">人均消耗对比</h3>
                                 <div class="chart-container">
                                     <canvas id="costPerUserChart"></canvas>
                                 </div>
                             </div>
-                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                                 <h3 class="text-lg font-semibold mb-4">项目成本排名</h3>
                                 <div class="chart-container">
                                     <canvas id="costProjectRankingChart"></canvas>
@@ -1406,7 +1407,7 @@
                                     </svg>
                                 </div>
                                 <p class="text-3xl font-bold">68.5%</p>
-                                <p class="text-sm text-slate-400 mt-2">平均使用率</p>
+                                <p class="text-sm text-slate-500 mt-2">平均使用率</p>
                             </div>
                             <div class="bg-gradient-to-br from-green-500/20 to-green-600/20 border border-green-500/30 rounded-xl p-6">
                                 <div class="flex items-center justify-between mb-4">
@@ -1416,7 +1417,7 @@
                                     </svg>
                                 </div>
                                 <p class="text-3xl font-bold">86</p>
-                                <p class="text-sm text-slate-400 mt-2">活跃用户/总用户</p>
+                                <p class="text-sm text-slate-500 mt-2">活跃用户/总用户</p>
                             </div>
                             <div class="bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-xl p-6">
                                 <div class="flex items-center justify-between mb-4">
@@ -1426,7 +1427,7 @@
                                     </svg>
                                 </div>
                                 <p class="text-3xl font-bold">3.2</p>
-                                <p class="text-sm text-slate-400 mt-2">人均项目数</p>
+                                <p class="text-sm text-slate-500 mt-2">人均项目数</p>
                             </div>
                             <div class="bg-gradient-to-br from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-xl p-6">
                                 <div class="flex items-center justify-between mb-4">
@@ -1436,25 +1437,25 @@
                                     </svg>
                                 </div>
                                 <p class="text-3xl font-bold">¥1.82K</p>
-                                <p class="text-sm text-slate-400 mt-2">人均成本贡献</p>
+                                <p class="text-sm text-slate-500 mt-2">人均成本贡献</p>
                             </div>
                         </div>
 
                         <!-- Charts: 保留现有3个 + 项目消耗Token占比 + 模型调用趋势 -->
                         <div class="grid grid-cols-3 gap-6 mb-8">
-                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                                 <h3 class="text-lg font-semibold mb-4">模型调用量 Top10</h3>
                                 <div class="chart-container">
                                     <canvas id="resModelRankingChart"></canvas>
                                 </div>
                             </div>
-                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                                 <h3 class="text-lg font-semibold mb-4">用户消耗 Top10</h3>
                                 <div class="chart-container">
                                     <canvas id="resUserRankingChart"></canvas>
                                 </div>
                             </div>
-                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                                 <h3 class="text-lg font-semibold mb-4">部门资源占用 (帕累托分析)</h3>
                                 <div class="chart-container">
                                     <canvas id="resParetoChart"></canvas>
@@ -1464,14 +1465,14 @@
 
                         <div class="grid grid-cols-2 gap-6">
                             <!-- 新增：项目消耗Token占比 -->
-                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                                 <h3 class="text-lg font-semibold mb-4">项目消耗Token占比</h3>
                                 <div class="chart-container">
                                     <canvas id="resProjectTokenDistChart"></canvas>
                                 </div>
                             </div>
                             <!-- 新增：模型调用趋势 -->
-                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                                 <h3 class="text-lg font-semibold mb-4">模型调用趋势</h3>
                                 <div class="chart-container">
                                     <canvas id="resModelTrendChart"></canvas>
@@ -1487,36 +1488,36 @@
                     <!-- 第一行：系统参数配置 + 告警规则配置 并列 -->
                     <div class="grid grid-cols-2 gap-6 mb-6">
                         <!-- 系统参数配置 -->
-                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                             <div class="flex items-center justify-between mb-6">
                                 <h3 class="text-lg font-semibold">系统参数配置</h3>
-                                <button id="saveSystemConfig" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition text-sm">保存配置</button>
+                                <button id="saveSystemConfig" class="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition text-sm">保存配置</button>
                             </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm text-slate-400 mb-2">默认额度</label>
+                                    <label class="block text-sm text-slate-600 mb-2">默认额度</label>
                                     <div class="flex items-center">
-                                        <input type="number" id="defaultQuota" value="1000000" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
-                                        <span class="ml-2 text-slate-400 text-sm">个</span>
+                                        <input type="number" id="defaultQuota" value="1000000" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500">
+                                        <span class="ml-2 text-slate-500 text-sm">个</span>
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-sm text-slate-400 mb-2">额度预警阈值</label>
+                                    <label class="block text-sm text-slate-600 mb-2">额度预警阈值</label>
                                     <div class="flex items-center">
-                                        <input type="number" id="quotaWarningThreshold" value="80" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
-                                        <span class="ml-2 text-slate-400 text-sm">%</span>
+                                        <input type="number" id="quotaWarningThreshold" value="80" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500">
+                                        <span class="ml-2 text-slate-500 text-sm">%</span>
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-sm text-slate-400 mb-2">GPU高负载阈值</label>
+                                    <label class="block text-sm text-slate-600 mb-2">GPU高负载阈值</label>
                                     <div class="flex items-center">
-                                        <input type="number" id="gpuHighThreshold" value="85" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
-                                        <span class="ml-2 text-slate-400 text-sm">%</span>
+                                        <input type="number" id="gpuHighThreshold" value="85" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500">
+                                        <span class="ml-2 text-slate-500 text-sm">%</span>
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-sm text-slate-400 mb-2">令牌默认有效期</label>
-                                    <select id="tokenDefaultExpiry" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                                    <label class="block text-sm text-slate-600 mb-2">令牌默认有效期</label>
+                                    <select id="tokenDefaultExpiry" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500">
                                         <option value="30">30天</option>
                                         <option value="90" selected>90天</option>
                                         <option value="365">1年</option>
@@ -1524,29 +1525,29 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-sm text-slate-400 mb-2">最大并发请求数</label>
+                                    <label class="block text-sm text-slate-600 mb-2">最大并发请求数</label>
                                     <div class="flex items-center">
-                                        <input type="number" id="maxConcurrency" value="100" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
-                                        <span class="ml-2 text-slate-400 text-sm">/用户</span>
+                                        <input type="number" id="maxConcurrency" value="100" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500">
+                                        <span class="ml-2 text-slate-500 text-sm">/用户</span>
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-sm text-slate-400 mb-2">请求速率限制</label>
+                                    <label class="block text-sm text-slate-600 mb-2">请求速率限制</label>
                                     <div class="flex items-center">
-                                        <input type="number" id="rateLimit" value="60" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
-                                        <span class="ml-2 text-slate-400 text-sm">/分钟</span>
+                                        <input type="number" id="rateLimit" value="60" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500">
+                                        <span class="ml-2 text-slate-500 text-sm">/分钟</span>
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-sm text-slate-400 mb-2">数据保留天数</label>
+                                    <label class="block text-sm text-slate-600 mb-2">数据保留天数</label>
                                     <div class="flex items-center">
-                                        <input type="number" id="dataRetention" value="90" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
-                                        <span class="ml-2 text-slate-400 text-sm">天</span>
+                                        <input type="number" id="dataRetention" value="90" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500">
+                                        <span class="ml-2 text-slate-500 text-sm">天</span>
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-sm text-slate-400 mb-2">系统维护模式</label>
-                                    <select id="maintenanceMode" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                                    <label class="block text-sm text-slate-600 mb-2">系统维护模式</label>
+                                    <select id="maintenanceMode" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500">
                                         <option value="off" selected>正常运行</option>
                                         <option value="on">维护中</option>
                                     </select>
@@ -1555,55 +1556,55 @@
                         </div>
 
                         <!-- 告警规则配置 -->
-                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                             <div class="flex items-center justify-between mb-6">
                                 <h3 class="text-lg font-semibold">告警规则配置</h3>
-                                <button id="addAlertRule" class="px-3 py-1.5 bg-green-500 text-white rounded-lg hover:bg-green-600 transition text-sm">+ 添加规则</button>
+                                <button id="addAlertRule" class="px-3 py-1.5 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition text-sm">+ 添加规则</button>
                             </div>
                             <div class="space-y-3" id="alertRulesList">
-                                <div class="p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                                <div class="p-3 bg-white rounded-lg border border-slate-200">
                                     <div class="flex items-center justify-between mb-2">
                                         <span class="font-medium text-sm">GPU负载过高</span>
                                         <div class="flex items-center space-x-2">
-                                            <span class="px-2 py-0.5 bg-green-500/20 text-green-400 rounded text-xs">已启用</span>
-                                            <button class="text-blue-400 hover:text-blue-300 text-sm">编辑</button>
-                                            <button class="text-red-400 hover:text-red-300 text-sm">删除</button>
+                                            <span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">已启用</span>
+                                            <button class="text-cyan-600 hover:text-cyan-800 text-sm">编辑</button>
+                                            <button class="text-red-600 hover:text-red-800 text-sm">删除</button>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-slate-400">当GPU使用率超过 85% 持续5分钟时触发告警</p>
+                                    <p class="text-xs text-slate-500">当GPU使用率超过 85% 持续5分钟时触发告警</p>
                                 </div>
-                                <div class="p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                                <div class="p-3 bg-white rounded-lg border border-slate-200">
                                     <div class="flex items-center justify-between mb-2">
                                         <span class="font-medium text-sm">额度即将耗尽</span>
                                         <div class="flex items-center space-x-2">
-                                            <span class="px-2 py-0.5 bg-green-500/20 text-green-400 rounded text-xs">已启用</span>
-                                            <button class="text-blue-400 hover:text-blue-300 text-sm">编辑</button>
-                                            <button class="text-red-400 hover:text-red-300 text-sm">删除</button>
+                                            <span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">已启用</span>
+                                            <button class="text-cyan-600 hover:text-cyan-800 text-sm">编辑</button>
+                                            <button class="text-red-600 hover:text-red-800 text-sm">删除</button>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-slate-400">当用户额度使用率超过 80% 时触发告警</p>
+                                    <p class="text-xs text-slate-500">当用户额度使用率超过 80% 时触发告警</p>
                                 </div>
-                                <div class="p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                                <div class="p-3 bg-white rounded-lg border border-slate-200">
                                     <div class="flex items-center justify-between mb-2">
                                         <span class="font-medium text-sm">服务器离线</span>
                                         <div class="flex items-center space-x-2">
-                                            <span class="px-2 py-0.5 bg-green-500/20 text-green-400 rounded text-xs">已启用</span>
-                                            <button class="text-blue-400 hover:text-blue-300 text-sm">编辑</button>
-                                            <button class="text-red-400 hover:text-red-300 text-sm">删除</button>
+                                            <span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">已启用</span>
+                                            <button class="text-cyan-600 hover:text-cyan-800 text-sm">编辑</button>
+                                            <button class="text-red-600 hover:text-red-800 text-sm">删除</button>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-slate-400">当GPU服务器连续3次心跳检测失败时触发告警</p>
+                                    <p class="text-xs text-slate-500">当GPU服务器连续3次心跳检测失败时触发告警</p>
                                 </div>
-                                <div class="p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                                <div class="p-3 bg-white rounded-lg border border-slate-200">
                                     <div class="flex items-center justify-between mb-2">
                                         <span class="font-medium text-sm">API响应异常</span>
                                         <div class="flex items-center space-x-2">
-                                            <span class="px-2 py-0.5 bg-slate-500/20 text-slate-400 rounded text-xs">已禁用</span>
-                                            <button class="text-blue-400 hover:text-blue-300 text-sm">编辑</button>
-                                            <button class="text-red-400 hover:text-red-300 text-sm">删除</button>
+                                            <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-xs">已禁用</span>
+                                            <button class="text-cyan-600 hover:text-cyan-800 text-sm">编辑</button>
+                                            <button class="text-red-600 hover:text-red-800 text-sm">删除</button>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-slate-400">当API错误率超过 5% 时触发告警</p>
+                                    <p class="text-xs text-slate-500">当API错误率超过 5% 时触发告警</p>
                                 </div>
                             </div>
                         </div>
@@ -1613,63 +1614,63 @@
                     <!-- 第三行：GPU硬件 + 模型配置 + 公告 -->
                     <div class="grid grid-cols-3 gap-6">
                         <!-- GPU Hardware Config -->
-                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                             <div class="flex items-center justify-between mb-6">
                                 <h3 class="text-lg font-semibold">GPU硬件配置</h3>
-                                <button id="addGpuServer" class="px-3 py-1.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition text-sm">+ 添加</button>
+                                <button id="addGpuServer" class="px-3 py-1.5 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition text-sm">+ 添加</button>
                             </div>
                             <div class="space-y-3" id="gpuServersList">
-                                <div class="p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                                <div class="p-3 bg-white rounded-lg border border-slate-200">
                                     <div class="flex items-center justify-between mb-2">
                                         <span class="font-mono text-sm font-medium">gpu-server-001</span>
                                         <div class="flex items-center space-x-2">
-                                            <span class="px-2 py-0.5 bg-green-500/20 text-green-400 rounded text-xs">运行中</span>
-                                            <button class="text-blue-400 hover:text-blue-300 text-xs">编辑</button>
+                                            <span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">运行中</span>
+                                            <button class="text-cyan-600 hover:text-cyan-800 text-xs">编辑</button>
                                         </div>
                                     </div>
-                                    <div class="flex items-center space-x-4 text-xs text-slate-400">
+                                    <div class="flex items-center space-x-4 text-xs text-slate-500">
                                         <span>A100 x8</span>
                                         <span>|</span>
                                         <span>红区</span>
                                     </div>
                                 </div>
-                                <div class="p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                                <div class="p-3 bg-white rounded-lg border border-slate-200">
                                     <div class="flex items-center justify-between mb-2">
                                         <span class="font-mono text-sm font-medium">gpu-server-002</span>
                                         <div class="flex items-center space-x-2">
-                                            <span class="px-2 py-0.5 bg-green-500/20 text-green-400 rounded text-xs">运行中</span>
-                                            <button class="text-blue-400 hover:text-blue-300 text-xs">编辑</button>
+                                            <span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">运行中</span>
+                                            <button class="text-cyan-600 hover:text-cyan-800 text-xs">编辑</button>
                                         </div>
                                     </div>
-                                    <div class="flex items-center space-x-4 text-xs text-slate-400">
+                                    <div class="flex items-center space-x-4 text-xs text-slate-500">
                                         <span>A100 x8</span>
                                         <span>|</span>
                                         <span>红区</span>
                                     </div>
                                 </div>
-                                <div class="p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                                <div class="p-3 bg-white rounded-lg border border-slate-200">
                                     <div class="flex items-center justify-between mb-2">
                                         <span class="font-mono text-sm font-medium">gpu-server-003</span>
                                         <div class="flex items-center space-x-2">
-                                            <span class="px-2 py-0.5 bg-yellow-500/20 text-yellow-400 rounded text-xs">高负载</span>
-                                            <button class="text-blue-400 hover:text-blue-300 text-xs">编辑</button>
+                                            <span class="px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded text-xs">高负载</span>
+                                            <button class="text-cyan-600 hover:text-cyan-800 text-xs">编辑</button>
                                         </div>
                                     </div>
-                                    <div class="flex items-center space-x-4 text-xs text-slate-400">
+                                    <div class="flex items-center space-x-4 text-xs text-slate-500">
                                         <span>H100 x4</span>
                                         <span>|</span>
                                         <span>黄区</span>
                                     </div>
                                 </div>
-                                <div class="p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                                <div class="p-3 bg-white rounded-lg border border-slate-200">
                                     <div class="flex items-center justify-between mb-2">
                                         <span class="font-mono text-sm font-medium">gpu-server-004</span>
                                         <div class="flex items-center space-x-2">
-                                            <span class="px-2 py-0.5 bg-red-500/20 text-red-400 rounded text-xs">离线</span>
-                                            <button class="text-blue-400 hover:text-blue-300 text-xs">编辑</button>
+                                            <span class="px-2 py-0.5 bg-red-100 text-red-700 rounded text-xs">离线</span>
+                                            <button class="text-cyan-600 hover:text-cyan-800 text-xs">编辑</button>
                                         </div>
                                     </div>
-                                    <div class="flex items-center space-x-4 text-xs text-slate-400">
+                                    <div class="flex items-center space-x-4 text-xs text-slate-500">
                                         <span>A100 x8</span>
                                         <span>|</span>
                                         <span>红区</span>
@@ -1679,63 +1680,63 @@
                         </div>
 
                         <!-- Model Config -->
-                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                             <div class="flex items-center justify-between mb-6">
                                 <h3 class="text-lg font-semibold">模型配置</h3>
-                                <button id="addModel" class="px-3 py-1.5 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition text-sm">+ 添加</button>
+                                <button id="addModel" class="px-3 py-1.5 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition text-sm">+ 添加</button>
                             </div>
                             <div class="space-y-3" id="modelsList">
-                                <div class="p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                                <div class="p-3 bg-white rounded-lg border border-slate-200">
                                     <div class="flex items-center justify-between mb-2">
                                         <span class="font-medium text-sm">LLaMA-7B</span>
                                         <div class="flex items-center space-x-2">
-                                            <span class="px-2 py-0.5 bg-green-500/20 text-green-400 rounded text-xs">已启用</span>
-                                            <button class="text-blue-400 hover:text-blue-300 text-xs">编辑</button>
+                                            <span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">已启用</span>
+                                            <button class="text-cyan-600 hover:text-cyan-800 text-xs">编辑</button>
                                         </div>
                                     </div>
-                                    <div class="flex items-center space-x-2 text-xs text-slate-400">
+                                    <div class="flex items-center space-x-2 text-xs text-slate-500">
                                         <span>系数: 1.0x</span>
                                         <span>|</span>
                                         <span>红区</span>
                                     </div>
                                 </div>
-                                <div class="p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                                <div class="p-3 bg-white rounded-lg border border-slate-200">
                                     <div class="flex items-center justify-between mb-2">
                                         <span class="font-medium text-sm">GPT-4</span>
                                         <div class="flex items-center space-x-2">
-                                            <span class="px-2 py-0.5 bg-green-500/20 text-green-400 rounded text-xs">已启用</span>
-                                            <button class="text-blue-400 hover:text-blue-300 text-xs">编辑</button>
+                                            <span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">已启用</span>
+                                            <button class="text-cyan-600 hover:text-cyan-800 text-xs">编辑</button>
                                         </div>
                                     </div>
-                                    <div class="flex items-center space-x-2 text-xs text-slate-400">
+                                    <div class="flex items-center space-x-2 text-xs text-slate-500">
                                         <span>系数: 2.5x</span>
                                         <span>|</span>
                                         <span>红区</span>
                                     </div>
                                 </div>
-                                <div class="p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                                <div class="p-3 bg-white rounded-lg border border-slate-200">
                                     <div class="flex items-center justify-between mb-2">
                                         <span class="font-medium text-sm">StableDiffusion-XL</span>
                                         <div class="flex items-center space-x-2">
-                                            <span class="px-2 py-0.5 bg-green-500/20 text-green-400 rounded text-xs">已启用</span>
-                                            <button class="text-blue-400 hover:text-blue-300 text-xs">编辑</button>
+                                            <span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">已启用</span>
+                                            <button class="text-cyan-600 hover:text-cyan-800 text-xs">编辑</button>
                                         </div>
                                     </div>
-                                    <div class="flex items-center space-x-2 text-xs text-slate-400">
+                                    <div class="flex items-center space-x-2 text-xs text-slate-500">
                                         <span>系数: 3.0x</span>
                                         <span>|</span>
                                         <span>黄区</span>
                                     </div>
                                 </div>
-                                <div class="p-3 bg-slate-700/30 rounded-lg border border-slate-600">
+                                <div class="p-3 bg-white rounded-lg border border-slate-200">
                                     <div class="flex items-center justify-between mb-2">
                                         <span class="font-medium text-sm">Whisper-Large</span>
                                         <div class="flex items-center space-x-2">
-                                            <span class="px-2 py-0.5 bg-slate-500/20 text-slate-400 rounded text-xs">已禁用</span>
-                                            <button class="text-blue-400 hover:text-blue-300 text-xs">编辑</button>
+                                            <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-xs">已禁用</span>
+                                            <button class="text-cyan-600 hover:text-cyan-800 text-xs">编辑</button>
                                         </div>
                                     </div>
-                                    <div class="flex items-center space-x-2 text-xs text-slate-400">
+                                    <div class="flex items-center space-x-2 text-xs text-slate-500">
                                         <span>系数: 1.5x</span>
                                         <span>|</span>
                                         <span>未分配</span>
@@ -1745,35 +1746,35 @@
                         </div>
 
                         <!-- System Announcements -->
-                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                             <div class="flex items-center justify-between mb-6">
                                 <h3 class="text-lg font-semibold">系统公告</h3>
-                                <button id="publishAnnouncement" class="px-3 py-1.5 bg-green-500 text-white rounded-lg hover:bg-green-600 transition text-sm">+ 发布</button>
+                                <button id="publishAnnouncement" class="px-3 py-1.5 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition text-sm">+ 发布</button>
                             </div>
                             <div class="space-y-4" id="announcementsList">
                                 <div class="p-4 bg-blue-500/10 border border-blue-500/30 rounded-lg">
                                     <div class="flex items-center justify-between mb-2">
                                         <span class="text-sm font-medium text-blue-400">重要通知</span>
-                                        <button class="text-slate-400 hover:text-white text-xs">删除</button>
+                                        <button class="text-slate-500 hover:text-red-600 text-xs">删除</button>
                                     </div>
-                                    <p class="text-sm text-slate-300 mb-1">本周日凌晨 2:00-6:00 进行系统维护</p>
-                                    <span class="text-xs text-slate-400">2025-01-25</span>
+                                    <p class="text-sm text-slate-600 mb-1">本周日凌晨 2:00-6:00 进行系统维护</p>
+                                    <span class="text-xs text-slate-500">2025-01-25</span>
                                 </div>
                                 <div class="p-4 bg-amber-500/10 border border-amber-500/30 rounded-lg">
                                     <div class="flex items-center justify-between mb-2">
                                         <span class="text-sm font-medium text-amber-400">额度调整</span>
-                                        <button class="text-slate-400 hover:text-white text-xs">删除</button>
+                                        <button class="text-slate-500 hover:text-red-600 text-xs">删除</button>
                                     </div>
-                                    <p class="text-sm text-slate-300 mb-1">GPT-4 模型消耗系数调整为 2.5x</p>
-                                    <span class="text-xs text-slate-400">2025-01-20</span>
+                                    <p class="text-sm text-slate-600 mb-1">GPT-4 模型消耗系数调整为 2.5x</p>
+                                    <span class="text-xs text-slate-500">2025-01-20</span>
                                 </div>
-                                <div class="p-4 bg-slate-700/30 border border-slate-600 rounded-lg">
+                                <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg">
                                     <div class="flex items-center justify-between mb-2">
-                                        <span class="text-sm font-medium text-slate-300">功能更新</span>
-                                        <button class="text-slate-400 hover:text-white text-xs">删除</button>
+                                        <span class="text-sm font-medium text-slate-600">功能更新</span>
+                                        <button class="text-slate-500 hover:text-red-600 text-xs">删除</button>
                                     </div>
-                                    <p class="text-sm text-slate-400 mb-1">新增批量导入/导出额度功能</p>
-                                    <span class="text-xs text-slate-400">2025-01-15</span>
+                                    <p class="text-sm text-slate-500 mb-1">新增批量导入/导出额度功能</p>
+                                    <span class="text-xs text-slate-500">2025-01-15</span>
                                 </div>
                             </div>
                         </div>
@@ -1784,18 +1785,18 @@
                 <div id="page-quota-requests" class="page">
                     <div class="mb-6">
                         <h2 class="text-2xl font-bold text-white">配额申请</h2>
-                        <p class="text-slate-400 text-sm mt-1">查看和管理配额申请记录</p>
+                        <p class="text-slate-500 text-sm mt-1">查看和管理配额申请记录</p>
                     </div>
 
                     <!-- 我的申请记录 -->
-                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 mb-6">
+                    <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm mb-6">
                         <h3 class="text-lg font-semibold text-white mb-4">我的申请记录</h3>
                         <div id="myQuotaRequestsList">
                             <!-- 动态渲染申请记录 -->
                         </div>
-                        <div id="noQuotaRequests" class="text-center py-8 text-slate-400 hidden">
+                        <div id="noQuotaRequests" class="text-center py-8 text-slate-500 hidden">
                             <p>暂无配额申请记录</p>
-                            <button onclick="showApplyQuotaModal()" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+                            <button onclick="showApplyQuotaModal()" class="mt-4 px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition">
                                 申请配额
                             </button>
                         </div>
@@ -1806,11 +1807,11 @@
                 <div id="page-quota-approval" class="page">
                     <div class="mb-6">
                         <h2 class="text-2xl font-bold text-white">配额审批</h2>
-                        <p class="text-slate-400 text-sm mt-1">审批用户提交的配额申请</p>
+                        <p class="text-slate-500 text-sm mt-1">审批用户提交的配额申请</p>
                     </div>
 
                     <!-- 审批筛选和列表 -->
-                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                    <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                         <div class="flex items-center justify-between mb-4">
                             <div class="flex items-center space-x-4">
                                 <select id="approvalStatusFilter" class="bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm">
@@ -1825,13 +1826,13 @@
                             <!-- 动态渲染审批列表 -->
                         </div>
                         <!-- 分页控件 -->
-                        <div id="approvalPagination" class="flex items-center justify-between mt-4 pt-4 border-t border-slate-700">
-                            <div class="text-sm text-slate-400">
+                        <div id="approvalPagination" class="flex items-center justify-between mt-4 pt-4 border-t border-slate-200">
+                            <div class="text-sm text-slate-500">
                                 共 <span id="approvalTotalCount">0</span> 条记录
                             </div>
                             <div class="flex items-center space-x-2">
                                 <button id="approvalPrevBtn" class="px-3 py-1 bg-slate-700 text-white rounded text-sm hover:bg-slate-600 disabled:opacity-50" disabled>上一页</button>
-                                <span id="approvalPageInfo" class="text-sm text-slate-300">1 / 1</span>
+                                <span id="approvalPageInfo" class="text-sm text-slate-500">1 / 1</span>
                                 <button id="approvalNextBtn" class="px-3 py-1 bg-slate-700 text-white rounded text-sm hover:bg-slate-600 disabled:opacity-50" disabled>下一页</button>
                             </div>
                         </div>
@@ -1842,10 +1843,10 @@
                 <div id="page-projects" class="page">
                     <div class="mb-6 flex items-center justify-between">
                         <div>
-                            <h2 class="text-2xl font-bold text-white">项目管理</h2>
-                            <p class="text-slate-400 text-sm mt-1">管理AI算力项目配额和成员</p>
+                            <h2 class="text-2xl font-bold text-slate-800">项目管理</h2>
+                            <p class="text-slate-500 text-sm mt-1">管理AI算力项目配额和成员</p>
                         </div>
-                        <button id="addProjectBtn" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition flex items-center">
+                        <button id="addProjectBtn" class="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition flex items-center">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                             </svg>
@@ -1855,17 +1856,17 @@
 
                     <!-- 项目统计 -->
                     <div class="grid grid-cols-3 gap-4 mb-6">
-                        <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
-                            <div class="text-2xl font-bold text-white" id="projectCount">0</div>
-                            <div class="text-sm text-slate-400">项目总数</div>
+                        <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm">
+                            <div class="text-2xl font-bold text-slate-800" id="projectCount">0</div>
+                            <div class="text-sm text-slate-500">项目总数</div>
                         </div>
-                        <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
-                            <div class="text-2xl font-bold text-green-400" id="activeProjectCount">0</div>
-                            <div class="text-sm text-slate-400">进行中</div>
+                        <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm">
+                            <div class="text-2xl font-bold text-green-600" id="activeProjectCount">0</div>
+                            <div class="text-sm text-slate-500">进行中</div>
                         </div>
-                        <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
-                            <div class="text-2xl font-bold text-purple-400" id="usedProjectQuota">0</div>
-                            <div class="text-sm text-slate-400">已使用Token</div>
+                        <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm">
+                            <div class="text-2xl font-bold text-purple-600" id="usedProjectQuota">0</div>
+                            <div class="text-sm text-slate-500">已使用Token</div>
                         </div>
                     </div>
 
@@ -1879,10 +1880,10 @@
                 <div id="page-user-management" class="page">
                     <div class="mb-6 flex items-center justify-between">
                         <div>
-                            <h2 class="text-2xl font-bold text-white">用户管理</h2>
-                            <p class="text-slate-400 text-sm mt-1">管理系统用户和权限</p>
+                            <h2 class="text-2xl font-bold text-slate-800">用户管理</h2>
+                            <p class="text-slate-500 text-sm mt-1">管理系统用户和权限</p>
                         </div>
-                        <button id="addUserBtn" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition flex items-center">
+                        <button id="addUserBtn" class="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition flex items-center">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                             </svg>
@@ -1892,16 +1893,16 @@
 
                     <!-- Tabs -->
                     <div class="flex items-center space-x-4 mb-6">
-                        <button class="user-mgmt-tab-btn active px-4 py-2 bg-blue-500 text-white rounded-lg text-sm transition" data-tab="user-list">用户列表</button>
-                        <button class="user-mgmt-tab-btn px-4 py-2 bg-slate-700 text-slate-300 rounded-lg text-sm hover:bg-slate-600 transition" data-tab="quota-list">用户额度</button>
+                        <button class="user-mgmt-tab-btn active px-4 py-2 bg-slate-800 text-white rounded-lg text-sm transition" data-tab="user-list">用户列表</button>
+                        <button class="user-mgmt-tab-btn px-4 py-2 bg-white text-slate-600 border border-slate-200 rounded-lg text-sm hover:bg-slate-50 transition" data-tab="quota-list">用户额度</button>
                     </div>
 
                     <!-- Tab Content: 用户列表 -->
                     <div id="tab-user-list" class="user-mgmt-tab-content">
-                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                             <table class="w-full">
                                 <thead>
-                                    <tr class="text-left text-slate-400 text-sm border-b border-slate-700">
+                                    <tr class="text-left text-slate-500 text-sm border-b border-slate-200">
                                         <th class="pb-3">用户名</th>
                                         <th class="pb-3">角色</th>
                                         <th class="pb-3">所属部门</th>
@@ -1920,7 +1921,7 @@
                     <!-- Tab Content: 用户额度 -->
                     <div id="tab-quota-list" class="user-mgmt-tab-content hidden">
                         <div class="flex items-center space-x-4 mb-6">
-                            <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition text-sm flex items-center">
+                            <button class="px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition text-sm flex items-center">
                                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
                                 </svg>
@@ -1933,11 +1934,11 @@
                                 批量导出额度
                             </button>
                         </div>
-                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
                             <h3 class="text-lg font-semibold mb-6">用户额度列表</h3>
                             <table class="w-full">
                                 <thead>
-                                    <tr class="text-left text-slate-400 text-sm border-b border-slate-700">
+                                    <tr class="text-left text-slate-500 text-sm border-b border-slate-200">
                                         <th class="pb-3 font-medium">用户姓名</th>
                                         <th class="pb-3 font-medium">所属部门</th>
                                         <th class="pb-3 font-medium">当前额度</th>

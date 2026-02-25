@@ -152,11 +152,13 @@ function initDashboardViews() {
         btn.addEventListener('click', function() {
             const view = this.getAttribute('data-view');
 
-            // Update active tab
-            tabBtns.forEach(b => b.classList.remove('active', 'bg-blue-500', 'text-white'));
-            tabBtns.forEach(b => b.classList.add('bg-slate-700', 'text-slate-300'));
-            this.classList.add('active', 'bg-blue-500', 'text-white');
-            this.classList.remove('bg-slate-700', 'text-slate-300');
+            // Update active tab - Light mode styles
+            tabBtns.forEach(b => {
+                b.classList.remove('active', 'bg-slate-800', 'text-white');
+                b.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-200', 'hover:bg-slate-50');
+            });
+            this.classList.add('active', 'bg-slate-800', 'text-white');
+            this.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-200', 'hover:bg-slate-50');
 
             // Show corresponding view
             views.forEach(v => v.style.display = 'none');
@@ -170,12 +172,14 @@ function initDashboardViews() {
         });
     });
 
-    // Set default active style
+    // Set default active style - Light mode
     tabBtns.forEach(b => {
         if (b.classList.contains('active')) {
-            b.classList.add('bg-blue-500', 'text-white');
+            b.classList.add('bg-slate-800', 'text-white');
+            b.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-200');
         } else {
-            b.classList.add('bg-slate-700', 'text-slate-300');
+            b.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-200', 'hover:bg-slate-50');
+            b.classList.remove('bg-slate-800', 'text-white');
         }
     });
 }
@@ -267,9 +271,9 @@ function initCharts() {
     // Destroy existing charts before creating new ones to prevent duplication
     destroyAllCharts();
 
-    // Set Chart.js global defaults for the new design
-    Chart.defaults.color = '#9898a6';
-    Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.08)';
+    // Set Chart.js global defaults for Light Mode
+    Chart.defaults.color = '#64748b';
+    Chart.defaults.borderColor = 'rgba(148, 163, 184, 0.2)';
     Chart.defaults.font.family = "'Outfit', sans-serif";
 
     // Use setTimeout to ensure DOM is fully rendered
@@ -313,8 +317,8 @@ function initMyComputingCharts() {
                 datasets: [{
                     label: '额度消耗',
                     data: [65000, 78000, 90000, 81000, 95000, 110000, 125000],
-                    borderColor: '#00f5d4',
-                    backgroundColor: 'rgba(0, 245, 212, 0.1)',
+                    borderColor: '#0891b2',
+                    backgroundColor: 'rgba(8, 145, 178, 0.1)',
                     fill: true,
                     tension: 0.4
                 }]
@@ -330,19 +334,19 @@ function initMyComputingCharts() {
                 scales: {
                     x: {
                         grid: {
-                            color: 'rgba(71, 85, 105, 0.5)'
+                            color: 'rgba(148, 163, 184, 0.15)'
                         },
                         ticks: {
-                            color: '#94a3b8'
+                            color: '#64748b'
                         }
                     },
                     y: {
                         max: 150000,
                         grid: {
-                            color: 'rgba(71, 85, 105, 0.5)'
+                            color: 'rgba(148, 163, 184, 0.15)'
                         },
                         ticks: {
-                            color: '#94a3b8',
+                            color: '#64748b',
                             callback: function(value) {
                                 if (value >= 1000000) {
                                     return (value / 1000000) + 'M';
@@ -366,7 +370,7 @@ function initMyComputingCharts() {
                 datasets: [{
                     data: [45, 25, 20, 10],
                     backgroundColor: [
-                        '#00f5d4',
+                        '#0891b2',
                         '#8b5cf6',
                         '#10b981',
                         '#f59e0b'
@@ -381,7 +385,7 @@ function initMyComputingCharts() {
                     legend: {
                         position: 'bottom',
                         labels: {
-                            color: '#94a3b8',
+                            color: '#64748b',
                             padding: 20
                         }
                     }
@@ -403,8 +407,8 @@ function initGpuDashboardCharts() {
                 datasets: [{
                     label: 'GPU使用率',
                     data: [45, 42, 38, 55, 72, 85, 82, 78, 80, 75, 68, 52],
-                    borderColor: '#00f5d4',
-                    backgroundColor: 'rgba(0, 245, 212, 0.1)',
+                    borderColor: '#0891b2',
+                    backgroundColor: 'rgba(8, 145, 178, 0.1)',
                     fill: true,
                     tension: 0.4,
                     pointRadius: 3,
@@ -422,20 +426,20 @@ function initGpuDashboardCharts() {
                 scales: {
                     x: {
                         grid: {
-                            color: 'rgba(71, 85, 105, 0.5)'
+                            color: 'rgba(148, 163, 184, 0.15)'
                         },
                         ticks: {
-                            color: '#94a3b8'
+                            color: '#64748b'
                         }
                     },
                     y: {
                         min: 0,
                         max: 100,
                         grid: {
-                            color: 'rgba(71, 85, 105, 0.5)'
+                            color: 'rgba(148, 163, 184, 0.15)'
                         },
                         ticks: {
-                            color: '#94a3b8',
+                            color: '#64748b',
                             callback: function(value) {
                                 return value + '%';
                             }
@@ -458,7 +462,7 @@ function initGpuDashboardCharts() {
                     data: [2, 5, 8, 5],
                     backgroundColor: [
                         '#10b981',
-                        '#00f5d4',
+                        '#0891b2',
                         '#f59e0b',
                         '#ef4444'
                     ],
@@ -482,17 +486,17 @@ function initGpuDashboardCharts() {
                             display: false
                         },
                         ticks: {
-                            color: '#94a3b8'
+                            color: '#64748b'
                         }
                     },
                     y: {
                         min: 0,
                         max: 12,
                         grid: {
-                            color: 'rgba(71, 85, 105, 0.5)'
+                            color: 'rgba(148, 163, 184, 0.15)'
                         },
                         ticks: {
-                            color: '#94a3b8',
+                            color: '#64748b',
                             stepSize: 2
                         }
                     }
@@ -531,20 +535,20 @@ function initTokenDashboardCharts() {
                 scales: {
                     x: {
                         grid: {
-                            color: 'rgba(71, 85, 105, 0.5)'
+                            color: 'rgba(148, 163, 184, 0.15)'
                         },
                         ticks: {
-                            color: '#94a3b8'
+                            color: '#64748b'
                         }
                     },
                     y: {
                         min: 0,
                         max: 5,
                         grid: {
-                            color: 'rgba(71, 85, 105, 0.5)'
+                            color: 'rgba(148, 163, 184, 0.15)'
                         },
                         ticks: {
-                            color: '#94a3b8',
+                            color: '#64748b',
                             stepSize: 1,
                             callback: function(value) {
                                 return value + 'M';
@@ -566,7 +570,7 @@ function initTokenDashboardCharts() {
                 datasets: [{
                     data: [35, 25, 15, 12, 8, 5],
                     backgroundColor: [
-                        '#00f5d4',
+                        '#0891b2',
                         '#8b5cf6',
                         '#10b981',
                         '#f59e0b',
@@ -583,7 +587,7 @@ function initTokenDashboardCharts() {
                     legend: {
                         position: 'right',
                         labels: {
-                            color: '#94a3b8',
+                            color: '#64748b',
                             padding: 15,
                             boxWidth: 12
                         }
@@ -603,7 +607,7 @@ function initTokenDashboardCharts() {
                 datasets: [{
                     label: '调用次数',
                     data: [18500, 16200, 12800, 9500, 7200, 6800, 5400, 4100, 3200, 2800],
-                    backgroundColor: '#00f5d4',
+                    backgroundColor: '#0891b2',
                     borderRadius: 4
                 }]
             },
@@ -624,10 +628,10 @@ function initTokenDashboardCharts() {
                         min: 0,
                         max: 20000,
                         grid: {
-                            color: 'rgba(71, 85, 105, 0.5)'
+                            color: 'rgba(148, 163, 184, 0.15)'
                         },
                         ticks: {
-                            color: '#94a3b8',
+                            color: '#64748b',
                             stepSize: 5000,
                             callback: function(value) {
                                 return (value / 1000) + 'K';
@@ -639,7 +643,7 @@ function initTokenDashboardCharts() {
                             display: false
                         },
                         ticks: {
-                            color: '#94a3b8'
+                            color: '#64748b'
                         }
                     }
                 }
@@ -825,8 +829,8 @@ function initOperationsMonitoringCharts() {
                 datasets: [{
                     label: 'GPU使用率',
                     data: [45, 42, 38, 55, 72, 85, 82, 78, 80, 75, 68, 52],
-                    borderColor: '#00f5d4',
-                    backgroundColor: 'rgba(0, 245, 212, 0.1)',
+                    borderColor: '#0891b2',
+                    backgroundColor: 'rgba(8, 145, 178, 0.1)',
                     fill: true,
                     tension: 0.4
                 }]
@@ -836,8 +840,8 @@ function initOperationsMonitoringCharts() {
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    x: { grid: { color: 'rgba(71, 85, 105, 0.5)' }, ticks: { color: '#94a3b8' } },
-                    y: { max: 100, grid: { color: 'rgba(71, 85, 105, 0.5)' }, ticks: { color: '#94a3b8', callback: v => v + '%' } }
+                    x: { grid: { color: 'rgba(148, 163, 184, 0.15)' }, ticks: { color: '#64748b' } },
+                    y: { max: 100, grid: { color: 'rgba(148, 163, 184, 0.15)' }, ticks: { color: '#64748b', callback: v => v + '%' } }
                 }
             }
         });
@@ -864,8 +868,8 @@ function initOperationsMonitoringCharts() {
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    x: { grid: { color: 'rgba(71, 85, 105, 0.5)' }, ticks: { color: '#94a3b8' } },
-                    y: { grid: { color: 'rgba(71, 85, 105, 0.5)' }, ticks: { color: '#94a3b8', callback: v => v + 'ms' } }
+                    x: { grid: { color: 'rgba(148, 163, 184, 0.15)' }, ticks: { color: '#64748b' } },
+                    y: { grid: { color: 'rgba(148, 163, 184, 0.15)' }, ticks: { color: '#64748b', callback: v => v + 'ms' } }
                 }
             }
         });
@@ -892,8 +896,8 @@ function initOperationsMonitoringCharts() {
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    x: { grid: { color: 'rgba(71, 85, 105, 0.5)' }, ticks: { color: '#94a3b8' } },
-                    y: { grid: { color: 'rgba(71, 85, 105, 0.5)' }, ticks: { color: '#94a3b8', callback: v => v + ' req/s' } }
+                    x: { grid: { color: 'rgba(148, 163, 184, 0.15)' }, ticks: { color: '#64748b' } },
+                    y: { grid: { color: 'rgba(148, 163, 184, 0.15)' }, ticks: { color: '#64748b', callback: v => v + ' req/s' } }
                 }
             }
         });
@@ -912,8 +916,8 @@ function initCostOperationsCharts() {
                 datasets: [{
                     label: '成本',
                     data: [35, 38.5, 42, 45.6],
-                    borderColor: '#00f5d4',
-                    backgroundColor: 'rgba(0, 245, 212, 0.1)',
+                    borderColor: '#0891b2',
+                    backgroundColor: 'rgba(8, 145, 178, 0.1)',
                     fill: true,
                     tension: 0.4
                 }]
@@ -923,8 +927,8 @@ function initCostOperationsCharts() {
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    x: { grid: { color: 'rgba(71, 85, 105, 0.5)' }, ticks: { color: '#94a3b8' } },
-                    y: { grid: { color: 'rgba(71, 85, 105, 0.5)' }, ticks: { color: '#94a3b8', callback: v => '¥' + v + 'K' } }
+                    x: { grid: { color: 'rgba(148, 163, 184, 0.15)' }, ticks: { color: '#64748b' } },
+                    y: { grid: { color: 'rgba(148, 163, 184, 0.15)' }, ticks: { color: '#64748b', callback: v => '¥' + v + 'K' } }
                 }
             }
         });
@@ -938,7 +942,7 @@ function initCostOperationsCharts() {
             data: {
                 labels: ['第1周', '第2周', '第3周', '第4周'],
                 datasets: [
-                    { label: '芯片设计部', data: [1.2, 1.5, 1.3, 1.4], borderColor: '#00f5d4', backgroundColor: 'rgba(0, 245, 212, 0.5)', fill: true },
+                    { label: '芯片设计部', data: [1.2, 1.5, 1.3, 1.4], borderColor: '#0891b2', backgroundColor: 'rgba(8, 145, 178, 0.5)', fill: true },
                     { label: '验证部', data: [0.9, 1.1, 1.0, 1.0], borderColor: '#8b5cf6', backgroundColor: 'rgba(139, 92, 246, 0.5)', fill: true },
                     { label: '封装部', data: [0.5, 0.6, 0.5, 0.6], borderColor: '#10b981', backgroundColor: 'rgba(16, 185, 129, 0.5)', fill: true },
                     { label: '测试部', data: [0.4, 0.5, 0.5, 0.5], borderColor: '#f59e0b', backgroundColor: 'rgba(245, 158, 11, 0.5)', fill: true },
@@ -949,10 +953,10 @@ function initCostOperationsCharts() {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', padding: 15 } } },
+                plugins: { legend: { position: 'bottom', labels: { color: '#64748b', padding: 15 } } },
                 scales: {
-                    x: { grid: { color: 'rgba(71, 85, 105, 0.5)' }, ticks: { color: '#94a3b8' } },
-                    y: { stacked: true, grid: { color: 'rgba(71, 85, 105, 0.5)' }, ticks: { color: '#94a3b8', callback: v => v + 'M' } }
+                    x: { grid: { color: 'rgba(148, 163, 184, 0.15)' }, ticks: { color: '#64748b' } },
+                    y: { stacked: true, grid: { color: 'rgba(148, 163, 184, 0.15)' }, ticks: { color: '#64748b', callback: v => v + 'M' } }
                 }
             }
         });
@@ -968,7 +972,7 @@ function initCostOperationsCharts() {
                 datasets: [{
                     label: '人均消耗',
                     data: [185, 162, 145, 128, 112, 95],
-                    backgroundColor: ['#00f5d4', '#f72585', '#7b2cbf', '#ff6b35', '#06d6a0', '#4361ee'],
+                    backgroundColor: ['#0891b2', '#db2777', '#7c3aed', '#ea580c', '#059669', '#4f46e5'],
                     borderRadius: 6
                 }]
             },
@@ -977,8 +981,8 @@ function initCostOperationsCharts() {
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } },
-                    y: { grid: { color: 'rgba(71, 85, 105, 0.5)' }, ticks: { color: '#94a3b8', callback: v => v + 'K' } }
+                    x: { grid: { display: false }, ticks: { color: '#64748b' } },
+                    y: { grid: { color: 'rgba(148, 163, 184, 0.15)' }, ticks: { color: '#64748b', callback: v => v + 'K' } }
                 }
             }
         });
@@ -1004,8 +1008,8 @@ function initCostOperationsCharts() {
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    x: { grid: { color: 'rgba(71, 85, 105, 0.5)' }, ticks: { color: '#94a3b8', callback: v => '¥' + v + 'K' } },
-                    y: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                    x: { grid: { color: 'rgba(148, 163, 184, 0.15)' }, ticks: { color: '#64748b', callback: v => '¥' + v + 'K' } },
+                    y: { grid: { display: false }, ticks: { color: '#64748b' } }
                 }
             }
         });
@@ -1024,7 +1028,7 @@ function initResourceAnalyticsCharts() {
                 datasets: [{
                     label: '调用次数',
                     data: [18500, 16200, 12800, 9500, 7200, 6800, 5400, 4100, 3200, 2800],
-                    backgroundColor: '#00f5d4',
+                    backgroundColor: '#0891b2',
                     borderRadius: 4
                 }]
             },
@@ -1034,8 +1038,8 @@ function initResourceAnalyticsCharts() {
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    x: { grid: { color: 'rgba(71, 85, 105, 0.5)' }, ticks: { color: '#94a3b8' } },
-                    y: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+                    x: { grid: { color: 'rgba(148, 163, 184, 0.15)' }, ticks: { color: '#64748b' } },
+                    y: { grid: { display: false }, ticks: { color: '#64748b' } }
                 }
             }
         });
@@ -1060,8 +1064,8 @@ function initResourceAnalyticsCharts() {
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
                 scales: {
-                    x: { grid: { color: 'rgba(71, 85, 105, 0.5)' }, ticks: { color: '#94a3b8' } },
-                    y: { grid: { color: 'rgba(71, 85, 105, 0.5)' }, ticks: { color: '#94a3b8', callback: v => v + 'M' } }
+                    x: { grid: { color: 'rgba(148, 163, 184, 0.15)' }, ticks: { color: '#64748b' } },
+                    y: { grid: { color: 'rgba(148, 163, 184, 0.15)' }, ticks: { color: '#64748b', callback: v => v + 'M' } }
                 }
             }
         });
@@ -1092,10 +1096,10 @@ function initResourceAnalyticsCharts() {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', padding: 15 } } },
+                plugins: { legend: { position: 'bottom', labels: { color: '#64748b', padding: 15 } } },
                 scales: {
-                    x: { grid: { display: false }, ticks: { color: '#94a3b8' } },
-                    y: { grid: { color: 'rgba(71, 85, 105, 0.5)' }, ticks: { color: '#94a3b8', callback: v => v + '%' } }
+                    x: { grid: { display: false }, ticks: { color: '#64748b' } },
+                    y: { grid: { color: 'rgba(148, 163, 184, 0.15)' }, ticks: { color: '#64748b', callback: v => v + '%' } }
                 }
             }
         });
@@ -1110,14 +1114,14 @@ function initResourceAnalyticsCharts() {
                 labels: ['芯片设计A', '验证测试B', '模型训练C', '数据处理D', '算法研发E', '其他'],
                 datasets: [{
                     data: [32, 25, 18, 12, 8, 5],
-                    backgroundColor: ['#00f5d4', '#f72585', '#7b2cbf', '#ff6b35', '#06d6a0', '#5c5c6e'],
+                    backgroundColor: ['#0891b2', '#db2777', '#7c3aed', '#ea580c', '#059669', '#94a3b8'],
                     borderWidth: 0
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', padding: 15 } } }
+                plugins: { legend: { position: 'bottom', labels: { color: '#64748b', padding: 15 } } }
             }
         });
     }
@@ -1132,7 +1136,7 @@ function initResourceAnalyticsCharts() {
                 datasets: [{
                     label: 'LLaMA-7B',
                     data: [4200, 4500, 4800, 5100],
-                    borderColor: '#00f5d4',
+                    borderColor: '#0891b2',
                     tension: 0.3
                 }, {
                     label: 'GPT-3.5',
@@ -1149,10 +1153,10 @@ function initResourceAnalyticsCharts() {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', padding: 15 } } },
+                plugins: { legend: { position: 'bottom', labels: { color: '#64748b', padding: 15 } } },
                 scales: {
-                    x: { grid: { color: 'rgba(71, 85, 105, 0.5)' }, ticks: { color: '#94a3b8' } },
-                    y: { grid: { color: 'rgba(71, 85, 105, 0.5)' }, ticks: { color: '#94a3b8' } }
+                    x: { grid: { color: 'rgba(148, 163, 184, 0.15)' }, ticks: { color: '#64748b' } },
+                    y: { grid: { color: 'rgba(148, 163, 184, 0.15)' }, ticks: { color: '#64748b' } }
                 }
             }
         });
@@ -1175,17 +1179,17 @@ function initDashboardDynamicContent() {
             { name: 'gpu-server-008', model: 'A100 x8', load: 78, status: 'green' }
         ];
         opsServerList.innerHTML = servers.map(s => `
-            <div class="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
+            <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                 <div class="flex items-center space-x-3">
                     <div class="w-2 h-2 rounded-full bg-${s.status}-500"></div>
-                    <span class="font-mono text-sm">${s.name}</span>
-                    <span class="text-xs text-slate-400">${s.model}</span>
+                    <span class="font-mono text-sm text-slate-800">${s.name}</span>
+                    <span class="text-xs text-slate-500">${s.model}</span>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <div class="w-24 h-2 bg-slate-700 rounded-full overflow-hidden">
+                    <div class="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
                         <div class="h-full bg-${s.status}-500" style="width: ${s.load}%"></div>
                     </div>
-                    <span class="text-sm text-${s.status}-400">${s.load}%</span>
+                    <span class="text-sm text-${s.status}-600">${s.load}%</span>
                 </div>
             </div>
         `).join('');
@@ -1202,14 +1206,14 @@ function initDashboardDynamicContent() {
             { type: 'GPU负载过高', server: 'gpu-server-001', level: '91%', time: '2小时前', status: 'resolved', color: 'slate' }
         ];
         opsAlertList.innerHTML = alerts.map(a => `
-            <div class="p-3 bg-${a.color}-500/10 border border-${a.color}-500/30 rounded-lg">
+            <div class="p-3 bg-${a.color}-50 border border-${a.color}-200 rounded-lg">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-${a.color}-400 text-sm font-medium">${a.type}</span>
-                    <span class="text-xs text-slate-400">${a.time}</span>
+                    <span class="text-${a.color}-700 text-sm font-medium">${a.type}</span>
+                    <span class="text-xs text-slate-500">${a.time}</span>
                 </div>
-                <p class="text-xs text-slate-300">${a.server} ${a.level}</p>
+                <p class="text-xs text-slate-600">${a.server} ${a.level}</p>
                 <div class="flex items-center space-x-2 mt-2">
-                    <span class="px-2 py-0.5 bg-${a.status === 'pending' ? a.color : 'green'}-500/20 text-${a.status === 'pending' ? a.color : 'green'}-400 rounded text-xs">${a.status === 'pending' ? '待处理' : '已处理'}</span>
+                    <span class="px-2 py-0.5 bg-${a.status === 'pending' ? a.color : 'green'}-100 text-${a.status === 'pending' ? a.color : 'green'}-700 rounded text-xs">${a.status === 'pending' ? '待处理' : '已处理'}</span>
                 </div>
             </div>
         `).join('');
@@ -1256,13 +1260,13 @@ function initDashboardDynamicContent() {
             { name: '郑十', dept: '芯片设计部', value: 0.55 }
         ];
         resUserActivity.innerHTML = users.map((u, i) => `
-            <div class="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
+            <div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
                 <div class="flex items-center space-x-3">
-                    <span class="w-6 h-6 ${i < 3 ? 'bg-yellow-500' : 'bg-slate-600'} rounded-full flex items-center justify-center text-xs font-bold ${i < 3 ? 'text-slate-900' : 'text-white'}">${i + 1}</span>
-                    <span class="text-sm">${u.name}</span>
-                    <span class="text-xs text-slate-400">${u.dept}</span>
+                    <span class="w-6 h-6 ${i < 3 ? 'bg-yellow-500' : 'bg-slate-300'} rounded-full flex items-center justify-center text-xs font-bold ${i < 3 ? 'text-slate-900' : 'text-slate-700'}">${i + 1}</span>
+                    <span class="text-sm text-slate-800">${u.name}</span>
+                    <span class="text-xs text-slate-500">${u.dept}</span>
                 </div>
-                <span class="text-sm text-blue-400">${u.value}M</span>
+                <span class="text-sm text-cyan-600">${u.value}M</span>
             </div>
         `).join('');
     }
@@ -1277,12 +1281,12 @@ function initDashboardDynamicContent() {
             { type: '容量预警', title: 'GPU资源使用率达76%', status: 'warning', color: 'amber' }
         ];
         mgtEvents.innerHTML = events.map(e => `
-            <div class="p-3 bg-slate-700/30 rounded-lg">
+            <div class="p-3 bg-slate-50 rounded-lg">
                 <div class="flex items-center justify-between mb-2">
-                    <span class="text-xs px-2 py-0.5 bg-${e.color}-500/20 text-${e.color}-400 rounded">${e.type}</span>
-                    <span class="text-xs ${e.status === 'pending' ? 'text-amber-400' : e.status === 'warning' ? 'text-yellow-400' : 'text-green-400'}">${e.status === 'pending' ? '待处理' : e.status === 'warning' ? '预警' : '已解决'}</span>
+                    <span class="text-xs px-2 py-0.5 bg-${e.color}-100 text-${e.color}-700 rounded">${e.type}</span>
+                    <span class="text-xs ${e.status === 'pending' ? 'text-amber-600' : e.status === 'warning' ? 'text-yellow-600' : 'text-green-600'}">${e.status === 'pending' ? '待处理' : e.status === 'warning' ? '预警' : '已解决'}</span>
                 </div>
-                <p class="text-sm text-slate-300">${e.title}</p>
+                <p class="text-sm text-slate-600">${e.title}</p>
             </div>
         `).join('');
     }
@@ -1457,24 +1461,24 @@ function renderQuotaRequestsPage() {
 
     container.innerHTML = myRequests.map(req => {
         const statusColors = {
-            'pending': { bg: 'bg-yellow-500/20', text: 'text-yellow-400', label: '待审批' },
-            'approved': { bg: 'bg-green-500/20', text: 'text-green-400', label: '已通过' },
-            'rejected': { bg: 'bg-red-500/20', text: 'text-red-400', label: '已拒绝' }
+            'pending': { bg: 'bg-yellow-100', text: 'text-yellow-700', label: '待审批' },
+            'approved': { bg: 'bg-green-100', text: 'text-green-700', label: '已通过' },
+            'rejected': { bg: 'bg-red-100', text: 'text-red-700', label: '已拒绝' }
         };
         const colors = statusColors[req.status] || statusColors['pending'];
 
         return `
-            <div class="p-4 bg-slate-700/30 rounded-lg border border-slate-600 mb-3">
+            <div class="p-4 bg-slate-50 rounded-lg border border-slate-200 mb-3">
                 <div class="flex items-center justify-between mb-2">
                     <div>
-                        <span class="font-medium text-white">${req.requestType === 'increase' ? '申请增加配额' : '新分配配额'}</span>
+                        <span class="font-medium text-slate-800">${req.requestType === 'increase' ? '申请增加配额' : '新分配配额'}</span>
                         <span class="ml-2 px-2 py-0.5 ${colors.bg} ${colors.text} rounded text-xs">${colors.label}</span>
                     </div>
-                    <span class="text-sm text-slate-400">${req.createdAt}</span>
+                    <span class="text-sm text-slate-500">${req.createdAt}</span>
                 </div>
-                <div class="text-sm text-slate-300 mb-1">申请额度: <span class="text-white font-medium">${formatNumber(req.requestedQuota)} 百万Token</span></div>
-                <div class="text-sm text-slate-400 mb-2">申请理由: ${req.reason}</div>
-                ${req.approverId ? `<div class="text-xs text-slate-500">审批意见: ${req.approvalComment || '无'}</div>` : ''}
+                <div class="text-sm text-slate-500 mb-1">申请额度: <span class="text-slate-800 font-medium">${formatNumber(req.requestedQuota)} 百万Token</span></div>
+                <div class="text-sm text-slate-500 mb-2">申请理由: ${req.reason}</div>
+                ${req.approverId ? `<div class="text-xs text-slate-400">审批意见: ${req.approvalComment || '无'}</div>` : ''}
             </div>
         `;
     }).join('');
@@ -1495,37 +1499,37 @@ function renderProjectsPage() {
     container.innerHTML = projects.map(proj => {
         const dept = getDepartments().find(d => d.id === proj.departmentId);
         const statusColors = proj.status === 'active'
-            ? { bg: 'bg-green-500/20', text: 'text-green-400', label: '进行中' }
-            : { bg: 'bg-slate-500/20', text: 'text-slate-400', label: '已结束' };
+            ? { bg: 'bg-green-100', text: 'text-green-700', label: '进行中' }
+            : { bg: 'bg-slate-100', text: 'text-slate-600', label: '已结束' };
         const newStatus = proj.status === 'active' ? 'ended' : 'active';
         const newStatusLabel = proj.status === 'active' ? '结束项目' : '开始项目';
 
         return `
-            <div class="bg-slate-800/50 rounded-xl p-5 border border-slate-700">
+            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-sm">
                 <div class="flex items-center justify-between mb-3">
                     <div class="flex items-center justify-between mb-1">
-                        <h4 class="font-semibold text-white">${proj.name}</h4>
-                        <span class="text-xs text-slate-500">${proj.code || ''}</span>
+                        <h4 class="font-semibold text-slate-800">${proj.name}</h4>
+                        <span class="text-xs text-slate-400">${proj.code || ''}</span>
                     </div>
                     <span class="px-2 py-0.5 ${statusColors.bg} ${statusColors.text} rounded text-xs">${statusColors.label}</span>
                 </div>
-                <p class="text-sm text-slate-400 mb-3">${proj.description || '暂无描述'}</p>
+                <p class="text-sm text-slate-500 mb-3">${proj.description || '暂无描述'}</p>
                 <div class="space-y-2 text-sm">
                     <div class="flex justify-between">
-                        <span class="text-slate-400">所属部门:</span>
-                        <span class="text-white">${dept?.name || '-'}</span>
+                        <span class="text-slate-500">所属部门:</span>
+                        <span class="text-slate-700">${dept?.name || '-'}</span>
                     </div>
                     <div class="flex justify-between">
-                        <span class="text-slate-400">已使用Token:</span>
-                        <span class="text-white">${formatNumber(proj.quotaUsed || 0)}</span>
+                        <span class="text-slate-500">已使用Token:</span>
+                        <span class="text-slate-700">${formatNumber(proj.quotaUsed || 0)}</span>
                     </div>
                     <div class="flex justify-between">
-                        <span class="text-slate-400">项目负责人:</span>
-                        <span class="text-white">${proj.manager || '-'}</span>
+                        <span class="text-slate-500">项目负责人:</span>
+                        <span class="text-slate-700">${proj.manager || '-'}</span>
                     </div>
                 </div>
-                <div class="mt-4 pt-3 border-t border-slate-700 flex justify-end">
-                    <button onclick="toggleProjectStatus('${proj.id}', '${newStatus}')" class="px-3 py-1.5 ${proj.status === 'active' ? 'bg-slate-600 hover:bg-slate-500' : 'bg-green-600 hover:bg-green-500'} text-white rounded text-sm transition">
+                <div class="mt-4 pt-3 border-t border-slate-200 flex justify-end">
+                    <button onclick="toggleProjectStatus('${proj.id}', '${newStatus}')" class="px-3 py-1.5 ${proj.status === 'active' ? 'bg-slate-200 text-slate-700 hover:bg-slate-300' : 'bg-green-600 text-white hover:bg-green-700'} rounded text-sm transition">
                         ${newStatusLabel}
                     </button>
                 </div>
@@ -1568,13 +1572,13 @@ function initUserMgmtTabs() {
         btn.addEventListener('click', function() {
             const tab = this.getAttribute('data-tab');
 
-            // 更新按钮状态
+            // 更新按钮状态 - Light mode
             tabBtns.forEach(b => {
-                b.classList.remove('bg-blue-500', 'text-white');
-                b.classList.add('bg-slate-700', 'text-slate-300');
+                b.classList.remove('active', 'bg-slate-800', 'text-white');
+                b.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-200');
             });
-            this.classList.remove('bg-slate-700', 'text-slate-300');
-            this.classList.add('bg-blue-500', 'text-white');
+            this.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-200');
+            this.classList.add('active', 'bg-slate-800', 'text-white');
 
             // 更新内容显示
             tabContents.forEach(content => {
@@ -1603,19 +1607,19 @@ function renderUsersList() {
         const roleColors = getRoleColorConfig(user.role);
 
         return `
-            <tr class="border-b border-slate-700/50 hover:bg-slate-700/20">
-                <td class="py-3 text-white">${user.username}</td>
+            <tr class="border-b border-slate-100 hover:bg-slate-50">
+                <td class="py-3 text-slate-800">${user.username}</td>
                 <td class="py-3">
                     <span class="px-2 py-1 ${roleColors.bg} ${roleColors.text} rounded text-xs">${getRoleDisplayName(user.role)}</span>
                 </td>
-                <td class="py-3 text-slate-300">${dept?.name || '-'}</td>
-                <td class="py-3 text-slate-300">${userProjects.map(p => p.name).join(', ') || '-'}</td>
+                <td class="py-3 text-slate-600">${dept?.name || '-'}</td>
+                <td class="py-3 text-slate-600">${userProjects.map(p => p.name).join(', ') || '-'}</td>
                 <td class="py-3">
-                    <span class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs">${user.status === 'active' ? '正常' : '禁用'}</span>
+                    <span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs">${user.status === 'active' ? '正常' : '禁用'}</span>
                 </td>
                 <td class="py-3">
-                    <button class="text-blue-400 hover:text-blue-300 text-sm mr-3">编辑</button>
-                    ${user.role !== 'admin' ? '<button class="text-red-400 hover:text-red-300 text-sm">删除</button>' : ''}
+                    <button class="text-cyan-600 hover:text-cyan-800 text-sm mr-3">编辑</button>
+                    ${user.role !== 'admin' ? '<button class="text-red-600 hover:text-red-800 text-sm">删除</button>' : ''}
                 </td>
             </tr>
         `;
@@ -1638,32 +1642,32 @@ function renderUserQuotaListForManagement() {
         const usagePercent = Math.round((used / quota) * 100);
 
         const statusInfo = usagePercent >= 90
-            ? { bg: 'bg-red-500/20', text: 'text-red-400', label: '已耗尽' }
+            ? { bg: 'bg-red-100', text: 'text-red-700', label: '已耗尽' }
             : usagePercent >= 70
-            ? { bg: 'bg-yellow-500/20', text: 'text-yellow-400', label: '即将耗尽' }
-            : { bg: 'bg-green-500/20', text: 'text-green-400', label: '正常' };
+            ? { bg: 'bg-yellow-100', text: 'text-yellow-700', label: '即将耗尽' }
+            : { bg: 'bg-green-100', text: 'text-green-700', label: '正常' };
 
         return `
-            <tr class="border-b border-slate-700/50 hover:bg-slate-700/20">
-                <td class="py-4 text-white">${user.username}</td>
-                <td class="py-4 text-slate-400">${dept?.name || '-'}</td>
-                <td class="py-4 text-white">${formatNumber(quota)}</td>
-                <td class="py-4 text-white">${formatNumber(used)}</td>
-                <td class="py-4 text-white">${formatNumber(remaining)}</td>
+            <tr class="border-b border-slate-100 hover:bg-slate-50">
+                <td class="py-4 text-slate-800">${user.username}</td>
+                <td class="py-4 text-slate-600">${dept?.name || '-'}</td>
+                <td class="py-4 text-slate-800">${formatNumber(quota)}</td>
+                <td class="py-4 text-slate-800">${formatNumber(used)}</td>
+                <td class="py-4 text-slate-800">${formatNumber(remaining)}</td>
                 <td class="py-4">
                     <div class="flex items-center space-x-2">
-                        <div class="w-24 h-2 bg-slate-700 rounded-full overflow-hidden">
+                        <div class="w-24 h-2 bg-slate-200 rounded-full overflow-hidden">
                             <div class="h-full ${usagePercent >= 90 ? 'bg-red-500' : usagePercent >= 70 ? 'bg-yellow-500' : 'bg-green-500'}" style="width: ${usagePercent}%"></div>
                         </div>
-                        <span class="text-xs text-slate-400">${usagePercent}%</span>
+                        <span class="text-xs text-slate-500">${usagePercent}%</span>
                     </div>
                 </td>
                 <td class="py-4">
                     <span class="px-2 py-1 ${statusInfo.bg} ${statusInfo.text} rounded text-xs">${statusInfo.label}</span>
                 </td>
                 <td class="py-4">
-                    <button class="text-blue-400 hover:text-blue-300 text-sm mr-3">编辑</button>
-                    <button class="text-red-400 hover:text-red-300 text-sm">删除</button>
+                    <button class="text-cyan-600 hover:text-cyan-800 text-sm mr-3">编辑</button>
+                    <button class="text-red-600 hover:text-red-800 text-sm">删除</button>
                 </td>
             </tr>
         `;
@@ -1726,13 +1730,13 @@ function initQuotaTabs() {
         btn.addEventListener('click', function() {
             const tab = this.getAttribute('data-tab');
 
-            // 更新按钮状态
+            // 更新按钮状态 - Light mode
             tabBtns.forEach(b => {
-                b.classList.remove('bg-blue-500', 'text-white');
-                b.classList.add('bg-slate-700', 'text-slate-300');
+                b.classList.remove('active', 'bg-slate-800', 'text-white');
+                b.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-200');
             });
-            this.classList.remove('bg-slate-700', 'text-slate-300');
-            this.classList.add('bg-blue-500', 'text-white');
+            this.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-200');
+            this.classList.add('active', 'bg-slate-800', 'text-white');
 
             // 更新内容显示
             tabContents.forEach(content => {
@@ -1806,22 +1810,22 @@ function renderMyRequestsList() {
             }
 
             return `
-                <div class="bg-slate-700/30 rounded-lg p-4 border border-slate-700">
+                <div class="bg-slate-50 rounded-lg p-4 border border-slate-200">
                     <div class="flex items-center justify-between">
                         <div>
                             <div class="flex items-center space-x-3">
-                                <span class="text-white font-medium">申请额度: ${formatNumber(req.requestedQuota)}</span>
+                                <span class="text-slate-800 font-medium">申请额度: ${formatNumber(req.requestedQuota)}</span>
                                 <span class="px-2 py-0.5 ${statusInfo.bg} ${statusInfo.text} rounded text-xs">${statusLabel}</span>
                             </div>
-                            <p class="text-slate-400 text-sm mt-1">申请类型: ${req.quotaType === 'user' ? '用户额度' : req.quotaType === 'project' ? '项目额度' : '部门额度'}
+                            <p class="text-slate-500 text-sm mt-1">申请类型: ${req.quotaType === 'user' ? '用户额度' : req.quotaType === 'project' ? '项目额度' : '部门额度'}
                                 ${req.quotaType === 'project' && targetName ? ` - ${targetName}` : ''}
                             </p>
-                            <p class="text-slate-400 text-sm mt-1">申请原因: ${req.reason || '-'}</p>
-                            <p class="text-slate-500 text-xs mt-2">申请时间: ${req.createdAt}</p>
+                            <p class="text-slate-500 text-sm mt-1">申请原因: ${req.reason || '-'}</p>
+                            <p class="text-slate-400 text-xs mt-2">申请时间: ${req.createdAt}</p>
                         </div>
                         ${req.status === 'approved' && req.approvalComment ? `
                             <div class="text-right">
-                                <p class="text-green-400 text-sm">审批意见: ${req.approvalComment}</p>
+                                <p class="text-green-600 text-sm">审批意见: ${req.approvalComment}</p>
                             </div>
                         ` : ''}
                     </div>
@@ -1902,22 +1906,22 @@ function renderApprovalRequestsList() {
             }
 
             return `
-                <div class="p-4 bg-slate-700/30 rounded-lg border border-slate-600 mb-3">
+                <div class="p-4 bg-slate-50 rounded-lg border border-slate-200 mb-3">
                     <div class="flex items-center justify-between mb-2">
                         <div class="flex items-center">
-                            <input type="checkbox" class="approval-checkbox w-4 h-4 rounded bg-slate-700 border-slate-600 text-blue-500 focus:ring-blue-500 mr-3" data-id="${req.id}">
-                            <span class="font-medium text-white">${req.userName}</span>
-                            <span class="ml-2 text-slate-400">申请 ${req.requestType === 'increase' ? '增加' : '新分配'} ${req.quotaType === 'project' ? '项目' : '用户'} 配额</span>
-                            ${req.quotaType === 'project' ? `<span class="ml-1 text-blue-400">【${targetName}】</span>` : ''}
-                            <span class="ml-2 px-2 py-0.5 bg-yellow-500/20 text-yellow-400 rounded text-xs">待审批</span>
+                            <input type="checkbox" class="approval-checkbox w-4 h-4 rounded bg-slate-50 border-slate-300 text-cyan-600 focus:ring-cyan-500 mr-3" data-id="${req.id}">
+                            <span class="font-medium text-slate-800">${req.userName}</span>
+                            <span class="ml-2 text-slate-500">申请 ${req.requestType === 'increase' ? '增加' : '新分配'} ${req.quotaType === 'project' ? '项目' : '用户'} 配额</span>
+                            ${req.quotaType === 'project' ? `<span class="ml-1 text-cyan-600">【${targetName}】</span>` : ''}
+                            <span class="ml-2 px-2 py-0.5 bg-yellow-100 text-yellow-700 rounded text-xs">待审批</span>
                         </div>
-                        <span class="text-sm text-slate-400">${req.createdAt}</span>
+                        <span class="text-sm text-slate-500">${req.createdAt}</span>
                     </div>
-                    <div class="text-sm text-slate-300 mb-1">申请额度: <span class="text-white font-medium">${formatNumber(req.requestedQuota)} 百万Token</span></div>
-                    <div class="text-sm text-slate-400 mb-3">申请理由: ${req.reason}</div>
+                    <div class="text-sm text-slate-500 mb-1">申请额度: <span class="text-slate-800 font-medium">${formatNumber(req.requestedQuota)} 百万Token</span></div>
+                    <div class="text-sm text-slate-500 mb-3">申请理由: ${req.reason}</div>
                     <div class="flex space-x-2">
-                        <button onclick="approveRequest('${req.id}', true)" class="px-3 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600">批准</button>
-                        <button onclick="approveRequest('${req.id}', false)" class="px-3 py-1 bg-red-500 text-white rounded text-sm hover:bg-red-600">拒绝</button>
+                        <button onclick="approveRequest('${req.id}', true)" class="px-3 py-1 bg-green-600 text-white rounded text-sm hover:bg-green-700">批准</button>
+                        <button onclick="approveRequest('${req.id}', false)" class="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700">拒绝</button>
                     </div>
                 </div>
             `;
@@ -2058,34 +2062,34 @@ function showAddProjectModal() {
     const content = `
         <div class="space-y-4">
             <div>
-                <label class="block text-sm text-slate-400 mb-2">项目编码 <span class="text-red-400">*</span></label>
-                <input type="text" id="projectCode" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500" placeholder="请输入项目编码，如：PROJ-001">
+                <label class="block text-sm text-slate-600 mb-2">项目编码 <span class="text-red-500">*</span></label>
+                <input type="text" id="projectCode" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500" placeholder="请输入项目编码，如：PROJ-001">
             </div>
             <div>
-                <label class="block text-sm text-slate-400 mb-2">项目名称 <span class="text-red-400">*</span></label>
-                <input type="text" id="projectName" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500" placeholder="请输入项目名称">
+                <label class="block text-sm text-slate-600 mb-2">项目名称 <span class="text-red-500">*</span></label>
+                <input type="text" id="projectName" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500" placeholder="请输入项目名称">
             </div>
             <div>
-                <label class="block text-sm text-slate-400 mb-2">项目负责人 <span class="text-red-400">*</span></label>
-                <select id="projectManager" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                <label class="block text-sm text-slate-600 mb-2">项目负责人 <span class="text-red-500">*</span></label>
+                <select id="projectManager" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500">
                     <option value="">请选择项目负责人</option>
                     ${users.filter(u => u.role !== 'admin').map(u => `<option value="${u.username}">${u.username}</option>`).join('')}
                 </select>
             </div>
             <div>
-                <label class="block text-sm text-slate-400 mb-2">所属部门</label>
-                <select id="projectDepartment" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                <label class="block text-sm text-slate-600 mb-2">所属部门</label>
+                <select id="projectDepartment" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500">
                     <option value="">请选择部门</option>
                     ${departments.map(d => `<option value="${d.id}">${d.name}</option>`).join('')}
                 </select>
             </div>
             <div>
-                <label class="block text-sm text-slate-400 mb-2">项目描述</label>
-                <textarea id="projectDesc" rows="2" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white resize-none focus:outline-none focus:border-blue-500" placeholder="请输入项目描述"></textarea>
+                <label class="block text-sm text-slate-600 mb-2">项目描述</label>
+                <textarea id="projectDesc" rows="2" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 resize-none focus:outline-none focus:border-cyan-500" placeholder="请输入项目描述"></textarea>
             </div>
             <div>
-                <label class="block text-sm text-slate-400 mb-2">项目配额 (百万Token)</label>
-                <input type="number" id="projectQuota" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500" placeholder="请输入项目配额，默认1000000">
+                <label class="block text-sm text-slate-600 mb-2">项目配额 (百万Token)</label>
+                <input type="number" id="projectQuota" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500" placeholder="请输入项目配额，默认1000000">
             </div>
         </div>
     `;
@@ -2155,23 +2159,23 @@ function showApplyQuotaModal() {
     const content = `
         <div class="space-y-4">
             <div>
-                <label class="block text-sm text-slate-400 mb-2">申请项目 <span class="text-red-400">*</span></label>
-                <select id="requestProject" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                <label class="block text-sm text-slate-600 mb-2">申请项目 <span class="text-red-500">*</span></label>
+                <select id="requestProject" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500">
                     <option value="">请选择项目</option>
                     ${projectOptions}
                 </select>
             </div>
             <div>
-                <label class="block text-sm text-slate-400 mb-2">项目负责人</label>
-                <input type="text" id="projectManager" class="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-400" readonly>
+                <label class="block text-sm text-slate-600 mb-2">项目负责人</label>
+                <input type="text" id="projectManager" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-lg text-slate-600" readonly>
             </div>
             <div>
-                <label class="block text-sm text-slate-400 mb-2">申请额度 (百万Token) <span class="text-red-400">*</span></label>
-                <input type="number" id="requestedQuota" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500" placeholder="请输入申请额度">
+                <label class="block text-sm text-slate-600 mb-2">申请额度 (百万Token) <span class="text-red-500">*</span></label>
+                <input type="number" id="requestedQuota" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500" placeholder="请输入申请额度">
             </div>
             <div>
-                <label class="block text-sm text-slate-400 mb-2">申请理由 <span class="text-red-400">*</span></label>
-                <textarea id="requestReason" rows="3" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white resize-none focus:outline-none focus:border-blue-500" placeholder="请说明申请配额的原因和用途"></textarea>
+                <label class="block text-sm text-slate-600 mb-2">申请理由 <span class="text-red-500">*</span></label>
+                <textarea id="requestReason" rows="3" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 resize-none focus:outline-none focus:border-cyan-500" placeholder="请说明申请配额的原因和用途"></textarea>
             </div>
         </div>
     `;
@@ -2252,7 +2256,7 @@ function initNewPageButtons() {
             const header = myComputingPage.querySelector('.grid.grid-cols-4');
             if (header) {
                 applyBtn = document.createElement('button');
-                applyBtn.className = 'apply-quota-btn px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition text-sm flex items-center justify-center';
+                applyBtn.className = 'apply-quota-btn px-4 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition text-sm flex items-center justify-center';
                 applyBtn.innerHTML = `
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
@@ -2279,12 +2283,12 @@ function initButtonHandlers() {
             const content = `
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-sm text-slate-400 mb-2">令牌名称</label>
-                        <input type="text" id="tokenName" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500" placeholder="请输入令牌名称">
+                        <label class="block text-sm text-slate-600 mb-2">令牌名称</label>
+                        <input type="text" id="tokenName" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500" placeholder="请输入令牌名称">
                     </div>
                     <div>
-                        <label class="block text-sm text-slate-400 mb-2">过期时间</label>
-                        <select id="tokenExpiry" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                        <label class="block text-sm text-slate-600 mb-2">过期时间</label>
+                        <select id="tokenExpiry" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500">
                             <option value="30">30天</option>
                             <option value="90">90天</option>
                             <option value="365">1年</option>
@@ -2349,12 +2353,12 @@ function initSystemConfigHandlers() {
             const content = `
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-sm text-slate-400 mb-2">服务器名称</label>
-                        <input type="text" id="gpuServerName" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500" placeholder="如: gpu-server-005">
+                        <label class="block text-sm text-slate-600 mb-2">服务器名称</label>
+                        <input type="text" id="gpuServerName" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500" placeholder="如: gpu-server-005">
                     </div>
                     <div>
-                        <label class="block text-sm text-slate-400 mb-2">GPU型号</label>
-                        <select id="gpuModel" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                        <label class="block text-sm text-slate-600 mb-2">GPU型号</label>
+                        <select id="gpuModel" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500">
                             <option value="A100 x8">A100 x8</option>
                             <option value="A100 x4">A100 x4</option>
                             <option value="H100 x8">H100 x8</option>
@@ -2362,8 +2366,8 @@ function initSystemConfigHandlers() {
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm text-slate-400 mb-2">所在区域</label>
-                        <select id="gpuZone" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                        <label class="block text-sm text-slate-600 mb-2">所在区域</label>
+                        <select id="gpuZone" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500">
                             <option value="红区">红区（生产环境）</option>
                             <option value="黄区">黄区（测试环境）</option>
                         </select>
@@ -2379,7 +2383,7 @@ function initSystemConfigHandlers() {
                     // Add new GPU server to the list
                     const list = document.getElementById('gpuServersList');
                     const newServer = document.createElement('div');
-                    newServer.className = 'p-3 bg-slate-700/30 rounded-lg border border-slate-600';
+                    newServer.className = 'p-3 bg-white rounded-lg border border-slate-200';
                     newServer.innerHTML = `
                         <div class="flex items-center justify-between mb-2">
                             <span class="font-mono text-sm font-medium">${name}</span>
@@ -2411,16 +2415,16 @@ function initSystemConfigHandlers() {
             const content = `
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-sm text-slate-400 mb-2">模型名称</label>
-                        <input type="text" id="newModelName" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500" placeholder="如: GPT-4-Turbo">
+                        <label class="block text-sm text-slate-600 mb-2">模型名称</label>
+                        <input type="text" id="newModelName" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500" placeholder="如: GPT-4-Turbo">
                     </div>
                     <div>
-                        <label class="block text-sm text-slate-400 mb-2">消耗系数</label>
-                        <input type="number" id="modelFactor" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500" placeholder="1.0" value="1.0" step="0.1">
+                        <label class="block text-sm text-slate-600 mb-2">消耗系数</label>
+                        <input type="number" id="modelFactor" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500" placeholder="1.0" value="1.0" step="0.1">
                     </div>
                     <div>
-                        <label class="block text-sm text-slate-400 mb-2">部署区域</label>
-                        <select id="modelZone" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                        <label class="block text-sm text-slate-600 mb-2">部署区域</label>
+                        <select id="modelZone" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500">
                             <option value="红区">红区</option>
                             <option value="黄区">黄区</option>
                             <option value="未分配">未分配</option>
@@ -2436,7 +2440,7 @@ function initSystemConfigHandlers() {
                 if (name.trim()) {
                     const list = document.getElementById('modelsList');
                     const newModel = document.createElement('div');
-                    newModel.className = 'p-3 bg-slate-700/30 rounded-lg border border-slate-600';
+                    newModel.className = 'p-3 bg-white rounded-lg border border-slate-200';
                     newModel.innerHTML = `
                         <div class="flex items-center justify-between mb-2">
                             <span class="font-medium text-sm">${name}</span>
@@ -2468,8 +2472,8 @@ function initSystemConfigHandlers() {
             const content = `
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-sm text-slate-400 mb-2">公告类型</label>
-                        <select id="announceType" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                        <label class="block text-sm text-slate-600 mb-2">公告类型</label>
+                        <select id="announceType" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500">
                             <option value="important">重要通知</option>
                             <option value="quota">额度调整</option>
                             <option value="feature">功能更新</option>
@@ -2477,8 +2481,8 @@ function initSystemConfigHandlers() {
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm text-slate-400 mb-2">公告内容</label>
-                        <textarea id="announceContent" rows="3" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500 resize-none" placeholder="请输入公告内容"></textarea>
+                        <label class="block text-sm text-slate-600 mb-2">公告内容</label>
+                        <textarea id="announceContent" rows="3" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500 resize-none" placeholder="请输入公告内容"></textarea>
                     </div>
                 </div>
             `;
@@ -2503,9 +2507,9 @@ function initSystemConfigHandlers() {
                     newAnnounce.innerHTML = `
                         <div class="flex items-center justify-between mb-2">
                             <span class="text-sm font-medium text-${typeInfo.color}-400">${typeInfo.label}</span>
-                            <button class="text-slate-400 hover:text-white text-xs">删除</button>
+                            <button class="text-red-600 hover:text-red-800 text-xs">删除</button>
                         </div>
-                        <p class="text-sm text-slate-300 mb-1">${content}</p>
+                        <p class="text-sm text-slate-600 mb-1">${content}</p>
                         <span class="text-xs text-slate-400">${today}</span>
                     `;
                     list.insertBefore(newAnnounce, list.firstChild);
@@ -2525,12 +2529,12 @@ function initSystemConfigHandlers() {
             const content = `
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-sm text-slate-400 mb-2">规则名称</label>
-                        <input type="text" id="ruleName" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500" placeholder="如: GPU温度过高">
+                        <label class="block text-sm text-slate-600 mb-2">规则名称</label>
+                        <input type="text" id="ruleName" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500" placeholder="如: GPU温度过高">
                     </div>
                     <div>
-                        <label class="block text-sm text-slate-400 mb-2">触发条件</label>
-                        <select id="ruleCondition" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
+                        <label class="block text-sm text-slate-600 mb-2">触发条件</label>
+                        <select id="ruleCondition" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-lg text-slate-800 focus:outline-none focus:border-cyan-500">
                             <option>GPU温度超过 80℃</option>
                             <option>内存使用率超过 90%</option>
                             <option>磁盘空间不足 10%</option>
@@ -2546,7 +2550,7 @@ function initSystemConfigHandlers() {
                 if (name.trim()) {
                     const list = document.getElementById('alertRulesList');
                     const newRule = document.createElement('div');
-                    newRule.className = 'p-3 bg-slate-700/30 rounded-lg border border-slate-600';
+                    newRule.className = 'p-3 bg-white rounded-lg border border-slate-200';
                     newRule.innerHTML = `
                         <div class="flex items-center justify-between mb-2">
                             <span class="font-medium text-sm">${name}</span>
@@ -2681,15 +2685,15 @@ function showProjectSwitchModal() {
         const remaining = (p.quota || 0) - (p.usedQuota || 0);
         const isLowBalance = remaining < 100000; // 余额少于10万显示警告
 
-        return `<div class="project-option p-3 bg-slate-700/50 rounded-lg border border-slate-600 cursor-pointer hover:border-indigo-500 transition" data-project-id="${p.id}" data-project-name="${p.name}">
+        return `<div class="project-option p-3 bg-white rounded-lg border border-slate-200 cursor-pointer hover:border-cyan-500 transition" data-project-id="${p.id}" data-project-name="${p.name}">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="font-medium text-white">${p.name}</p>
-                    <p class="text-xs text-slate-400 mt-1">部门: ${p.departmentName || '-'}</p>
+                    <p class="font-medium text-slate-800">${p.name}</p>
+                    <p class="text-xs text-slate-500 mt-1">部门: ${p.departmentName || '-'}</p>
                 </div>
                 <div class="text-right">
-                    <p class="text-sm ${isLowBalance ? 'text-amber-400' : 'text-indigo-400'}">剩余: ${formatNumber(remaining)}</p>
-                    ${isLowBalance ? '<p class="text-xs text-amber-400 mt-1">余额不足</p>' : ''}
+                    <p class="text-sm ${isLowBalance ? 'text-amber-600' : 'text-cyan-600'}">剩余: ${formatNumber(remaining)}</p>
+                    ${isLowBalance ? '<p class="text-xs text-amber-600 mt-1">余额不足</p>' : ''}
                 </div>
             </div>
         </div>`;
@@ -2718,7 +2722,7 @@ function showProjectSwitchModal() {
             </div>
 
             <div>
-                <p class="text-sm text-slate-400 mb-2">当前项目: <span class="text-white">${currentProject?.projectName || '未挂靠'}</span></p>
+                <p class="text-sm text-slate-600 mb-2">当前项目: <span class="text-slate-800">${currentProject?.projectName || '未挂靠'}</span></p>
                 <p class="text-xs text-slate-500">只能切换到有剩余额度的项目</p>
             </div>
 
@@ -2844,14 +2848,14 @@ function showProjectHistory() {
     const historyItems = history.map(h => {
         const isActive = h.status === 'active';
         const endDate = h.endDate || '至今';
-        return `<div class="p-4 bg-slate-700/30 rounded-lg border ${isActive ? 'border-indigo-500/50' : 'border-slate-600'}">
+        return `<div class="p-4 bg-white rounded-lg border ${isActive ? 'border-cyan-300' : 'border-slate-200'}">
             <div class="flex items-center justify-between">
                 <div>
                     <div class="flex items-center space-x-2">
-                        <p class="font-medium text-white">${h.projectName}</p>
-                        ${isActive ? '<span class="px-2 py-0.5 bg-green-500/20 text-green-400 rounded text-xs">当前</span>' : ''}
+                        <p class="font-medium text-slate-800">${h.projectName}</p>
+                        ${isActive ? '<span class="px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">当前</span>' : ''}
                     </div>
-                    <p class="text-xs text-slate-400 mt-1">${h.startDate} ~ ${endDate}</p>
+                    <p class="text-xs text-slate-500 mt-1">${h.startDate} ~ ${endDate}</p>
                 </div>
                 <div class="text-right">
                     ${getStatusBadge(h.status)}

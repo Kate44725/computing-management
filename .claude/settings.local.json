@@ -5,7 +5,8 @@
       "Bash(mkdir:*)",
       "Bash(ls:*)",
       "Bash(git -C:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Skill(frontend-design:frontend-design)"
     ]
   }
 }
