@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI算力管理平台</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <style>
         @keyframes pulse-soft {
             0%, 100% { opacity: 1; }
@@ -170,12 +170,25 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
                     </svg>
                     <span>额度管理</span>
+                    <span id="quotaRequestBadge" class="hidden ml-auto px-2 py-0.5 text-xs bg-red-500 text-white rounded-full">0</span>
                 </a>
                 <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-700/50 transition" data-page="dashboard">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                     </svg>
                     <span>运营看板</span>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-700/50 transition" data-page="projects">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+                    </svg>
+                    <span>项目管理</span>
+                </a>
+                <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-700/50 transition" data-page="user-management">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <span>用户管理</span>
                 </a>
                 <a href="#" class="nav-item flex items-center space-x-3 px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-700/50 transition" data-page="system-config">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -229,17 +242,49 @@
             <div class="p-8">
                 <!-- Page: 我的算力 -->
                 <div id="page-my-computing" class="page active">
+                    <!-- 项目挂靠信息卡片 -->
+                    <div class="bg-gradient-to-br from-indigo-500/20 to-indigo-600/20 border border-indigo-500/30 rounded-xl p-6 mb-8">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 rounded-xl bg-indigo-500/30 flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-indigo-400 text-sm font-medium">当前挂靠项目</span>
+                                        <span id="currentProjectBadge" class="px-2 py-0.5 bg-green-500/20 text-green-400 rounded text-xs">进行中</span>
+                                    </div>
+                                    <p class="text-xl font-bold text-white mt-1" id="currentProjectName">加载中...</p>
+                                    <p class="text-sm text-slate-400 mt-1" id="currentProjectPeriod">挂靠时间: --</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <button onclick="showProjectSwitchModal()" class="px-4 py-2 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition text-sm flex items-center">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                                    </svg>
+                                    切换项目
+                                </button>
+                                <button onclick="showProjectHistory()" class="px-4 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition text-sm">
+                                    查看历史
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Stats Cards -->
                     <div class="grid grid-cols-4 gap-6 mb-8">
                         <div class="bg-gradient-to-br from-blue-500/20 to-blue-600/20 border border-blue-500/30 rounded-xl p-6">
                             <div class="flex items-center justify-between mb-4">
-                                <span class="text-blue-400">总Token额度</span>
+                                <span class="text-blue-400">总额度</span>
                                 <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                             </div>
                             <p class="text-3xl font-bold">1,000,000</p>
-                            <p class="text-sm text-slate-400 mt-2">Token</p>
+                            <p class="text-sm text-slate-400 mt-2">百万Token</p>
                         </div>
                         <div class="bg-gradient-to-br from-green-500/20 to-green-600/20 border border-green-500/30 rounded-xl p-6">
                             <div class="flex items-center justify-between mb-4">
@@ -249,9 +294,9 @@
                                 </svg>
                             </div>
                             <p class="text-3xl font-bold">325,680</p>
-                            <p class="text-sm text-slate-400 mt-2">Token</p>
+                            <p class="text-sm text-slate-400 mt-2">百万Token</p>
                         </div>
-                        <div class="bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-xl p-6">
+                        <div class="bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-xl p-6 relative">
                             <div class="flex items-center justify-between mb-4">
                                 <span class="text-purple-400">剩余额度</span>
                                 <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -259,7 +304,10 @@
                                 </svg>
                             </div>
                             <p class="text-3xl font-bold">674,320</p>
-                            <p class="text-sm text-slate-400 mt-2">Token</p>
+                            <div class="flex items-center justify-between mt-2">
+                                <p class="text-sm text-slate-400">百万Token</p>
+                                <button onclick="navigateToQuotaManage()" class="apply-quota-btn px-2 py-1 bg-purple-500 text-white rounded text-xs hover:bg-purple-600 transition">申请额度</button>
+                            </div>
                         </div>
                         <div class="bg-gradient-to-br from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-xl p-6">
                             <div class="flex items-center justify-between mb-4">
@@ -278,7 +326,7 @@
                     <div class="grid grid-cols-3 gap-6">
                         <!-- Usage Trend -->
                         <div class="col-span-2 bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                            <h3 class="text-lg font-semibold mb-6">Token使用趋势</h3>
+                            <h3 class="text-lg font-semibold mb-6">额度使用趋势</h3>
                             <div class="chart-container">
                                 <canvas id="myComputingTrendChart"></canvas>
                             </div>
@@ -353,162 +401,90 @@
 
                 <!-- Page: 额度管理 -->
                 <div id="page-quota-manage" class="page">
-                    <!-- Admin Only Warning -->
-                    <div class="mb-6 bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
-                        <div class="flex items-center">
-                            <svg class="w-5 h-5 text-amber-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                            </svg>
-                            <span class="text-amber-400 text-sm">仅管理员可访问此页面</span>
+                    <!-- Tabs -->
+                    <div class="flex items-center space-x-4 mb-6">
+                        <button class="quota-tab-btn active px-4 py-2 bg-blue-500 text-white rounded-lg text-sm transition" data-tab="my-requests">我的申请</button>
+                        <button class="quota-tab-btn px-4 py-2 bg-slate-700 text-slate-300 rounded-lg text-sm hover:bg-slate-600 transition hidden" data-tab="approval" id="approvalTabBtn">配额审批</button>
+                    </div>
+
+                    <!-- Tab Content: 我的申请 -->
+                    <div id="tab-my-requests" class="quota-tab-content">
+                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-lg font-semibold">我的申请记录</h3>
+                                <button id="applyQuotaBtn" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition text-sm flex items-center">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                                    </svg>
+                                    申请额度
+                                </button>
+                            </div>
+                            <div id="myRequestsList" class="space-y-4">
+                                <p class="text-slate-400 text-center py-8">暂无申请记录</p>
+                            </div>
+                            <!-- 我的申请分页 -->
+                            <div id="myRequestsPagination" class="flex items-center justify-between mt-4 pt-4 border-t border-slate-700">
+                                <div class="text-sm text-slate-400">
+                                    共 <span id="myRequestsTotalCount">0</span> 条记录
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <button id="myRequestsPrevBtn" class="px-3 py-1 bg-slate-700 text-white rounded text-sm hover:bg-slate-600 disabled:opacity-50" disabled>上一页</button>
+                                    <span id="myRequestsPageInfo" class="text-sm text-slate-300">1 / 1</span>
+                                    <button id="myRequestsNextBtn" class="px-3 py-1 bg-slate-700 text-white rounded text-sm hover:bg-slate-600 disabled:opacity-50" disabled>下一页</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Action Buttons -->
-                    <div class="flex items-center space-x-4 mb-8">
-                        <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition text-sm flex items-center">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
-                            </svg>
-                            批量导入额度
-                        </button>
-                        <button class="px-4 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition text-sm flex items-center">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                            </svg>
-                            批量导出额度
-                        </button>
-                        <button class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition text-sm flex items-center">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
-                            </svg>
-                            添加用户
-                        </button>
-                    </div>
-
-                    <!-- User Quota Table -->
-                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                        <h3 class="text-lg font-semibold mb-6">用户额度列表</h3>
-                        <table class="w-full">
-                            <thead>
-                                <tr class="text-left text-slate-400 text-sm border-b border-slate-700">
-                                    <th class="pb-3 font-medium">用户姓名</th>
-                                    <th class="pb-3 font-medium">所属部门</th>
-                                    <th class="pb-3 font-medium">当前额度</th>
-                                    <th class="pb-3 font-medium">已使用</th>
-                                    <th class="pb-3 font-medium">剩余额度</th>
-                                    <th class="pb-3 font-medium">使用率</th>
-                                    <th class="pb-3 font-medium">状态</th>
-                                    <th class="pb-3 font-medium">操作</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-sm">
-                                <tr class="border-b border-slate-700/50">
-                                    <td class="py-4">张三</td>
-                                    <td class="py-4 text-slate-400">芯片设计部</td>
-                                    <td class="py-4">500,000</td>
-                                    <td class="py-4">325,680</td>
-                                    <td class="py-4">174,320</td>
-                                    <td class="py-4">
-                                        <div class="flex items-center">
-                                            <div class="w-24 h-2 bg-slate-700 rounded-full overflow-hidden mr-2">
-                                                <div class="h-full bg-yellow-500" style="width: 65%"></div>
-                                            </div>
-                                            <span class="text-yellow-400">65%</span>
-                                        </div>
-                                    </td>
-                                    <td class="py-4"><span class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs">正常</span></td>
-                                    <td class="py-4">
-                                        <button class="text-blue-400 hover:text-blue-300 mr-3">编辑</button>
-                                        <button class="text-red-400 hover:text-red-300">删除</button>
-                                    </td>
-                                </tr>
-                                <tr class="border-b border-slate-700/50">
-                                    <td class="py-4">李四</td>
-                                    <td class="py-4 text-slate-400">验证部</td>
-                                    <td class="py-4">300,000</td>
-                                    <td class="py-4">280,000</td>
-                                    <td class="py-4">20,000</td>
-                                    <td class="py-4">
-                                        <div class="flex items-center">
-                                            <div class="w-24 h-2 bg-slate-700 rounded-full overflow-hidden mr-2">
-                                                <div class="h-full bg-red-500" style="width: 93%"></div>
-                                            </div>
-                                            <span class="text-red-400">93%</span>
-                                        </div>
-                                    </td>
-                                    <td class="py-4"><span class="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs">即将耗尽</span></td>
-                                    <td class="py-4">
-                                        <button class="text-blue-400 hover:text-blue-300 mr-3">编辑</button>
-                                        <button class="text-red-400 hover:text-red-300">删除</button>
-                                    </td>
-                                </tr>
-                                <tr class="border-b border-slate-700/50">
-                                    <td class="py-4">王五</td>
-                                    <td class="py-4 text-slate-400">封装部</td>
-                                    <td class="py-4">200,000</td>
-                                    <td class="py-4">45,000</td>
-                                    <td class="py-4">155,000</td>
-                                    <td class="py-4">
-                                        <div class="flex items-center">
-                                            <div class="w-24 h-2 bg-slate-700 rounded-full overflow-hidden mr-2">
-                                                <div class="h-full bg-green-500" style="width: 22%"></div>
-                                            </div>
-                                            <span class="text-green-400">22%</span>
-                                        </div>
-                                    </td>
-                                    <td class="py-4"><span class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs">正常</span></td>
-                                    <td class="py-4">
-                                        <button class="text-blue-400 hover:text-blue-300 mr-3">编辑</button>
-                                        <button class="text-red-400 hover:text-red-300">删除</button>
-                                    </td>
-                                </tr>
-                                <tr class="border-b border-slate-700/50">
-                                    <td class="py-4">赵六</td>
-                                    <td class="py-4 text-slate-400">芯片设计部</td>
-                                    <td class="py-4">400,000</td>
-                                    <td class="py-4">156,000</td>
-                                    <td class="py-4">244,000</td>
-                                    <td class="py-4">
-                                        <div class="flex items-center">
-                                            <div class="w-24 h-2 bg-slate-700 rounded-full overflow-hidden mr-2">
-                                                <div class="h-full bg-green-500" style="width: 39%"></div>
-                                            </div>
-                                            <span class="text-green-400">39%</span>
-                                        </div>
-                                    </td>
-                                    <td class="py-4"><span class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs">正常</span></td>
-                                    <td class="py-4">
-                                        <button class="text-blue-400 hover:text-blue-300 mr-3">编辑</button>
-                                        <button class="text-red-400 hover:text-red-300">删除</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="py-4">孙七</td>
-                                    <td class="py-4 text-slate-400">验证部</td>
-                                    <td class="py-4">250,000</td>
-                                    <td class="py-4">242,000</td>
-                                    <td class="py-4">8,000</td>
-                                    <td class="py-4">
-                                        <div class="flex items-center">
-                                            <div class="w-24 h-2 bg-slate-700 rounded-full overflow-hidden mr-2">
-                                                <div class="h-full bg-red-500" style="width: 97%"></div>
-                                            </div>
-                                            <span class="text-red-400">97%</span>
-                                        </div>
-                                    </td>
-                                    <td class="py-4"><span class="px-2 py-1 bg-red-500/20 text-red-400 rounded text-xs">即将耗尽</span></td>
-                                    <td class="py-4">
-                                        <button class="text-blue-400 hover:text-blue-300 mr-3">编辑</button>
-                                        <button class="text-red-400 hover:text-red-300">删除</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <!-- Tab Content: 配额审批 (Admin Only) -->
+                    <div id="tab-approval" class="quota-tab-content hidden">
+                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="text-lg font-semibold">待审批申请</h3>
+                                <div class="flex items-center space-x-3">
+                                    <label class="flex items-center space-x-2 text-sm text-slate-400 cursor-pointer">
+                                        <input type="checkbox" id="selectAllApproval" class="w-4 h-4 rounded bg-slate-700 border-slate-600 text-blue-500 focus:ring-blue-500">
+                                        <span>全选</span>
+                                    </label>
+                                    <button id="batchApproveBtn" class="px-3 py-1.5 bg-green-500 text-white rounded text-sm hover:bg-green-600 disabled:opacity-50" disabled>
+                                        批量批准
+                                    </button>
+                                    <button id="batchRejectBtn" class="px-3 py-1.5 bg-red-500 text-white rounded text-sm hover:bg-red-600 disabled:opacity-50" disabled>
+                                        批量拒绝
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="approvalRequestsList" class="space-y-4">
+                                <p class="text-slate-400 text-center py-8">暂无待审批申请</p>
+                            </div>
+                            <!-- 审批分页 -->
+                            <div id="approvalPagination" class="flex items-center justify-between mt-4 pt-4 border-t border-slate-700">
+                                <div class="text-sm text-slate-400">
+                                    共 <span id="approvalTotalCount">0</span> 条记录
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <button id="approvalPrevBtn" class="px-3 py-1 bg-slate-700 text-white rounded text-sm hover:bg-slate-600 disabled:opacity-50" disabled>上一页</button>
+                                    <span id="approvalPageInfo" class="text-sm text-slate-300">1 / 1</span>
+                                    <button id="approvalNextBtn" class="px-3 py-1 bg-slate-700 text-white rounded text-sm hover:bg-slate-600 disabled:opacity-50" disabled>下一页</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Page: 运营看板 -->
                 <div id="page-dashboard" class="page">
+                    <!-- Real-time Alert Banner (shown when there are unhandled alerts) -->
+                    <div id="realtime-alert-banner" class="hidden mb-4 p-4 bg-red-500/20 border border-red-500/50 rounded-lg flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <svg class="w-5 h-5 text-red-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                            </svg>
+                            <span class="text-red-400 font-medium">实时告警: <span id="alert-count">3</span> 条未处理</span>
+                        </div>
+                        <button class="text-red-400 hover:text-red-300 text-sm">查看详情</button>
+                    </div>
+
                     <!-- Time Range Selector -->
                     <div class="flex items-center justify-between mb-6">
                         <div class="flex items-center space-x-4">
@@ -521,63 +497,106 @@
                                 <input type="date" class="bg-slate-700 border border-slate-600 rounded px-3 py-1.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                             </div>
                         </div>
+                        <!-- Refresh indicator for real-time dashboards -->
+                        <div id="refresh-indicator" class="hidden flex items-center space-x-2 text-sm text-slate-400">
+                            <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                            </svg>
+                            <span>实时刷新中...</span>
+                        </div>
                     </div>
 
-                    <!-- View Tabs -->
+                    <!-- Dashboard Tab Navigation -->
                     <div class="flex items-center space-x-4 mb-8">
-                        <button class="dashboard-tab-btn active px-4 py-2 rounded-lg text-sm transition" data-view="gpu">GPU硬件看板</button>
-                        <button class="dashboard-tab-btn px-4 py-2 rounded-lg text-sm transition" data-view="token">Token看板</button>
+                        <button class="dashboard-tab-btn active px-4 py-2 rounded-lg text-sm transition" data-view="operations">运维监控</button>
+                        <button class="dashboard-tab-btn px-4 py-2 rounded-lg text-sm transition" data-view="cost">成本运营</button>
+                        <button class="dashboard-tab-btn px-4 py-2 rounded-lg text-sm transition" data-view="resource">资源分析</button>
                     </div>
 
-                    <!-- GPU Hardware View -->
-                    <div id="view-gpu" class="dashboard-view">
-                        <!-- GPU Stats Cards -->
-                        <div class="grid grid-cols-4 gap-6 mb-8">
+                    <!-- ==================== 1. 运维监控看板 ==================== -->
+                    <div id="view-operations" class="dashboard-view">
+                        <!-- Stats Cards: 模型在线状态 + 模型性能指标 + 异常告警数量 -->
+                        <div class="grid grid-cols-3 gap-6 mb-8">
+                            <!-- 模型在线状态 -->
                             <div class="bg-gradient-to-br from-blue-500/20 to-blue-600/20 border border-blue-500/30 rounded-xl p-6">
                                 <div class="flex items-center justify-between mb-4">
-                                    <span class="text-blue-400">GPU总卡数</span>
+                                    <span class="text-blue-400">模型在线状态</span>
                                     <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
                                     </svg>
                                 </div>
-                                <p class="text-3xl font-bold">200</p>
-                                <p class="text-sm text-slate-400 mt-2">张GPU卡</p>
+                                <p class="text-3xl font-bold">18/20</p>
+                                <p class="text-sm text-slate-400 mt-2">模型在线数量</p>
+                                <div class="mt-2 flex items-center">
+                                    <span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+                                    <span class="text-xs text-green-400">90% 在线率</span>
+                                </div>
                             </div>
+                            <!-- 模型性能指标 -->
                             <div class="bg-gradient-to-br from-green-500/20 to-green-600/20 border border-green-500/30 rounded-xl p-6">
                                 <div class="flex items-center justify-between mb-4">
-                                    <span class="text-green-400">可用卡数</span>
+                                    <span class="text-green-400">模型性能指标</span>
                                     <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                                     </svg>
                                 </div>
-                                <p class="text-3xl font-bold">48</p>
-                                <p class="text-sm text-slate-400 mt-2">/ 200 空闲</p>
-                            </div>
-                            <div class="bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-xl p-6">
-                                <div class="flex items-center justify-between mb-4">
-                                    <span class="text-purple-400">平均使用率</span>
-                                    <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
-                                    </svg>
+                                <p class="text-3xl font-bold">245ms</p>
+                                <p class="text-sm text-slate-400 mt-2">平均响应时间</p>
+                                <div class="mt-2 flex items-center justify-between text-xs">
+                                    <span class="text-slate-400">QPS: <span class="text-white">1,280</span></span>
+                                    <span class="text-slate-400">并发: <span class="text-white">856</span></span>
                                 </div>
-                                <p class="text-3xl font-bold">76%</p>
-                                <p class="text-sm text-slate-400 mt-2">实时负载</p>
                             </div>
+                            <!-- 异常告警数量 -->
                             <div class="bg-gradient-to-br from-red-500/20 to-red-600/20 border border-red-500/30 rounded-xl p-6">
                                 <div class="flex items-center justify-between mb-4">
-                                    <span class="text-red-400">异常卡数</span>
+                                    <span class="text-red-400">异常告警数量</span>
                                     <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                                     </svg>
                                 </div>
                                 <p class="text-3xl font-bold">3</p>
-                                <p class="text-sm text-slate-400 mt-2">有告警</p>
+                                <p class="text-sm text-slate-400 mt-2">当前告警</p>
+                                <div class="mt-2">
+                                    <span class="px-2 py-0.5 bg-red-500/20 text-red-400 rounded text-xs">2高危 1中危</span>
+                                </div>
                             </div>
                         </div>
 
-                        <!-- GPU Charts -->
-                        <div class="grid grid-cols-2 gap-6 mb-8">
-                            <!-- GPU Usage Trend -->
+                        <!-- 模型筛选器 -->
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex items-center space-x-4">
+                                <span class="text-sm text-slate-400">筛选模型：</span>
+                                <div class="relative" id="modelFilterContainer">
+                                    <button id="modelFilterBtn" type="button" class="flex items-center space-x-2 px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white text-sm hover:bg-slate-600 transition">
+                                        <span>全部模型</span>
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    </button>
+                                    <div id="modelFilterDropdown" style="display:none;" class="absolute top-full left-0 mt-2 w-72 bg-slate-800 border border-slate-600 rounded-lg shadow-xl z-50 max-h-64 overflow-y-auto">
+                                        <div class="p-2 border-b border-slate-700">
+                                            <label class="flex items-center space-x-2 cursor-pointer">
+                                                <input type="checkbox" id="selectAllModels" class="w-4 h-4 rounded bg-slate-700 border-slate-600 text-blue-500" checked>
+                                                <span class="text-sm text-white">全选</span>
+                                            </label>
+                                        </div>
+                                        <div id="modelFilterList" class="p-2 space-y-1">
+                                            <!-- 模型选项动态生成 -->
+                                        </div>
+                                        <div class="p-2 border-t border-slate-700 flex justify-between">
+                                            <button id="clearModelFilter" class="text-xs text-slate-400 hover:text-white">清除</button>
+                                            <button id="applyModelFilter" class="px-3 py-1 bg-blue-500 text-white rounded text-xs hover:bg-blue-600">应用</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span id="selectedModelCount" class="text-xs text-slate-500">已选 0 个模型</span>
+                            </div>
+                        </div>
+
+                        <!-- Charts: GPU使用率趋势 + 模型响应时间趋势 + 模型吞吐量趋势 -->
+                        <div class="grid grid-cols-3 gap-6 mb-8">
+                            <!-- GPU使用率趋势 -->
                             <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
                                 <h3 class="text-lg font-semibold mb-4">GPU使用率趋势</h3>
                                 <div class="flex items-center space-x-2 mb-4">
@@ -585,18 +604,25 @@
                                     <button class="grain-btn px-2 py-1 text-xs bg-blue-500 text-white rounded">小时</button>
                                     <button class="grain-btn px-2 py-1 text-xs bg-slate-700 text-slate-300 rounded hover:bg-slate-600">天</button>
                                     <button class="grain-btn px-2 py-1 text-xs bg-slate-700 text-slate-300 rounded hover:bg-slate-600">周</button>
-                                    <button class="grain-btn px-2 py-1 text-xs bg-slate-700 text-slate-300 rounded hover:bg-slate-600">月</button>
                                 </div>
                                 <div class="chart-container">
                                     <canvas id="gpuUsageTrendChart"></canvas>
                                 </div>
                             </div>
 
-                            <!-- GPU Load Distribution -->
+                            <!-- 模型响应时间趋势 -->
                             <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                                <h3 class="text-lg font-semibold mb-4">服务器负载分布</h3>
+                                <h3 class="text-lg font-semibold mb-4">模型响应时间趋势</h3>
                                 <div class="chart-container">
-                                    <canvas id="gpuLoadDistChart"></canvas>
+                                    <canvas id="modelResponseTimeChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- 模型吞吐量趋势 -->
+                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                                <h3 class="text-lg font-semibold mb-4">模型吞吐量趋势</h3>
+                                <div class="chart-container">
+                                    <canvas id="modelThroughputChart"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -779,10 +805,10 @@
                         </div>
                     </div>
 
-                    <!-- Token View -->
-                    <div id="view-token" class="dashboard-view" style="display: none;">
-                        <!-- Token Stats Cards -->
-                        <div class="grid grid-cols-4 gap-6 mb-8">
+                    <!-- ==================== 2. 成本运营看板 ==================== -->
+                    <div id="view-cost" class="dashboard-view" style="display: none;">
+                        <!-- Stats Cards: Token总消耗、人均消耗、部门成本、项目成本、成本趋势 -->
+                        <div class="grid grid-cols-5 gap-6 mb-8">
                             <div class="bg-gradient-to-br from-blue-500/20 to-blue-600/20 border border-blue-500/30 rounded-xl p-6">
                                 <div class="flex items-center justify-between mb-4">
                                     <span class="text-blue-400">Token总消耗</span>
@@ -795,204 +821,164 @@
                             </div>
                             <div class="bg-gradient-to-br from-green-500/20 to-green-600/20 border border-green-500/30 rounded-xl p-6">
                                 <div class="flex items-center justify-between mb-4">
-                                    <span class="text-green-400">日均消耗</span>
+                                    <span class="text-green-400">人均消耗</span>
                                     <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                                    </svg>
-                                </div>
-                                <p class="text-3xl font-bold">520K</p>
-                                <p class="text-sm text-slate-400 mt-2">Token/天</p>
-                            </div>
-                            <div class="bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-xl p-6">
-                                <div class="flex items-center justify-between mb-4">
-                                    <span class="text-purple-400">调用总次数</span>
-                                    <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                                    </svg>
-                                </div>
-                                <p class="text-3xl font-bold">86,432</p>
-                                <p class="text-sm text-slate-400 mt-2">近30天</p>
-                            </div>
-                            <div class="bg-gradient-to-br from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-xl p-6">
-                                <div class="flex items-center justify-between mb-4">
-                                    <span class="text-amber-400">活跃部门数</span>
-                                    <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                                     </svg>
                                 </div>
-                                <p class="text-3xl font-bold">6</p>
-                                <p class="text-sm text-slate-400 mt-2">部门</p>
+                                <p class="text-3xl font-bold">181K</p>
+                                <p class="text-sm text-slate-400 mt-2">百万Token/人</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-xl p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="text-purple-400">部门成本</span>
+                                    <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                    </svg>
+                                </div>
+                                <p class="text-3xl font-bold">¥156K</p>
+                                <p class="text-sm text-slate-400 mt-2">6个部门</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-xl p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="text-amber-400">项目成本</span>
+                                    <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+                                    </svg>
+                                </div>
+                                <p class="text-3xl font-bold">¥89K</p>
+                                <p class="text-sm text-slate-400 mt-2">24个项目</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-cyan-500/20 to-cyan-600/20 border border-cyan-500/30 rounded-xl p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="text-cyan-400">成本趋势</span>
+                                    <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+                                    </svg>
+                                </div>
+                                <p class="text-3xl font-bold">+8.5%</p>
+                                <p class="text-sm text-slate-400 mt-2">环比增长</p>
                             </div>
                         </div>
 
-                        <!-- Token Charts -->
+                        <!-- Charts: 成本趋势、部门消耗对比、人均消耗对比、项目成本排名 -->
                         <div class="grid grid-cols-2 gap-6 mb-8">
-                            <!-- Token Consumption Trend -->
                             <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                                <h3 class="text-lg font-semibold mb-4">Token消耗趋势</h3>
+                                <h3 class="text-lg font-semibold mb-4">成本趋势</h3>
                                 <div class="chart-container">
-                                    <canvas id="tokenConsumptionChart"></canvas>
+                                    <canvas id="costTrendChart"></canvas>
                                 </div>
                             </div>
-
-                            <!-- Department Distribution -->
                             <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                                <h3 class="text-lg font-semibold mb-4">部门消耗分布</h3>
+                                <h3 class="text-lg font-semibold mb-4">部门消耗对比</h3>
                                 <div class="chart-container">
-                                    <canvas id="departmentDistChart"></canvas>
+                                    <canvas id="costDeptStackedChart"></canvas>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Model Ranking & User Ranking -->
                         <div class="grid grid-cols-2 gap-6">
-                            <!-- Model Ranking -->
                             <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                                <h3 class="text-lg font-semibold mb-4">模型调用量 Top10</h3>
+                                <h3 class="text-lg font-semibold mb-4">人均消耗对比</h3>
                                 <div class="chart-container">
-                                    <canvas id="modelRankingChart"></canvas>
+                                    <canvas id="costPerUserChart"></canvas>
                                 </div>
                             </div>
-
-                            <!-- User Ranking -->
                             <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                                <h3 class="text-lg font-semibold mb-4">用户活跃度 Top10</h3>
-                                <div class="space-y-3">
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center space-x-3">
-                                            <span class="w-6 h-6 bg-yellow-500 rounded-full flex items-center justify-center text-xs font-bold text-slate-900">1</span>
-                                            <span class="text-sm">张三</span>
-                                            <span class="text-xs text-slate-400">芯片设计部</span>
-                                        </div>
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
-                                                <div class="h-full bg-blue-500" style="width: 100%"></div>
-                                            </div>
-                                            <span class="text-sm text-blue-400">2.5M</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center space-x-3">
-                                            <span class="w-6 h-6 bg-slate-400 rounded-full flex items-center justify-center text-xs font-bold text-slate-900">2</span>
-                                            <span class="text-sm">李四</span>
-                                            <span class="text-xs text-slate-400">验证部</span>
-                                        </div>
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
-                                                <div class="h-full bg-blue-500" style="width: 82%"></div>
-                                            </div>
-                                            <span class="text-sm text-blue-400">2.1M</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center space-x-3">
-                                            <span class="w-6 h-6 bg-amber-700 rounded-full flex items-center justify-center text-xs font-bold text-white">3</span>
-                                            <span class="text-sm">王五</span>
-                                            <span class="text-xs text-slate-400">封装部</span>
-                                        </div>
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
-                                                <div class="h-full bg-blue-500" style="width: 68%"></div>
-                                            </div>
-                                            <span class="text-sm text-blue-400">1.7M</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center space-x-3">
-                                            <span class="w-6 h-6 bg-slate-600 rounded-full flex items-center justify-center text-xs font-bold">4</span>
-                                            <span class="text-sm">赵六</span>
-                                            <span class="text-xs text-slate-400">芯片设计部</span>
-                                        </div>
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
-                                                <div class="h-full bg-blue-500" style="width: 55%"></div>
-                                            </div>
-                                            <span class="text-sm text-blue-400">1.4M</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center space-x-3">
-                                            <span class="w-6 h-6 bg-slate-600 rounded-full flex items-center justify-center text-xs font-bold">5</span>
-                                            <span class="text-sm">孙七</span>
-                                            <span class="text-xs text-slate-400">验证部</span>
-                                        </div>
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
-                                                <div class="h-full bg-blue-500" style="width: 42%"></div>
-                                            </div>
-                                            <span class="text-sm text-blue-400">1.1M</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center space-x-3">
-                                            <span class="w-6 h-6 bg-slate-600 rounded-full flex items-center justify-center text-xs font-bold">6</span>
-                                            <span class="text-sm">周八</span>
-                                            <span class="text-xs text-slate-400">测试部</span>
-                                        </div>
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
-                                                <div class="h-full bg-blue-500" style="width: 35%"></div>
-                                            </div>
-                                            <span class="text-sm text-blue-400">880K</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center space-x-3">
-                                            <span class="w-6 h-6 bg-slate-600 rounded-full flex items-center justify-center text-xs font-bold">7</span>
-                                            <span class="text-sm">吴九</span>
-                                            <span class="text-xs text-slate-400">研发部</span>
-                                        </div>
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
-                                                <div class="h-full bg-blue-500" style="width: 28%"></div>
-                                            </div>
-                                            <span class="text-sm text-blue-400">720K</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center space-x-3">
-                                            <span class="w-6 h-6 bg-slate-600 rounded-full flex items-center justify-center text-xs font-bold">8</span>
-                                            <span class="text-sm">郑十</span>
-                                            <span class="text-xs text-slate-400">芯片设计部</span>
-                                        </div>
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
-                                                <div class="h-full bg-blue-500" style="width: 22%"></div>
-                                            </div>
-                                            <span class="text-sm text-blue-400">550K</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center space-x-3">
-                                            <span class="w-6 h-6 bg-slate-600 rounded-full flex items-center justify-center text-xs font-bold">9</span>
-                                            <span class="text-sm">钱十一</span>
-                                            <span class="text-xs text-slate-400">验证部</span>
-                                        </div>
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
-                                                <div class="h-full bg-blue-500" style="width: 18%"></div>
-                                            </div>
-                                            <span class="text-sm text-blue-400">450K</span>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center justify-between">
-                                        <div class="flex items-center space-x-3">
-                                            <span class="w-6 h-6 bg-slate-600 rounded-full flex items-center justify-center text-xs font-bold">10</span>
-                                            <span class="text-sm">陈十二</span>
-                                            <span class="text-xs text-slate-400">封装部</span>
-                                        </div>
-                                        <div class="flex items-center space-x-3">
-                                            <div class="w-32 h-2 bg-slate-700 rounded-full overflow-hidden">
-                                                <div class="h-full bg-blue-500" style="width: 15%"></div>
-                                            </div>
-                                            <span class="text-sm text-blue-400">380K</span>
-                                        </div>
-                                    </div>
+                                <h3 class="text-lg font-semibold mb-4">项目成本排名</h3>
+                                <div class="chart-container">
+                                    <canvas id="costProjectRankingChart"></canvas>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- ==================== 3. 资源分析看板 ==================== -->
+                    <div id="view-resource" class="dashboard-view" style="display: none;">
+                        <!-- Stats Cards: 用户配额使用、用户活跃度、用户项目归属、用户成本贡献 -->
+                        <div class="grid grid-cols-4 gap-6 mb-8">
+                            <div class="bg-gradient-to-br from-blue-500/20 to-blue-600/20 border border-blue-500/30 rounded-xl p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="text-blue-400">用户配额使用</span>
+                                    <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <p class="text-3xl font-bold">68.5%</p>
+                                <p class="text-sm text-slate-400 mt-2">平均使用率</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-green-500/20 to-green-600/20 border border-green-500/30 rounded-xl p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="text-green-400">用户活跃度</span>
+                                    <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                                    </svg>
+                                </div>
+                                <p class="text-3xl font-bold">86</p>
+                                <p class="text-sm text-slate-400 mt-2">活跃用户/总用户</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/30 rounded-xl p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="text-purple-400">用户项目归属</span>
+                                    <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path>
+                                    </svg>
+                                </div>
+                                <p class="text-3xl font-bold">3.2</p>
+                                <p class="text-sm text-slate-400 mt-2">人均项目数</p>
+                            </div>
+                            <div class="bg-gradient-to-br from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-xl p-6">
+                                <div class="flex items-center justify-between mb-4">
+                                    <span class="text-amber-400">用户成本贡献</span>
+                                    <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                    </svg>
+                                </div>
+                                <p class="text-3xl font-bold">¥1.82K</p>
+                                <p class="text-sm text-slate-400 mt-2">人均成本贡献</p>
+                            </div>
+                        </div>
+
+                        <!-- Charts: 保留现有3个 + 项目消耗Token占比 + 模型调用趋势 -->
+                        <div class="grid grid-cols-3 gap-6 mb-8">
+                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                                <h3 class="text-lg font-semibold mb-4">模型调用量 Top10</h3>
+                                <div class="chart-container">
+                                    <canvas id="resModelRankingChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                                <h3 class="text-lg font-semibold mb-4">用户消耗 Top10</h3>
+                                <div class="chart-container">
+                                    <canvas id="resUserRankingChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                                <h3 class="text-lg font-semibold mb-4">部门资源占用 (帕累托分析)</h3>
+                                <div class="chart-container">
+                                    <canvas id="resParetoChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-6">
+                            <!-- 新增：项目消耗Token占比 -->
+                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                                <h3 class="text-lg font-semibold mb-4">项目消耗Token占比</h3>
+                                <div class="chart-container">
+                                    <canvas id="resProjectTokenDistChart"></canvas>
+                                </div>
+                            </div>
+                            <!-- 新增：模型调用趋势 -->
+                            <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                                <h3 class="text-lg font-semibold mb-4">模型调用趋势</h3>
+                                <div class="chart-container">
+                                    <canvas id="resModelTrendChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- Page: 系统配置 -->
@@ -1007,7 +993,7 @@
                             </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm text-slate-400 mb-2">默认Token额度</label>
+                                    <label class="block text-sm text-slate-400 mb-2">默认额度</label>
                                     <div class="flex items-center">
                                         <input type="number" id="defaultQuota" value="1000000" class="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500">
                                         <span class="ml-2 text-slate-400 text-sm">个</span>
@@ -1087,14 +1073,14 @@
                                 </div>
                                 <div class="p-3 bg-slate-700/30 rounded-lg border border-slate-600">
                                     <div class="flex items-center justify-between mb-2">
-                                        <span class="font-medium text-sm">Token额度即将耗尽</span>
+                                        <span class="font-medium text-sm">额度即将耗尽</span>
                                         <div class="flex items-center space-x-2">
                                             <span class="px-2 py-0.5 bg-green-500/20 text-green-400 rounded text-xs">已启用</span>
                                             <button class="text-blue-400 hover:text-blue-300 text-sm">编辑</button>
                                             <button class="text-red-400 hover:text-red-300 text-sm">删除</button>
                                         </div>
                                     </div>
-                                    <p class="text-xs text-slate-400">当用户Token使用率超过 80% 时触发告警</p>
+                                    <p class="text-xs text-slate-400">当用户额度使用率超过 80% 时触发告警</p>
                                 </div>
                                 <div class="p-3 bg-slate-700/30 rounded-lg border border-slate-600">
                                     <div class="flex items-center justify-between mb-2">
@@ -1292,6 +1278,183 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- ==================== 配额申请页面 ==================== -->
+                <div id="page-quota-requests" class="page">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-white">配额申请</h2>
+                        <p class="text-slate-400 text-sm mt-1">查看和管理配额申请记录</p>
+                    </div>
+
+                    <!-- 我的申请记录 -->
+                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700 mb-6">
+                        <h3 class="text-lg font-semibold text-white mb-4">我的申请记录</h3>
+                        <div id="myQuotaRequestsList">
+                            <!-- 动态渲染申请记录 -->
+                        </div>
+                        <div id="noQuotaRequests" class="text-center py-8 text-slate-400 hidden">
+                            <p>暂无配额申请记录</p>
+                            <button onclick="showApplyQuotaModal()" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
+                                申请配额
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== 配额审批页面 ==================== -->
+                <div id="page-quota-approval" class="page">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-white">配额审批</h2>
+                        <p class="text-slate-400 text-sm mt-1">审批用户提交的配额申请</p>
+                    </div>
+
+                    <!-- 审批筛选和列表 -->
+                    <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-4">
+                                <select id="approvalStatusFilter" class="bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white text-sm">
+                                    <option value="">全部状态</option>
+                                    <option value="pending">待审批</option>
+                                    <option value="approved">已通过</option>
+                                    <option value="rejected">已拒绝</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="approvalRequestsList">
+                            <!-- 动态渲染审批列表 -->
+                        </div>
+                        <!-- 分页控件 -->
+                        <div id="approvalPagination" class="flex items-center justify-between mt-4 pt-4 border-t border-slate-700">
+                            <div class="text-sm text-slate-400">
+                                共 <span id="approvalTotalCount">0</span> 条记录
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button id="approvalPrevBtn" class="px-3 py-1 bg-slate-700 text-white rounded text-sm hover:bg-slate-600 disabled:opacity-50" disabled>上一页</button>
+                                <span id="approvalPageInfo" class="text-sm text-slate-300">1 / 1</span>
+                                <button id="approvalNextBtn" class="px-3 py-1 bg-slate-700 text-white rounded text-sm hover:bg-slate-600 disabled:opacity-50" disabled>下一页</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== 项目管理页面 ==================== -->
+                <div id="page-projects" class="page">
+                    <div class="mb-6 flex items-center justify-between">
+                        <div>
+                            <h2 class="text-2xl font-bold text-white">项目管理</h2>
+                            <p class="text-slate-400 text-sm mt-1">管理AI算力项目配额和成员</p>
+                        </div>
+                        <button id="addProjectBtn" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                            添加项目
+                        </button>
+                    </div>
+
+                    <!-- 项目统计 -->
+                    <div class="grid grid-cols-3 gap-4 mb-6">
+                        <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
+                            <div class="text-2xl font-bold text-white" id="projectCount">0</div>
+                            <div class="text-sm text-slate-400">项目总数</div>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
+                            <div class="text-2xl font-bold text-green-400" id="activeProjectCount">0</div>
+                            <div class="text-sm text-slate-400">进行中</div>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
+                            <div class="text-2xl font-bold text-purple-400" id="usedProjectQuota">0</div>
+                            <div class="text-sm text-slate-400">已使用Token</div>
+                        </div>
+                    </div>
+
+                    <!-- 项目列表 -->
+                    <div id="projectsList" class="grid grid-cols-3 gap-4">
+                        <!-- 动态渲染项目卡片 -->
+                    </div>
+                </div>
+
+                <!-- ==================== 用户管理页面 ==================== -->
+                <div id="page-user-management" class="page">
+                    <div class="mb-6 flex items-center justify-between">
+                        <div>
+                            <h2 class="text-2xl font-bold text-white">用户管理</h2>
+                            <p class="text-slate-400 text-sm mt-1">管理系统用户和权限</p>
+                        </div>
+                        <button id="addUserBtn" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                            添加用户
+                        </button>
+                    </div>
+
+                    <!-- Tabs -->
+                    <div class="flex items-center space-x-4 mb-6">
+                        <button class="user-mgmt-tab-btn active px-4 py-2 bg-blue-500 text-white rounded-lg text-sm transition" data-tab="user-list">用户列表</button>
+                        <button class="user-mgmt-tab-btn px-4 py-2 bg-slate-700 text-slate-300 rounded-lg text-sm hover:bg-slate-600 transition" data-tab="quota-list">用户额度</button>
+                    </div>
+
+                    <!-- Tab Content: 用户列表 -->
+                    <div id="tab-user-list" class="user-mgmt-tab-content">
+                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="text-left text-slate-400 text-sm border-b border-slate-700">
+                                        <th class="pb-3">用户名</th>
+                                        <th class="pb-3">角色</th>
+                                        <th class="pb-3">所属部门</th>
+                                        <th class="pb-3">项目</th>
+                                        <th class="pb-3">状态</th>
+                                        <th class="pb-3">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="usersListTable">
+                                    <!-- 动态渲染用户列表 -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Tab Content: 用户额度 -->
+                    <div id="tab-quota-list" class="user-mgmt-tab-content hidden">
+                        <div class="flex items-center space-x-4 mb-6">
+                            <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition text-sm flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+                                </svg>
+                                批量导入额度
+                            </button>
+                            <button class="px-4 py-2 bg-slate-700 text-white rounded-lg hover:bg-slate-600 transition text-sm flex items-center">
+                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                </svg>
+                                批量导出额度
+                            </button>
+                        </div>
+                        <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
+                            <h3 class="text-lg font-semibold mb-6">用户额度列表</h3>
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="text-left text-slate-400 text-sm border-b border-slate-700">
+                                        <th class="pb-3 font-medium">用户姓名</th>
+                                        <th class="pb-3 font-medium">所属部门</th>
+                                        <th class="pb-3 font-medium">当前额度</th>
+                                        <th class="pb-3 font-medium">已使用</th>
+                                        <th class="pb-3 font-medium">剩余额度</th>
+                                        <th class="pb-3 font-medium">使用率</th>
+                                        <th class="pb-3 font-medium">状态</th>
+                                        <th class="pb-3 font-medium">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="userQuotaTable">
+                                    <!-- 动态渲染用户额度列表 -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </main>
     </div>
@@ -1316,6 +1479,8 @@
         </div>
     </div>
 
+    <script src="js/auth.js"></script>
+    <script src="js/data-models.js"></script>
     <script src="js/dashboard.js"></script>
 </body>
 </html>

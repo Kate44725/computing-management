@@ -48,8 +48,10 @@
                         <label class="block text-sm font-medium text-slate-300 mb-2">角色</label>
                         <select id="role"
                             class="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition">
-                            <option value="admin">管理员</option>
                             <option value="user">普通用户</option>
+                            <option value="admin">系统管理员</option>
+                            <option value="domain_admin">领域管理员</option>
+                            <option value="operator">运营人员</option>
                         </select>
                     </div>
                     <button type="submit"
@@ -60,8 +62,11 @@
 
                 <!-- Demo Info -->
                 <div class="mt-6 p-4 bg-blue-500/10 border border-blue-500/30 rounded-xl">
-                    <p class="text-xs text-blue-300 text-center">
-                        演示账号已预填，直接点击登录即可
+                    <p class="text-xs text-blue-300 text-center mb-2">
+                        演示账号：用户名任意，密码123456
+                    </p>
+                    <p class="text-xs text-slate-400 text-center">
+                        或选择角色直接登录体验
                     </p>
                 </div>
             </div>
@@ -75,11 +80,51 @@
         </div>
     </div>
 
+    <!-- 引入权限认证模块 -->
+    <script src="js/auth.js"></script>
+    <script src="js/data-models.js"></script>
     <script>
+        // 初始化默认数据
+        document.addEventListener('DOMContentLoaded', function() {
+            initDefaultData();
+        });
+
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
             const role = document.getElementById('role').value;
-            window.location.href = 'dashboard.html?role=' + role;
+
+            // 使用新的认证系统
+            const result = login(username, password);
+
+            if (result.success) {
+                // 跳转到仪表板
+                window.location.href = 'dashboard.html';
+            } else {
+                // 显示错误（使用模拟登录）
+                // 演示模式：直接使用选定的角色登录
+                const users = getUsers();
+                const demoUser = users.find(u => u.role === role);
+
+                if (demoUser) {
+                    setCurrentUser(demoUser);
+                    window.location.href = 'dashboard.html';
+                } else {
+                    // 创建临时用户
+                    const tempUser = {
+                        id: 'temp-' + Date.now(),
+                        username: username,
+                        role: role,
+                        departmentId: 'dept-001',
+                        projectIds: [],
+                        zoneAccess: ['red', 'yellow'],
+                        status: 'active'
+                    };
+                    setCurrentUser(tempUser);
+                    window.location.href = 'dashboard.html';
+                }
+            }
         });
     </script>
 </body>
